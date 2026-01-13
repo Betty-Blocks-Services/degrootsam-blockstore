@@ -71,6 +71,20 @@
       "name": "variables"
     },
     {
+      "label": "Comment map",
+      "meta": {
+        "type": "Object"
+      },
+      "name": "commentMap"
+    },
+    {
+      "label": "Changes map",
+      "meta": {
+        "type": "Object"
+      },
+      "name": "changesMap"
+    },
+    {
       "meta": {
         "type": "Output",
         "output": {

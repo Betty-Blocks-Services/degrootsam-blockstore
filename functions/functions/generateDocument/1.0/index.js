@@ -1,25 +1,28 @@
-import expressionParser from "angular-expressions";
-
 const generateWordDocument = async ({
   publicTemplateUrl,
   model,
   property: [{ name: propertyName }],
   fileName,
   variables,
+  commentMap = {},
+  changesMap = {},
 }) => {
-  const parser = expressionParser.configure({
-    filters: {}, // optional: define your custom filters here
-  });
-
   const variableMap = variables.reduce((previousValue, currentValue) => {
     previousValue[currentValue.key] = currentValue.value;
     return previousValue;
   }, {});
 
-  const buffer = await generateDocx(publicTemplateUrl, variableMap, {
+  const mergedObject = {
+    ...variableMap,
+    ...commentMap,
+    ...changesMap,
+  };
+
+  console.log({ mergedObject });
+
+  const buffer = await generateDocx(publicTemplateUrl, mergedObject, {
     linebreaks: true,
     paragraphLoop: true,
-    parser,
   });
 
   const reference = await storeFile(model.name, propertyName, {

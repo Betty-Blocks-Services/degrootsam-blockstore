@@ -1,0 +1,31 @@
+{
+  "category": "Misc",
+  "description": "Description",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Map Comments",
+  "options": [
+    {
+      "label": "Comments",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["COLLECTION", "ARRAY"],
+        "validations": { "required": true }
+      },
+      "name": "commentsCollection"
+    },
+    {
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Object"
+        }
+      },
+      "name": "result"
+    }
+  ],
+  "yields": "NONE"
+}

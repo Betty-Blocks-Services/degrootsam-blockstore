@@ -6,11 +6,16 @@ const travelPath = (object, path) => {
   }
   return result;
 };
+
+const normalizeArray = (input) =>
+  Array.isArray(input) ? input : Array.isArray(input?.data) ? input.data : [];
+
 const arrayFind = async ({ array, path, value, operator }) => {
   if (!array || !value || !operator) {
     console.log({ array, path, value, operator });
     throw new Error("Array Find: Missing required parameters to filter array");
   }
+
   const operators = {
     eq: (a, b) => a === b,
     ne: (a, b) => a !== b,
@@ -25,7 +30,8 @@ const arrayFind = async ({ array, path, value, operator }) => {
   if (!filterFn) {
     throw new Error("Invalid operator");
   }
-  const result = array.find((item) => {
+  const normalizedArray = normalizeArray(array);
+  const result = normalizedArray.find((item) => {
     if (typeof item === "string") {
       return filterFn(item, value);
     }
@@ -37,18 +43,21 @@ const arrayFind = async ({ array, path, value, operator }) => {
         throw new Error("Invalid value type");
       }
       const itemValue = travelPath(item, path);
+
       if (typeof itemValue === "string") {
         return filterFn(itemValue, value);
       }
       if (typeof itemValue === "number") {
         return filterFn(itemValue, Number(value));
       }
+
       throw new Error("Invalid value type");
     }
     throw new Error("Invalid value type");
   });
   return {
-    result,
+    resultSchema: result,
+    resultModel: result,
   };
 };
 export default arrayFind;

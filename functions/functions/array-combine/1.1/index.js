@@ -11,7 +11,9 @@ const arrayCombine = async ({ arrayA = [], pathA, arrayB = [], pathB }) => {
   const arrayBValues = normalizeArray(arrayB).map((item) =>
     pathB ? travelPath(item, pathB) : item,
   );
-  return { result: [...arrayAValues, ...arrayBValues] };
+
+  const result = [...arrayAValues, ...arrayBValues];
+  return { result, resultModel: result };
 };
 
 export default arrayCombine;

@@ -97,14 +97,25 @@
       "info": "The schema model to use for the output array"
     },
     {
-      "name": "resultSchema",
-      "label": "Result as schema model",
+      "name": "result",
+      "label": "Result",
       "meta": {
         "type": "Output",
         "output": {
           "type": "Array",
           "dataType": "SCHEMA",
           "schemaModel": "schemaModel"
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
         }
       }
     }

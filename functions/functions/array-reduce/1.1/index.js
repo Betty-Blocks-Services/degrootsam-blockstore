@@ -60,7 +60,10 @@ const arrayReduce = async ({
     return fn(acc, val);
   }, start);
 
-  return { result };
+  return {
+    resultSchema: result,
+    resultModel: result,
+  };
 };
 
 export default arrayReduce;

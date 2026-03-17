@@ -6,7 +6,8 @@ const travelPath = (object, path) => {
   }
   return result;
 };
-const arrayJoin = async ({ array, separator, path }) => {
+
+const arrayJoin = async ({ array = [], separator, path }) => {
   const parsedArray =
     typeof array === "object" && "data" in array ? array.data : array;
 

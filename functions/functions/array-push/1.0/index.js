@@ -40,7 +40,10 @@ const arrayPush = async ({
     if (logging) console.log("Pushing value to array");
     result.push(data);
     if (logging) console.log("Result", result);
-    return { result };
+    return {
+      resultSchema: result,
+      resultModel: result,
+    };
   } catch (err) {
     const message = `Array Push failed: ${err.message}`;
     throw new Error(message);

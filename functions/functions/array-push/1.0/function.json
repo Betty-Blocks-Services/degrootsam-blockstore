@@ -62,21 +62,34 @@
       "advanced": true
     },
     {
-      "name": "resultSchema",
+      "name": "schemaModel",
       "label": "Result Schema model",
       "meta": { "type": "SchemaModel" }
     },
     {
-      "name": "result",
-      "label": "Result",
+      "name": "resultSchema",
+      "label": "Result as schema",
       "meta": {
         "type": "Output",
-        "validations": {
-          "required": true
-        },
         "output": {
-          "type": "Array",
-          "dataType": "STRING"
+          "anyOf": [
+            {
+              "type": "Array",
+              "schemaModel": "schemaModel",
+              "dataType": "SCHEMA"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
         }
       }
     }

@@ -28,16 +28,26 @@
       }
     },
     {
-      "name": "result",
+      "name": "resultModel",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      }
+    },
+
+    {
+      "name": "resultSchema",
       "label": "Result",
       "meta": {
         "type": "Output",
         "output": {
           "type": "Array",
-          "dataType": "INTEGER"
-        },
-        "validations": {
-          "required": true
+          "schemaModel": "schemaModel",
+          "dataType": "SCHEMA"
         }
       }
     }

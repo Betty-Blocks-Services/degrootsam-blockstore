@@ -407,6 +407,9 @@
             id={inputId}
             type="file"
             multiple
+            accept={
+              allowedTypesValue.trim() === '*' ? undefined : allowedTypesValue
+            }
             style={{ display: 'none', pointerEvents: isDev ? 'none' : 'auto' }}
             onChange={handleInputChange}
           />

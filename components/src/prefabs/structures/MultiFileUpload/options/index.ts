@@ -5,8 +5,8 @@ import {
   property,
   variable,
 } from '@betty-blocks/component-sdk';
-import { advanced } from 'src/prefabs/structures/advanced';
-import { getAllowedKindsByType } from 'src/utils/allowedKinds';
+import { advanced } from '../../advanced';
+import { getAllowedKindsByType } from '../../../helpers/getAllowedKindsByType';
 import { dragDropZoneCategory, dragDropZoneOptions } from './dragDropZone';
 import { fileSectionCategory, fileSectionOptions } from './fileSection';
 import {

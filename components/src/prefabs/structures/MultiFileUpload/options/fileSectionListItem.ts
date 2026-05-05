@@ -168,7 +168,7 @@ export const fileSectionListItemOptions = {
   }),
 };
 
-const members = [
+const members: Array<keyof typeof fileSectionListItemOptions> = [
   'fileSectionListItemFontColor',
   'fileSectionListItemFontWeight',
   'fileSectionListItemFontType',
@@ -187,7 +187,7 @@ const members = [
   'fileSectionListItemRemoveIconType',
   'fileSectionListItemRemoveIcon',
   'fileSectionListItemRemoveIconSvg',
-] satisfies Array<keyof typeof fileSectionListItemOptions>;
+];
 
 export const fileSeciontListItemCategory: OptionCategory = {
   label: 'Uploaded files',

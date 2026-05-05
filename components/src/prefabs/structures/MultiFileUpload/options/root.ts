@@ -18,9 +18,7 @@ export const rootOptions = {
   }),
 };
 
-const members = ['rootOuterSpacing', 'rootInnerSpacing', 'errorColor'] satisfies Array<
-  keyof typeof rootOptions
->;
+const members: Array<keyof typeof rootOptions> = ['rootOuterSpacing', 'rootInnerSpacing', 'errorColor'];
 
 export const rootCategory: OptionCategory = {
   label: 'Root',

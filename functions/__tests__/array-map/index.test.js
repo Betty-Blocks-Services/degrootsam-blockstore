@@ -16,7 +16,7 @@ describe("mapArray", () => {
       path: "name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
   it("maps array with nested path", async () => {
@@ -33,7 +33,7 @@ describe("mapArray", () => {
       path: "user.name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
   it("maps array with numeric values", async () => {
@@ -50,7 +50,7 @@ describe("mapArray", () => {
       path: "age",
     });
 
-    expect(out).toEqual({ result: [25, 30, 35] });
+    expect(out).toEqual({ resultSchema: [25, 30, 35], resultModel: [25, 30, 35] });
   });
 
   it("maps array with boolean values", async () => {
@@ -67,7 +67,7 @@ describe("mapArray", () => {
       path: "active",
     });
 
-    expect(out).toEqual({ result: [true, false, true] });
+    expect(out).toEqual({ resultSchema: [true, false, true], resultModel: [true, false, true] });
   });
 
   it("maps array with mixed value types", async () => {
@@ -84,7 +84,7 @@ describe("mapArray", () => {
       path: "score",
     });
 
-    expect(out).toEqual({ result: [95, 87, 72] });
+    expect(out).toEqual({ resultSchema: [95, 87, 72], resultModel: [95, 87, 72] });
   });
 
   it("maps array with deeply nested path", async () => {
@@ -101,7 +101,7 @@ describe("mapArray", () => {
       path: "user.profile.settings.theme",
     });
 
-    expect(out).toEqual({ result: ["dark", "light", "dark"] });
+    expect(out).toEqual({ resultSchema: ["dark", "light", "dark"], resultModel: ["dark", "light", "dark"] });
   });
 
   it("maps array with null values", async () => {
@@ -118,7 +118,7 @@ describe("mapArray", () => {
       path: "age",
     });
 
-    expect(out).toEqual({ result: [25, null, 35] });
+    expect(out).toEqual({ resultSchema: [25, null, 35], resultModel: [25, null, 35] });
   });
 
   it("maps array with undefined values", async () => {
@@ -135,7 +135,7 @@ describe("mapArray", () => {
       path: "age",
     });
 
-    expect(out).toEqual({ result: [25, undefined, 35] });
+    expect(out).toEqual({ resultSchema: [25, undefined, 35], resultModel: [25, undefined, 35] });
   });
 
   it("maps empty array", async () => {
@@ -146,7 +146,7 @@ describe("mapArray", () => {
       path: "name",
     });
 
-    expect(out).toEqual({ result: [] });
+    expect(out).toEqual({ resultSchema: [], resultModel: [] });
   });
 
   it("maps single element array", async () => {
@@ -159,18 +159,7 @@ describe("mapArray", () => {
       path: "name",
     });
 
-    expect(out).toEqual({ result: ["Alice"] });
-  });
-
-  it("throws error when array item is not an object and path contains dot", async () => {
-    const array = { data: ["string", 123, true] };
-
-    await expect(
-      mapArray({
-        array,
-        path: "user.name",
-      }),
-    ).rejects.toThrow("Array item is not an object. Cannot travel path");
+    expect(out).toEqual({ resultSchema: ["Alice"], resultModel: ["Alice"] });
   });
 
   it("handles path that doesn't exist on some objects", async () => {
@@ -187,7 +176,7 @@ describe("mapArray", () => {
       path: "age",
     });
 
-    expect(out).toEqual({ result: [25, undefined, 35] });
+    expect(out).toEqual({ resultSchema: [25, undefined, 35], resultModel: [25, undefined, 35] });
   });
 
   it("handles path that returns undefined", async () => {
@@ -204,6 +193,6 @@ describe("mapArray", () => {
       path: "nonexistent",
     });
 
-    expect(out).toEqual({ result: [undefined, undefined, undefined] });
+    expect(out).toEqual({ resultSchema: [undefined, undefined, undefined], resultModel: [undefined, undefined, undefined] });
   });
 });

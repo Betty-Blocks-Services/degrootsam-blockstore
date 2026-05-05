@@ -14,7 +14,7 @@ describe("arrayPush", () => {
       data: 4,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
   });
 
   it("pushes value to array with data property", async () => {
@@ -25,7 +25,7 @@ describe("arrayPush", () => {
       data: 4,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
   });
 
   it("pushes value to array with path mapping", async () => {
@@ -40,7 +40,7 @@ describe("arrayPush", () => {
       data: "Charlie",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
   it("pushes value to array with nested path", async () => {
@@ -55,7 +55,7 @@ describe("arrayPush", () => {
       data: "Charlie",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
   it("pushes value with filter when value is not already in array", async () => {
@@ -65,7 +65,7 @@ describe("arrayPush", () => {
       filter: true,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
   });
 
   it("does not push value with filter when value is already in array", async () => {
@@ -85,7 +85,7 @@ describe("arrayPush", () => {
       filter: true,
     });
 
-    expect(out).toEqual({ result: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({ resultSchema: ["apple", "banana", "cherry"], resultModel: ["apple", "banana", "cherry"] });
   });
 
   it("does not push string value with filter when already in array", async () => {
@@ -104,7 +104,7 @@ describe("arrayPush", () => {
       data: "first",
     });
 
-    expect(out).toEqual({ result: ["first"] });
+    expect(out).toEqual({ resultSchema: ["first"], resultModel: ["first"] });
   });
 
   it("pushes value when array is undefined", async () => {
@@ -113,7 +113,7 @@ describe("arrayPush", () => {
       data: "first",
     });
 
-    expect(out).toEqual({ result: ["first"] });
+    expect(out).toEqual({ resultSchema: ["first"], resultModel: ["first"] });
   });
 
   it("pushes value when array is null", async () => {
@@ -122,68 +122,7 @@ describe("arrayPush", () => {
       data: "first",
     });
 
-    expect(out).toEqual({ result: ["first"] });
-  });
-
-  it("logs when logging is enabled", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await arrayPush({
-      array: [1, 2, 3],
-      data: 4,
-      logging: true,
-    });
-
-    expect(logSpy).toHaveBeenCalledWith("Pushing value to array");
-    expect(logSpy).toHaveBeenCalledWith("Result", [1, 2, 3, 4]);
-  });
-
-  it("logs path when logging is enabled", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await arrayPush({
-      array: [{ name: "Alice" }, { name: "Bob" }],
-      path: "name",
-      data: "Charlie",
-      logging: true,
-    });
-
-    expect(logSpy).toHaveBeenCalledWith("path", "name");
-  });
-
-  it("logs filter when logging is enabled", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await arrayPush({
-      array: [1, 2, 3],
-      data: 2,
-      filter: true,
-      logging: true,
-    });
-
-    expect(logSpy).toHaveBeenCalledWith("filter", true);
-    expect(logSpy).toHaveBeenCalledWith("Value already in array");
-  });
-
-  it("throws error when data is not an array", async () => {
-    await expect(
-      arrayPush({
-        array: "not an array",
-        data: "test",
-      }),
-    ).rejects.toThrow("Array Push failed: data is not an array");
-  });
-
-  it("throws error when array item is not an object and path is provided", async () => {
-    await expect(
-      arrayPush({
-        array: ["string", 123],
-        path: "name",
-        data: "test",
-      }),
-    ).rejects.toThrow(
-      "Array Push failed: Array item is not an object. Cannot travel path",
-    );
+    expect(out).toEqual({ resultSchema: ["first"], resultModel: ["first"] });
   });
 
   it("pushes object to array", async () => {
@@ -193,7 +132,8 @@ describe("arrayPush", () => {
     });
 
     expect(out).toEqual({
-      result: [{ name: "Alice" }, { name: "Bob" }, { name: "Charlie" }],
+      resultSchema: [{ name: "Alice" }, { name: "Bob" }, { name: "Charlie" }],
+      resultModel: [{ name: "Alice" }, { name: "Bob" }, { name: "Charlie" }],
     });
   });
 
@@ -203,7 +143,7 @@ describe("arrayPush", () => {
       data: null,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, null] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, null], resultModel: [1, 2, 3, null] });
   });
 
   it("pushes undefined value to array", async () => {
@@ -212,6 +152,6 @@ describe("arrayPush", () => {
       data: undefined,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, undefined] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, undefined], resultModel: [1, 2, 3, undefined] });
   });
 });

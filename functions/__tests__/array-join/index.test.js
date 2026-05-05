@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayJoin from "../../functions/array-join/1.1/index.js";
+import arrayJoin from "../../functions/array-join/1.2/index.js";
 
 describe("arrayJoin", () => {
   it("joins simple array with comma separator", async () => {
@@ -108,10 +108,10 @@ describe("arrayJoin", () => {
     expect(out).toEqual({ result: "1, string, true" });
   });
 
-  it("throws error when array is missing", async () => {
-    await expect(arrayJoin({ separator: ", " })).rejects.toThrow(
-      "Missing array input",
-    );
+  it("handles missing array gracefully (defaults to empty)", async () => {
+    const out = await arrayJoin({ separator: ", " });
+
+    expect(out).toEqual({ result: "" });
   });
 
   it("throws error when array is not an array", async () => {

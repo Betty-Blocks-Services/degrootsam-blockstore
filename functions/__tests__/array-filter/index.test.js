@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arrayFilter from "../../functions/array-filter/1.0/index.js";
+import arrayFilter from "../../functions/array-filter/1.1/index.js";
 
 describe("arrayFilter", () => {
   const originalConsoleLog = console.log;
@@ -15,7 +15,7 @@ describe("arrayFilter", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: [3] });
+    expect(out).toEqual({ resultSchema: [3], resultModel: [3] });
   });
 
   it("filters array with greater than operator", async () => {
@@ -25,7 +25,7 @@ describe("arrayFilter", () => {
       operator: "gt",
     });
 
-    expect(out).toEqual({ result: [4, 5] });
+    expect(out).toEqual({ resultSchema: [4, 5], resultModel: [4, 5] });
   });
 
   it("filters array with contains operator on strings", async () => {
@@ -35,7 +35,7 @@ describe("arrayFilter", () => {
       operator: "cont",
     });
 
-    expect(out).toEqual({ result: ["banana"] });
+    expect(out).toEqual({ resultSchema: ["banana"], resultModel: ["banana"] });
   });
 
   it("filters array with path and operator", async () => {
@@ -52,7 +52,7 @@ describe("arrayFilter", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: [{ name: "Bob", age: 30 }] });
+    expect(out).toEqual({ resultSchema: [{ name: "Bob", age: 30 }], resultModel: [{ name: "Bob", age: 30 }] });
   });
 
   it("filters array with nested path", async () => {
@@ -69,7 +69,7 @@ describe("arrayFilter", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: [{ user: { name: "Bob", age: 30 } }] });
+    expect(out).toEqual({ resultSchema: [{ user: { name: "Bob", age: 30 } }], resultModel: [{ user: { name: "Bob", age: 30 } }] });
   });
 
   it("filters array with not equal operator", async () => {
@@ -79,7 +79,7 @@ describe("arrayFilter", () => {
       operator: "ne",
     });
 
-    expect(out).toEqual({ result: [1, 2, 4, 5] });
+    expect(out).toEqual({ resultSchema: [1, 2, 4, 5], resultModel: [1, 2, 4, 5] });
   });
 
   it("filters array with less than or equal operator", async () => {
@@ -89,7 +89,7 @@ describe("arrayFilter", () => {
       operator: "lte",
     });
 
-    expect(out).toEqual({ result: [1, 2, 3] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3], resultModel: [1, 2, 3] });
   });
 
   it("filters array with not contains operator", async () => {
@@ -99,7 +99,7 @@ describe("arrayFilter", () => {
       operator: "ncont",
     });
 
-    expect(out).toEqual({ result: ["apple", "cherry", "date"] });
+    expect(out).toEqual({ resultSchema: ["apple", "cherry", "date"], resultModel: ["apple", "cherry", "date"] });
   });
 
   it("handles date comparison with valueIsDate flag", async () => {
@@ -113,7 +113,7 @@ describe("arrayFilter", () => {
       valueIsDate: true,
     });
 
-    expect(out.result).toHaveLength(1);
+    expect(out.resultSchema).toHaveLength(1);
     expect(logSpy).toHaveBeenCalledWith(new Date("2023-12-01"));
   });
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayCombine from "../../functions/array-combine/1.0/index.js";
+import arrayCombine from "../../functions/array-combine/1.1/index.js";
 
 describe("arrayCombine", () => {
   it("combines two simple arrays", async () => {
@@ -8,7 +8,7 @@ describe("arrayCombine", () => {
       arrayB: [4, 5, 6],
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
 
   it("combines arrays with object paths", async () => {
@@ -28,7 +28,7 @@ describe("arrayCombine", () => {
       pathB: "name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"] });
+    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"], resultModel: ["Alice", "Bob", "Charlie", "Diana"] });
   });
 
   it("handles arrays with data property", async () => {
@@ -40,7 +40,7 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
 
   it("handles mixed array formats", async () => {
@@ -52,7 +52,7 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
 
   it("handles empty arrays", async () => {
@@ -61,7 +61,7 @@ describe("arrayCombine", () => {
       arrayB: [],
     });
 
-    expect(out).toEqual({ result: [] });
+    expect(out).toEqual({ result: [], resultModel: [] });
   });
 
   it("handles nested object paths", async () => {
@@ -75,7 +75,7 @@ describe("arrayCombine", () => {
       pathB: "user.name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
   it("uses path for only one array", async () => {
@@ -91,7 +91,7 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"] });
+    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"], resultModel: ["Alice", "Bob", "Charlie", "Diana"] });
   });
 
   it("handles undefined arrays gracefully", async () => {
@@ -100,6 +100,6 @@ describe("arrayCombine", () => {
       arrayB: [1, 2, 3],
     });
 
-    expect(out).toEqual({ result: [1, 2, 3] });
+    expect(out).toEqual({ result: [1, 2, 3], resultModel: [1, 2, 3] });
   });
 });

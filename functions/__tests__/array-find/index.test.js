@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arrayFind from "../../functions/array-find/1.1/index.js";
+import arrayFind from "../../functions/array-find/1.2/index.js";
 
 describe("arrayFind", () => {
   const originalConsoleLog = console.log;
@@ -16,7 +16,7 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: 3 });
+    expect(out).toEqual({ resultSchema: 3, resultModel: 3 });
   });
 
   it("finds element with greater than operator", async () => {
@@ -27,7 +27,7 @@ describe("arrayFind", () => {
       operator: "gt",
     });
 
-    expect(out).toEqual({ result: 4 });
+    expect(out).toEqual({ resultSchema: 4, resultModel: 4 });
   });
 
   it("finds element with contains operator on strings", async () => {
@@ -38,7 +38,7 @@ describe("arrayFind", () => {
       operator: "cont",
     });
 
-    expect(out).toEqual({ result: "banana" });
+    expect(out).toEqual({ resultSchema: "banana", resultModel: "banana" });
   });
 
   it("finds element with path and operator", async () => {
@@ -55,7 +55,7 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: { name: "Bob", age: 30 } });
+    expect(out).toEqual({ resultSchema: { name: "Bob", age: 30 }, resultModel: { name: "Bob", age: 30 } });
   });
 
   it("finds element with nested path", async () => {
@@ -72,7 +72,7 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: { user: { name: "Bob", age: 30 } } });
+    expect(out).toEqual({ resultSchema: { user: { name: "Bob", age: 30 } }, resultModel: { user: { name: "Bob", age: 30 } } });
   });
 
   it("finds element with not equal operator", async () => {
@@ -83,7 +83,7 @@ describe("arrayFind", () => {
       operator: "ne",
     });
 
-    expect(out).toEqual({ result: 4 });
+    expect(out).toEqual({ resultSchema: 4, resultModel: 4 });
   });
 
   it("finds element with less than operator", async () => {
@@ -94,7 +94,7 @@ describe("arrayFind", () => {
       operator: "lt",
     });
 
-    expect(out).toEqual({ result: 1 });
+    expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
   it("finds element with greater than or equal operator", async () => {
@@ -105,7 +105,7 @@ describe("arrayFind", () => {
       operator: "gte",
     });
 
-    expect(out).toEqual({ result: 3 });
+    expect(out).toEqual({ resultSchema: 3, resultModel: 3 });
   });
 
   it("finds element with not contains operator", async () => {
@@ -116,7 +116,7 @@ describe("arrayFind", () => {
       operator: "ncont",
     });
 
-    expect(out).toEqual({ result: "apple" });
+    expect(out).toEqual({ resultSchema: "apple", resultModel: "apple" });
   });
 
   it("returns undefined when no element matches", async () => {
@@ -127,7 +127,7 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: undefined });
+    expect(out).toEqual({ resultSchema: undefined, resultModel: undefined });
   });
 
   it("handles string values correctly", async () => {
@@ -138,7 +138,7 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: "world" });
+    expect(out).toEqual({ resultSchema: "world", resultModel: "world" });
   });
 
   it("handles number values correctly", async () => {
@@ -149,76 +149,54 @@ describe("arrayFind", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ result: 20 });
+    expect(out).toEqual({ resultSchema: 20, resultModel: 20 });
   });
 
   it("throws error when array is missing", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await expect(
-      arrayFind({ path: "test", value: 3, operator: "eq" }),
-    ).rejects.toThrow(
-      "Array Find: Missing required parameters to filter array",
-    );
-
-    expect(logSpy).toHaveBeenCalledWith({
-      array: undefined,
-      path: "test",
-      value: 3,
-      operator: "eq",
-    });
+    try {
+      await arrayFind({ path: "test", value: 3, operator: "eq" });
+      throw new Error("Should have thrown");
+    } catch (e) {
+      expect(e.message).toBe("Array Find: 'array' is required");
+    }
   });
 
   it("throws error when value is missing", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await expect(
-      arrayFind({ array: [1, 2, 3], path: "test", operator: "eq" }),
-    ).rejects.toThrow(
-      "Array Find: Missing required parameters to filter array",
-    );
-
-    expect(logSpy).toHaveBeenCalledWith({
-      array: [1, 2, 3],
-      path: "test",
-      value: undefined,
-      operator: "eq",
-    });
+    try {
+      await arrayFind({ array: [1, 2, 3], path: "test", operator: "eq" });
+      throw new Error("Should have thrown");
+    } catch (e) {
+      expect(e.message).toBe("Array Find: 'value' is required");
+    }
   });
 
   it("throws error when operator is missing", async () => {
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-
-    await expect(
-      arrayFind({ array: [1, 2, 3], path: "test", value: 3 }),
-    ).rejects.toThrow(
-      "Array Find: Missing required parameters to filter array",
-    );
-
-    expect(logSpy).toHaveBeenCalledWith({
-      array: [1, 2, 3],
-      path: "test",
-      value: 3,
-      operator: undefined,
-    });
+    try {
+      await arrayFind({ array: [1, 2, 3], path: "test", value: 3 });
+      throw new Error("Should have thrown");
+    } catch (e) {
+      expect(e.message).toBe("Array Find: 'operator' is required");
+    }
   });
 
   it("throws error when operator is invalid", async () => {
-    await expect(
-      arrayFind({
+    try {
+      await arrayFind({
         array: [1, 2, 3],
         path: "test",
         value: 3,
         operator: "invalid",
-      }),
-    ).rejects.toThrow("Invalid operator");
+      });
+      throw new Error("Should have thrown");
+    } catch (e) {
+      expect(e.message).toBe("Array Find: Invalid operator 'invalid'");
+    }
   });
 
-  it("throws error for invalid value type", async () => {
+  it("returns undefined for invalid value type", async () => {
     const array = [null, undefined, Symbol("test")];
 
-    await expect(
-      arrayFind({ array, path: "test", value: 3, operator: "eq" }),
-    ).rejects.toThrow("Invalid value type");
+    const out = await arrayFind({ array, path: "test", value: 3, operator: "eq" });
+    expect(out).toEqual({ resultSchema: undefined, resultModel: undefined });
   });
 });

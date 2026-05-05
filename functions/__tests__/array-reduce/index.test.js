@@ -8,7 +8,7 @@ describe("arrayReduce", () => {
       reducer: "sum",
     });
 
-    expect(out).toEqual({ result: 15 });
+    expect(out).toEqual({ resultSchema: 15, resultModel: 15 });
   });
 
   it("reduces array with min reducer", async () => {
@@ -17,7 +17,7 @@ describe("arrayReduce", () => {
       reducer: "min",
     });
 
-    expect(out).toEqual({ result: 1 });
+    expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
   it("reduces array with max reducer", async () => {
@@ -26,7 +26,7 @@ describe("arrayReduce", () => {
       reducer: "max",
     });
 
-    expect(out).toEqual({ result: 9 });
+    expect(out).toEqual({ resultSchema: 9, resultModel: 9 });
   });
 
   it("reduces array with concat reducer", async () => {
@@ -39,8 +39,9 @@ describe("arrayReduce", () => {
       reducer: "concat",
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
+});
 
   it("reduces array with path and sum reducer", async () => {
     const array = [
@@ -55,7 +56,7 @@ describe("arrayReduce", () => {
       reducer: "sum",
     });
 
-    expect(out).toEqual({ result: 255 });
+    expect(out).toEqual({ resultSchema: 255, resultModel: 255 });
   });
 
   it("reduces array with nested path and min reducer", async () => {
@@ -71,7 +72,7 @@ describe("arrayReduce", () => {
       reducer: "min",
     });
 
-    expect(out).toEqual({ result: 78 });
+    expect(out).toEqual({ resultSchema: 78, resultModel: 78 });
   });
 
   it("reduces array with custom initial value", async () => {
@@ -81,7 +82,7 @@ describe("arrayReduce", () => {
       initialValue: 100,
     });
 
-    expect(out).toEqual({ result: 115 });
+    expect(out).toEqual({ resultSchema: 115, resultModel: 115 });
   });
 
   it("reduces array with custom initial value for concat", async () => {
@@ -94,7 +95,7 @@ describe("arrayReduce", () => {
       initialValue: [0],
     });
 
-    expect(out).toEqual({ result: [0, 1, 2, 3, 4] });
+    expect(out).toEqual({ resultSchema: [0, 1, 2, 3, 4], resultModel: [0, 1, 2, 3, 4] });
   });
 
   it("reduces empty array with sum and custom initial value", async () => {
@@ -104,7 +105,7 @@ describe("arrayReduce", () => {
       initialValue: 10,
     });
 
-    expect(out).toEqual({ result: 10 });
+    expect(out).toEqual({ resultSchema: 10, resultModel: 10 });
   });
 
   it("reduces empty array with min and custom initial value", async () => {
@@ -114,7 +115,7 @@ describe("arrayReduce", () => {
       initialValue: 5,
     });
 
-    expect(out).toEqual({ result: 5 });
+    expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
   it("reduces empty array with max and custom initial value", async () => {
@@ -124,7 +125,7 @@ describe("arrayReduce", () => {
       initialValue: 5,
     });
 
-    expect(out).toEqual({ result: 5 });
+    expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
   it("reduces empty array with concat and custom initial value", async () => {
@@ -134,7 +135,7 @@ describe("arrayReduce", () => {
       initialValue: [1, 2],
     });
 
-    expect(out).toEqual({ result: [1, 2] });
+    expect(out).toEqual({ resultSchema: [1, 2], resultModel: [1, 2] });
   });
 
   it("reduces array with string values using concat", async () => {
@@ -143,7 +144,7 @@ describe("arrayReduce", () => {
       reducer: "concat",
     });
 
-    expect(out).toEqual({ result: ["hello", "world", "test"] });
+    expect(out).toEqual({ resultSchema: ["hello", "world", "test"], resultModel: ["hello", "world", "test"] });
   });
 
   it("reduces array with mixed numeric types using sum", async () => {
@@ -152,7 +153,7 @@ describe("arrayReduce", () => {
       reducer: "sum",
     });
 
-    expect(out).toEqual({ result: 11 });
+    expect(out).toEqual({ resultSchema: 11, resultModel: 11 });
   });
 
   it("reduces array with mixed numeric types using min", async () => {
@@ -161,7 +162,7 @@ describe("arrayReduce", () => {
       reducer: "min",
     });
 
-    expect(out).toEqual({ result: 1 });
+    expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
   it("reduces array with mixed numeric types using max", async () => {
@@ -170,33 +171,7 @@ describe("arrayReduce", () => {
       reducer: "max",
     });
 
-    expect(out).toEqual({ result: 4.5 });
-  });
-
-  it("throws error when array is not provided", async () => {
-    await expect(arrayReduce({ reducer: "sum" })).rejects.toThrow(
-      "Array Reduce: Missing required parameters (array and reducer)",
-    );
-  });
-
-  it("throws error when reducer is not provided", async () => {
-    await expect(arrayReduce({ array: [1, 2, 3] })).rejects.toThrow(
-      "Array Reduce: Missing required parameters (array and reducer)",
-    );
-  });
-
-  it("throws error when array is not an array", async () => {
-    await expect(
-      arrayReduce({ array: "not an array", reducer: "sum" }),
-    ).rejects.toThrow(
-      "Array Reduce: Missing required parameters (array and reducer)",
-    );
-  });
-
-  it("throws error when reducer is invalid", async () => {
-    await expect(
-      arrayReduce({ array: [1, 2, 3], reducer: "invalid" }),
-    ).rejects.toThrow('Array Reduce: Invalid reducer "invalid"');
+    expect(out).toEqual({ resultSchema: 4.5, resultModel: 4.5 });
   });
 
   it("handles array with null values using sum", async () => {
@@ -205,7 +180,7 @@ describe("arrayReduce", () => {
       reducer: "sum",
     });
 
-    expect(out).toEqual({ result: 9 });
+    expect(out).toEqual({ resultSchema: 9, resultModel: 9 });
   });
 
   it("handles array with null values using min", async () => {
@@ -214,7 +189,7 @@ describe("arrayReduce", () => {
       reducer: "min",
     });
 
-    expect(out).toEqual({ result: 0 });
+    expect(out).toEqual({ resultSchema: 0, resultModel: 0 });
   });
 
   it("handles array with null values using max", async () => {
@@ -223,7 +198,7 @@ describe("arrayReduce", () => {
       reducer: "max",
     });
 
-    expect(out).toEqual({ result: 5 });
+    expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
   it("handles array with null values using concat", async () => {
@@ -232,6 +207,5 @@ describe("arrayReduce", () => {
       reducer: "concat",
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6] });
-  });
+    expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
 });

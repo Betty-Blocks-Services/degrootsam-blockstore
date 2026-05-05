@@ -24,11 +24,13 @@
       fileSectionListItemRemoveIcon,
       fileSectionListItemRemoveIconSvg,
       maxFileSize = 25,
+      allowedTypes: allowedTypesRaw,
       model,
       property,
     } = options;
     const { LinearProgress, Icon } = window.MaterialUI.Core;
     const isDev = env === 'dev';
+    const allowedTypesValue = useText(allowedTypesRaw);
     const [isDragOver, setIsDragOver] = useState(false);
     const rand = () => Math.random().toString(36).slice(2, 7);
     const [inputId] = useState(`file-upload-${rand()}`);
@@ -175,10 +177,34 @@
       }
     };
 
+    const isTypeAllowed = (file) => {
+      const allowed = allowedTypesValue.trim();
+      if (!allowed || allowed === '*') return true;
+      return allowed
+        .split(',')
+        .map((t) => t.trim())
+        .some((pattern) => {
+          if (pattern.endsWith('/*')) {
+            return file.type.startsWith(pattern.slice(0, -1));
+          }
+          return file.type === pattern;
+        });
+    };
+
     const onFileDrop = async (files) => {
       const maxBytes = (maxFileSize || 25) * 1024 * 1024;
       const newFiles = Object.fromEntries(
         files.map((file) => {
+          if (!isTypeAllowed(file)) {
+            return [
+              file.name,
+              {
+                file,
+                status: 'failed',
+                reason: `File type "${file.type}" is not allowed`,
+              },
+            ];
+          }
           if (file.size > maxBytes) {
             return [
               file.name,

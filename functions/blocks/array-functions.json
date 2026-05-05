@@ -9,7 +9,7 @@
     "arrayMap 1.0",
     "arrayPush 1.0",
     "arrayReduce 1.1",
-    "arraySplit 1.1"
+    "arraySplit 1.2"
   ],
   "includes": []
 }

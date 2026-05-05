@@ -86,7 +86,9 @@
     let resolvedCurrentValue;
 
     // set the value based on the selected property type (list, relational or object)
-    if (isObjectProperty) {
+    if (optionType === 'manual') {
+      resolvedCurrentValue = defaultValueText || parsedManualValues[0];
+    } else if (isObjectProperty) {
       resolvedCurrentValue = JSON.stringify({ uuid: defaultValueText });
     } else if (isListProperty) {
       resolvedCurrentValue = defaultValueText;
@@ -94,10 +96,6 @@
       resolvedCurrentValue = parseInt(defaultValueText, 10) || '';
     } else if (isPageVariableProperty) {
       resolvedCurrentValue = getValue(defaultValueText);
-    } else if (kind === undefined) {
-      // if kind is undefined, it is non property based
-      resolvedCurrentValue =
-        parsedManualValues.length > 0 ? parsedManualValues[0] : '';
     } else {
       resolvedCurrentValue = getValue(prefabValue);
     }

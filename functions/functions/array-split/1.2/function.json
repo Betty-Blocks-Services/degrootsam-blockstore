@@ -56,9 +56,6 @@
         "output": {
           "type": "Array",
           "dataType": "INTEGER"
-        },
-        "validations": {
-          "required": true
         }
       }
     },
@@ -70,9 +67,6 @@
         "output": {
           "type": "Array",
           "dataType": "STRING"
-        },
-        "validations": {
-          "required": true
         }
       }
     }

@@ -7,11 +7,15 @@ import {
   option,
   OptionCategory,
   showIf,
+  sizes,
   ThemeColor,
   variable,
 } from '@betty-blocks/component-sdk';
 
 export const fileSectionListItemOptions = {
+  fileSectionListItemInnerSpace: sizes('Inner spacing', {
+    value: ['2rem', '2rem', '2rem', '2rem'],
+  }),
   fileSectionListItemBorderSize: option('SIZE', {
     label: 'Border size',
     value: '1px',
@@ -181,6 +185,7 @@ const members = [
   'fileSectionListItemFontColor',
   'fileSectionListItemFontWeight',
   'fileSectionListItemFontType',
+  'fileSectionListItemInnerSpace',
   'fileSectionListItemBorderSize',
   'fileSectionListItemBorderColor',
   'fileSectionListItemUploadIconType',

@@ -495,6 +495,7 @@
                       classes.fileUploadStatus,
                     )}
                   >
+                    {' '}
                     <span>{upload.status}</span>
                     {upload.status !== 'finished' &&
                       upload.status !== 'failed' &&
@@ -569,8 +570,6 @@
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        padding: ({ options: { rootInnerSpacing } }) =>
-          convertSizes(rootInnerSpacing),
         gap: '1rem',
         margin: ({ options: { rootOuterSpacing } }) =>
           convertSizes(rootOuterSpacing),
@@ -766,6 +765,20 @@
           fileSectionListItemFontType === '[Inherit]'
             ? style.getFontColor(fileSectionListItemFontType)
             : style.getColor(fileSectionListItemFontColor),
+        padding: ({ options: { fileSectionListItemInnerSpace } }) =>
+          convertSizes(fileSectionListItemInnerSpace),
+        [`@media ${mediaMinWidth(600)}`]: {
+          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
+            convertSizes(fileSectionListItemInnerSpace, 'Portrait'),
+        },
+        [`@media ${mediaMinWidth(960)}`]: {
+          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
+            convertSizes(fileSectionListItemInnerSpace, 'Landscape'),
+        },
+        [`@media ${mediaMinWidth(1280)}`]: {
+          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
+            convertSizes(fileSectionListItemInnerSpace, 'Desktop'),
+        },
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',

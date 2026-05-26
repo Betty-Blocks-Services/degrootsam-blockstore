@@ -38,7 +38,7 @@ export const fileSectionOptions = {
   fileSectionPreviewFiles: toggle('Preview uploaded files'),
 };
 
-const members: Array<keyof typeof fileSectionOptions> = [
+const members = [
   'fileSectionBorderRadius',
   'fileSectionBorderColor',
   'fileSectionBorderSize',
@@ -47,7 +47,7 @@ const members: Array<keyof typeof fileSectionOptions> = [
   'fileSectionPreviewFiles',
 ];
 
-export const fileSectionCategory: OptionCategory = {
+export const fileSectionCategory = {
   label: 'File list',
   members,
   expanded: false,

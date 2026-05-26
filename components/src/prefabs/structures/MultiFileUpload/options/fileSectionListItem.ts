@@ -3,18 +3,15 @@ import {
   color,
   font,
   icon,
+  number,
   option,
   OptionCategory,
   showIf,
-  sizes,
   ThemeColor,
   variable,
 } from '@betty-blocks/component-sdk';
 
 export const fileSectionListItemOptions = {
-  fileSectionListItemInnerSpace: sizes('Inner spacing', {
-    value: ['2rem', '2rem', '2rem', '2rem'],
-  }),
   fileSectionListItemBorderSize: option('SIZE', {
     label: 'Border size',
     value: '1px',
@@ -69,11 +66,14 @@ export const fileSectionListItemOptions = {
   }),
   fileSectionListItemUploadIconSvg: variable('File icon svg', {
     value: [
-      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9 12.5h1v-2h1q.425 0 .713-.288T12 9.5v-1q0-.425-.288-.712T11 7.5H9zm1-3v-1h1v1zm3 3h2q.425 0 .713-.288T16 11.5v-3q0-.425-.288-.712T15 7.5h-2zm1-1v-3h1v3zm3 1h1v-2h1v-1h-1v-1h1v-1h-2zM8 18q-.825 0-1.412-.587T6 16V4q0-.825.588-1.412T8 2h12q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-4 4q-.825 0-1.412-.587T2 20V6h2v14h14v2z" /></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 12.5h1v-2h1q.425 0 .713-.288T12 9.5v-1q0-.425-.288-.712T11 7.5H9zm1-3v-1h1v1zm3 3h2q.425 0 .713-.288T16 11.5v-3q0-.425-.288-.712T15 7.5h-2zm1-1v-3h1v3zm3 1h1v-2h1v-1h-1v-1h1v-1h-2zM8 18q-.825 0-1.412-.587T6 16V4q0-.825.588-1.412T8 2h12q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-4 4q-.825 0-1.412-.587T2 20V6h2v14h14v2z" /></svg>`,
     ],
     configuration: {
       condition: showIf('fileSectionListItemUploadIconType', 'EQ', 'svg'),
     },
+  }),
+  fileSectionListItemUploadIconSize: number('File icon size (px)', {
+    value: 24,
   }),
   fileSectionListItemUploadSuccessIconType: buttongroup(
     'File upload success icon type',
@@ -98,7 +98,7 @@ export const fileSectionListItemOptions = {
     'File upload success icon svg',
     {
       value: [
-        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2e7d32" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8z"/></svg>`,
+        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#2e7d32" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8z"/></svg>`,
       ],
       configuration: {
         condition: showIf(
@@ -109,6 +109,9 @@ export const fileSectionListItemOptions = {
       },
     },
   ),
+  fileSectionListItemUploadSuccessIconSize: number('Success icon size (px)', {
+    value: 24,
+  }),
   fileSectionListItemUploadFailedIconType: buttongroup(
     'File upload failed icon type',
     [
@@ -132,7 +135,7 @@ export const fileSectionListItemOptions = {
     'File upload failed icon svg',
     {
       value: [
-        `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="#d32f2f" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07M9 5v6h2V5zm0 8v2h2v-2z"/></svg>`,
+        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><path fill="#d32f2f" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07M9 5v6h2V5zm0 8v2h2v-2z"/></svg>`,
       ],
       configuration: {
         condition: showIf(
@@ -143,6 +146,9 @@ export const fileSectionListItemOptions = {
       },
     },
   ),
+  fileSectionListItemUploadFailedIconSize: number('Failed icon size (px)', {
+    value: 20,
+  }),
   fileSectionListItemRemoveIconType: buttongroup(
     'Remove file icon type',
     [
@@ -160,36 +166,42 @@ export const fileSectionListItemOptions = {
   }),
   fileSectionListItemRemoveIconSvg: variable('Remove file icon svg', {
     value: [
-      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="#d32f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"/></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="#d32f2f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"/></svg>`,
     ],
     configuration: {
       condition: showIf('fileSectionListItemRemoveIconType', 'EQ', 'svg'),
     },
   }),
+  fileSectionListItemRemoveIconSize: number('Remove icon size (px)', {
+    value: 24,
+  }),
 };
 
-const members: Array<keyof typeof fileSectionListItemOptions> = [
+const members = [
   'fileSectionListItemFontColor',
   'fileSectionListItemFontWeight',
   'fileSectionListItemFontType',
-  'fileSectionListItemInnerSpace',
   'fileSectionListItemBorderSize',
   'fileSectionListItemBorderColor',
   'fileSectionListItemUploadIconType',
   'fileSectionListItemUploadIcon',
   'fileSectionListItemUploadIconSvg',
+  'fileSectionListItemUploadIconSize',
   'fileSectionListItemUploadSuccessIconType',
   'fileSectionListItemUploadSuccessIcon',
   'fileSectionListItemUploadSuccessIconSvg',
+  'fileSectionListItemUploadSuccessIconSize',
   'fileSectionListItemUploadFailedIconType',
   'fileSectionListItemUploadFailedIcon',
   'fileSectionListItemUploadFailedIconSvg',
+  'fileSectionListItemUploadFailedIconSize',
   'fileSectionListItemRemoveIconType',
   'fileSectionListItemRemoveIcon',
   'fileSectionListItemRemoveIconSvg',
+  'fileSectionListItemRemoveIconSize',
 ];
 
-export const fileSeciontListItemCategory: OptionCategory = {
+export const fileSeciontListItemCategory = {
   label: 'Uploaded files',
   members,
 };

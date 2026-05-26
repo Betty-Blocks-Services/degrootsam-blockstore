@@ -36,13 +36,13 @@ export const fileSectionTitleOptions = {
   }),
 };
 
-const members: Array<keyof typeof fileSectionTitleOptions> = [
+const members = [
   'fileSectionTitleFontColor',
   'fileSectionTitleFontWeight',
   'fileSectionTitleFontType',
 ];
 
-export const fileSectionTitleCategory: OptionCategory = {
+export const fileSectionTitleCategory = {
   label: 'File list title',
   members,
 };

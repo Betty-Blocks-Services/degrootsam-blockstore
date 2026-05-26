@@ -68,7 +68,7 @@ export const fileUploadStatusUptions = {
   ),
 };
 
-const members: Array<keyof typeof fileUploadStatusUptions> = [
+const members = [
   'fileUploadStatusFontType',
   'fileUploadStatusFontWeight',
   'fileUploadStatusTextTransform',
@@ -79,7 +79,7 @@ const members: Array<keyof typeof fileUploadStatusUptions> = [
   'fileUploadStatusProgressBackground',
 ];
 
-export const fileUploadStatusCategory: OptionCategory = {
+export const fileUploadStatusCategory = {
   label: 'File upload status',
   members,
 };

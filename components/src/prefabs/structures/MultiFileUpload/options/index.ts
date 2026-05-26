@@ -22,6 +22,10 @@ import {
   fileUploadStatusUptions,
 } from './fileUploadStatus';
 import { rootCategory, rootOptions } from './root';
+import {
+  fileUploadAlertCategory,
+  fileUploadAlertOptions,
+} from './fileUploadAlert';
 
 export const categories = [
   rootCategory,
@@ -30,6 +34,7 @@ export const categories = [
   fileSectionCategory,
   fileSeciontListItemCategory,
   fileUploadStatusCategory,
+  fileUploadAlertCategory,
   {
     label: 'Advanced Options',
     expanded: false,
@@ -66,5 +71,6 @@ export const multiFileUploadOptions = {
   ...fileSectionOptions,
   ...fileSectionListItemOptions,
   ...fileUploadStatusUptions,
+  ...fileUploadAlertOptions,
   ...advanced('MultiFileUpload'),
 };

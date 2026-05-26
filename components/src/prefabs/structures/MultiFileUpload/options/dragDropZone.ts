@@ -115,7 +115,7 @@ export const dragDropZoneOptions = {
   dragDropPreviewActive: toggle('Preview active state'),
 };
 
-const members: Array<keyof typeof dragDropZoneOptions> = [
+const members = [
   'dragDropBorderRadius',
   'dragDropTitleContent',
   'dragDropTitleContentExtra',
@@ -135,7 +135,7 @@ const members: Array<keyof typeof dragDropZoneOptions> = [
   'dragDropPreviewActive',
 ];
 
-export const dragDropZoneCategory: OptionCategory = {
+export const dragDropZoneCategory = {
   label: 'Drag & Drop zone',
   expanded: true,
   members,

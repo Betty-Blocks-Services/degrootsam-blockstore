@@ -8,6 +8,7 @@
     const {
       actionId,
       dragDropTitleContent,
+      dragDropTitleContentExtra,
       dragDropPreviewActive,
       dragDropSubtitleContent,
       fileSectionPreviewFiles,
@@ -23,6 +24,14 @@
       fileSectionListItemRemoveIconType,
       fileSectionListItemRemoveIcon,
       fileSectionListItemRemoveIconSvg,
+      fileUploadAlertIconType,
+      fileUploadAlertIcon,
+      fileUploadAlertIconSVG,
+      fileUploadAlertIconSize,
+      fileSectionListItemUploadIconSize,
+      fileSectionListItemUploadSuccessIconSize,
+      fileSectionListItemUploadFailedIconSize,
+      fileSectionListItemRemoveIconSize,
       maxFileSize = 25,
       allowedTypes: allowedTypesRaw,
       model,
@@ -284,12 +293,12 @@
       return `${b} B`;
     };
 
-    const getDoneFiles = () => {
+    const getDoneFilesLength = () => {
       return Object.values(uploadMap).filter(
         (f) => f.status === 'failed' || f.status === 'finished',
       ).length;
     };
-    const getFilesInProgress = () => {
+    const getFilesInProgressLength = () => {
       return Object.values(uploadMap).filter(
         (f) => f.status !== 'failed' && f.status !== 'finished',
       ).length;
@@ -305,46 +314,17 @@
       });
     };
 
-    const FileIcon = () =>
-      fileSectionListItemUploadIconType === 'svg' ? (
+    const ConfigurableIcon = ({ type, svg, name, size }) => {
+      const px = `${size}px`;
+      return type === 'svg' ? (
         <div
-          dangerouslySetInnerHTML={{
-            __html: useText(fileSectionListItemUploadIconSvg),
-          }}
+          style={{ fontSize: px, display: 'inline-flex' }}
+          dangerouslySetInnerHTML={{ __html: useText(svg) }}
         />
       ) : (
-        <Icon name={fileSectionListItemUploadIcon} />
+        <Icon name={name} style={{ fontSize: px }} />
       );
-    const ExclamationIcon = () =>
-      fileSectionListItemUploadFailedIconType === 'svg' ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: useText(fileSectionListItemUploadFailedIconSvg),
-          }}
-        />
-      ) : (
-        <Icon name={fileSectionListItemUploadFailedIcon} />
-      );
-    const XMarkIcon = () =>
-      fileSectionListItemRemoveIconType === 'svg' ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: useText(fileSectionListItemRemoveIconSvg),
-          }}
-        />
-      ) : (
-        <Icon name={fileSectionListItemRemoveIcon} />
-      );
-    const CheckMarkCircleIcon = () =>
-      fileSectionListItemUploadSuccessIconType === 'svg' ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: useText(fileSectionListItemUploadSuccessIconSvg),
-          }}
-        />
-      ) : (
-        <Icon name={fileSectionListItemUploadSuccessIcon} />
-      );
+    };
 
     const UploadCloud = () => (
       <svg
@@ -360,12 +340,23 @@
       </svg>
     );
 
+    const filterFiles = (status) => {
+      return Object.values(uploadMap).filter(
+        (upload) => upload.status === status,
+      );
+    };
+
     const getUploadedFiles = () => {
-      return Object.values(uploadMap)
-        .filter((upload) => upload.status === 'finished')
+      return filterFiles('finished')
         .map((upload) => upload.ref)
         .join(',');
     };
+
+    const getFailedUploads = () => {
+      return filterFiles('failed');
+    };
+
+    const pluralizeFiles = (count) => (count === 1 ? 'file' : 'files');
 
     if (!isDev && !model) {
       return <p>Please select a model</p>;
@@ -423,10 +414,35 @@
             {useText(dragDropSubtitleContent)}
           </span>
         </label>
+        {getFailedUploads().length > 0 && (
+          <div className={classes.fileUploadAlert}>
+            <span className={classes.fileUploadAlertIcon}>
+              <ConfigurableIcon
+                type={fileUploadAlertIconType}
+                svg={fileUploadAlertIconSVG}
+                name={fileUploadAlertIcon}
+                size={fileUploadAlertIconSize}
+              />
+            </span>
+            <p>
+              <b>
+                {getFailedUploads().length}{' '}
+                {pluralizeFiles(getFailedUploads().length)} can't be uploaded
+              </b>
+              <br />
+              Remove the rejected files below, or send the{' '}
+              {filterFiles('finished').length} valid{' '}
+              {pluralizeFiles(filterFiles('finished').length)} to the staging
+              queue and retry the rest separately
+            </p>
+          </div>
+        )}
         <div className={classes.fileSection}>
           <span className={classes.fileSectionTitle}>
-            {Object.keys(uploadMap).length} files in this batch ·{' '}
-            {getDoneFiles()} done, {getFilesInProgress()} in progress
+            {Object.keys(uploadMap).length}{' '}
+            {pluralizeFiles(Object.keys(uploadMap).length)} in this batch ·{' '}
+            {getDoneFilesLength()} done, {getFilesInProgressLength()} in
+            progress
           </span>
           <div className={classes.fileSectionList}>
             {Object.values(uploadMap).map((upload) => (
@@ -435,10 +451,31 @@
                 className={classes.fileSectionListItem}
               >
                 <div className={classes.fileUploadTitleSection}>
-                  {upload.status === 'failed' && <ExclamationIcon />}
-                  {upload.status === 'finished' && <CheckMarkCircleIcon />}
+                  {upload.status === 'failed' && (
+                    <ConfigurableIcon
+                      type={fileSectionListItemUploadFailedIconType}
+                      svg={fileSectionListItemUploadFailedIconSvg}
+                      name={fileSectionListItemUploadFailedIcon}
+                      size={fileSectionListItemUploadFailedIconSize}
+                    />
+                  )}
+                  {upload.status === 'finished' && (
+                    <ConfigurableIcon
+                      type={fileSectionListItemUploadSuccessIconType}
+                      svg={fileSectionListItemUploadSuccessIconSvg}
+                      name={fileSectionListItemUploadSuccessIcon}
+                      size={fileSectionListItemUploadSuccessIconSize}
+                    />
+                  )}
                   {upload.status !== 'failed' &&
-                    upload.status !== 'finished' && <FileIcon />}
+                    upload.status !== 'finished' && (
+                      <ConfigurableIcon
+                        type={fileSectionListItemUploadIconType}
+                        svg={fileSectionListItemUploadIconSvg}
+                        name={fileSectionListItemUploadIcon}
+                        size={fileSectionListItemUploadIconSize}
+                      />
+                    )}
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <p className={classes.fileUploadTitle}>
                       {upload.file.name}
@@ -504,7 +541,12 @@
                     type="button"
                   >
                     <div style={{ marginTop: '2px' }}>
-                      <XMarkIcon />
+                      <ConfigurableIcon
+                        type={fileSectionListItemRemoveIconType}
+                        svg={fileSectionListItemRemoveIconSvg}
+                        name={fileSectionListItemRemoveIcon}
+                        size={fileSectionListItemRemoveIconSize}
+                      />
                     </div>
                   </button>
                 </div>
@@ -724,21 +766,6 @@
           fileSectionListItemFontType === '[Inherit]'
             ? style.getFontColor(fileSectionListItemFontType)
             : style.getColor(fileSectionListItemFontColor),
-        padding: ({ options: { fileSectionListItemInnerSpace } }) =>
-          convertSizes(fileSectionListItemInnerSpace),
-
-        [`@media ${mediaMinWidth(600)}`]: {
-          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
-            convertSizes(fileSectionListItemInnerSpace, 'Portrait'),
-        },
-        [`@media ${mediaMinWidth(960)}`]: {
-          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
-            convertSizes(fileSectionListItemInnerSpace, 'Landscape'),
-        },
-        [`@media ${mediaMinWidth(1280)}`]: {
-          padding: ({ options: { fileSectionListItemInnerSpace } }) =>
-            convertSizes(fileSectionListItemInnerSpace, 'Desktop'),
-        },
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -769,6 +796,20 @@
         display: 'flex',
         gap: '1rem',
         alignItems: 'center',
+      },
+      fileUploadAlert: {
+        display: 'flex',
+        gap: '0.5rem',
+        padding: '1rem',
+        background: ({ options: { fileUploadAlertBackground } }) =>
+          style.getColor(fileUploadAlertBackground),
+        color: ({ options: { fileUploadAlertColor } }) =>
+          style.getColor(fileUploadAlertColor),
+        fontFamily: 'var(--text-fontFamily-body1)',
+      },
+      fileUploadAlertIcon: {
+        color: ({ options: { fileUploadAlertIconColor } }) =>
+          style.getColor(fileUploadAlertIconColor),
       },
       fileUploadStatus: {
         textTransform: ({ options: { fileUploadStatusTextTransform } }) =>

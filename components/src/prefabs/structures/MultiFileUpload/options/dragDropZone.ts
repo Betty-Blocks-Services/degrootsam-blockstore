@@ -2,8 +2,11 @@ import {
   buttongroup,
   color,
   font,
+  icon,
+  number,
   option,
   OptionCategory,
+  showIf,
   size,
   sizes,
   ThemeColor,
@@ -85,6 +88,33 @@ export const dragDropZoneOptions = {
       ],
     },
   }),
+  dragDropUploadIconType: buttongroup(
+    'Upload icon type',
+    [
+      ['Icon', 'icon'],
+      ['SVG', 'svg'],
+    ],
+    { value: 'svg' },
+  ),
+  dragDropUploadIcon: icon('Upload icon', {
+    configuration: {
+      condition: showIf('dragDropUploadIconType', 'EQ', 'icon'),
+    },
+  }),
+  dragDropUploadIconSvg: variable('Upload icon svg', {
+    value: [
+      `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><path fill="currentColor" d="M544 864V672h128L512 480L352 672h128v192H320v-1.6c-5.4.3-10.5 1.6-16 1.6A240 240 0 0 1 64 624a239 239 0 0 1 212.6-237.2A240 240 0 0 1 512 192a240 240 0 0 1 235.5 194.8A239 239 0 0 1 959.9 624a240 240 0 0 1-240 240c-5.3 0-10.5-1.3-16-1.6v1.6z"/></svg>`,
+    ],
+    configuration: {
+      condition: showIf('dragDropUploadIconType', 'EQ', 'svg'),
+    },
+  }),
+  dragDropUploadIconColor: color('Upload icon color', {
+    value: '#08bed5',
+  }),
+  dragDropUploadIconSize: number('Upload icon size (px)', {
+    value: 48,
+  }),
   dragDropBorderSize: option('SIZE', {
     label: 'Border size',
     value: '2px',
@@ -116,6 +146,11 @@ export const dragDropZoneOptions = {
 };
 
 const members = [
+  'dragDropUploadIconType',
+  'dragDropUploadIcon',
+  'dragDropUploadIconSvg',
+  'dragDropUploadIconColor',
+  'dragDropUploadIconSize',
   'dragDropBorderRadius',
   'dragDropTitleContent',
   'dragDropTitleContentExtra',

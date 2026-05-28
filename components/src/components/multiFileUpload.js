@@ -24,6 +24,10 @@
       fileSectionListItemRemoveIconType,
       fileSectionListItemRemoveIcon,
       fileSectionListItemRemoveIconSvg,
+      dragDropUploadIconType,
+      dragDropUploadIcon,
+      dragDropUploadIconSvg,
+      dragDropUploadIconSize,
       fileUploadAlertIconType,
       fileUploadAlertIcon,
       fileUploadAlertIconSVG,
@@ -94,8 +98,6 @@
           throw new Error('Please select a valid file property');
         }
 
-        console.log({ property: propertyInfo, model: modelInfo });
-
         const apiURL = `${origin}${apiEndpoint}/${appUUID}`;
 
         const response = await fetch(apiURL, {
@@ -104,8 +106,8 @@
           body: JSON.stringify({
             operationName: 'GenerateFileUploadRequest',
             variables: {
-              modelName: 'Document',
-              propertyName: 'file',
+              modelName: modelInfo.name,
+              propertyName: propertyInfo.name,
               contentType: file.type,
               filename: file.name,
             },
@@ -326,20 +328,6 @@
       );
     };
 
-    const UploadCloud = () => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="48"
-        height="48"
-        viewBox="0 0 1024 1024"
-      >
-        <path
-          fill="#08bed5"
-          d="M544 864V672h128L512 480L352 672h128v192H320v-1.6c-5.4.3-10.5 1.6-16 1.6A240 240 0 0 1 64 624a239 239 0 0 1 212.6-237.2A240 240 0 0 1 512 192a240 240 0 0 1 235.5 194.8A239 239 0 0 1 959.9 624a240 240 0 0 1-240 240c-5.3 0-10.5-1.3-16-1.6v1.6z"
-        />
-      </svg>
-    );
-
     const filterFiles = (status) => {
       return Object.values(uploadMap).filter(
         (upload) => upload.status === status,
@@ -404,7 +392,14 @@
             style={{ display: 'none', pointerEvents: isDev ? 'none' : 'auto' }}
             onChange={handleInputChange}
           />
-          <UploadCloud />
+          <span className={classes.dragDropUploadIcon}>
+            <ConfigurableIcon
+              type={dragDropUploadIconType}
+              svg={dragDropUploadIconSvg}
+              name={dragDropUploadIcon}
+              size={dragDropUploadIconSize}
+            />
+          </span>
           <span className={classes.dragDropTitle}>
             {isDragOver
               ? useText(dragDropTitleContentExtra)
@@ -819,6 +814,10 @@
         color: ({ options: { fileUploadAlertColor } }) =>
           style.getColor(fileUploadAlertColor),
         fontFamily: 'var(--text-fontFamily-body1)',
+      },
+      dragDropUploadIcon: {
+        color: ({ options: { dragDropUploadIconColor } }) =>
+          style.getColor(dragDropUploadIconColor),
       },
       fileUploadAlertIcon: {
         color: ({ options: { fileUploadAlertIconColor } }) =>

@@ -4,7 +4,7 @@
   allowedTypes: [],
   orientation: 'HORIZONTAL',
   jsx: (() => {
-    const { env, useText, useProperty, useModel } = B;
+    const { env, useText, useProperty, useModel, Icon } = B;
     const {
       actionId,
       dragDropTitleContent,
@@ -41,7 +41,7 @@
       model,
       property,
     } = options;
-    const { LinearProgress, Icon } = window.MaterialUI.Core;
+    const { LinearProgress } = window.MaterialUI.Core;
     const isDev = env === 'dev';
     const allowedTypesValue = useText(allowedTypesRaw);
     const [isDragOver, setIsDragOver] = useState(false);

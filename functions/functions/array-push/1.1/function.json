@@ -1,0 +1,108 @@
+{
+  "description": "Description",
+  "label": "Array Push",
+  "category": "Array",
+  "icon": {
+    "name": "SquareArrowInsideIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION", "STRING"]
+      },
+      "info": "The array to push the new value into."
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the Target Collection is an array of objects, this is the path to the value to search for"
+    },
+    {
+      "name": "data",
+      "label": "Value",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": [
+          "ARRAY",
+          "COLLECTION",
+          "BOOLEAN",
+          "INTEGER",
+          "JSON",
+          "OBJECT",
+          "RECORD",
+          "STRING"
+        ],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value to push into the array."
+    },
+    {
+      "name": "filter",
+      "label": "Filter existing values",
+      "meta": {
+        "type": "Boolean"
+      },
+      "info": "If true, the value will only be pushed if it is not already in the array."
+    },
+    {
+      "name": "logging",
+      "label": "Logging",
+      "meta": {
+        "type": "Boolean"
+      },
+      "advanced": true
+    },
+    {
+      "name": "schemaModel",
+      "label": "Result Schema model",
+      "meta": { "type": "SchemaModel" }
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result as schema",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Array",
+              "schemaModel": "schemaModel",
+              "dataType": "SCHEMA"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      }
+    },
+    {
+      "name": "reultText",
+      "label": "Result as text",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Text"
+        }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

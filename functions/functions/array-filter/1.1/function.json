@@ -97,7 +97,7 @@
       "info": "The schema model to use for the output array"
     },
     {
-      "name": "result",
+      "name": "resultSchema",
       "label": "Result",
       "meta": {
         "type": "Output",

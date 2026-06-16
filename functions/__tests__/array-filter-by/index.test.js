@@ -123,4 +123,18 @@ describe("arrayFilterBy", () => {
       arrayFilterBy({ array: [1], filterArray: [1], mode: "wrong" })
     ).rejects.toThrow("Invalid mode");
   });
+
+  it("include: handles null items in array gracefully", async () => {
+    const array = [{ id: 1 }, null, { id: 3 }];
+    const out = await arrayFilterBy({
+      array,
+      filterArray: [1, 3],
+      path: "id",
+      mode: "include",
+    });
+    expect(out).toEqual({
+      resultSchema: [{ id: 1 }, { id: 3 }],
+      resultModel: [{ id: 1 }, { id: 3 }],
+    });
+  });
 });

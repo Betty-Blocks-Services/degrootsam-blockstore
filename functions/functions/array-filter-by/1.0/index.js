@@ -3,6 +3,7 @@ const travelPath = (object, path) => {
   const keys = path.split(".");
   let result = object;
   for (const key of keys) {
+    if (result == null) return undefined;
     result = result[key];
   }
   return result;

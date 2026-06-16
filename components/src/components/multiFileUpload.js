@@ -4,7 +4,7 @@
   allowedTypes: [],
   orientation: 'HORIZONTAL',
   jsx: (() => {
-    const { env, useText, useProperty, useModel, Icon } = B;
+    const { env, useText } = B;
     const {
       actionId,
       dragDropTitleContent,
@@ -24,10 +24,6 @@
       fileSectionListItemRemoveIconType,
       fileSectionListItemRemoveIcon,
       fileSectionListItemRemoveIconSvg,
-      dragDropUploadIconType,
-      dragDropUploadIcon,
-      dragDropUploadIconSvg,
-      dragDropUploadIconSize,
       fileUploadAlertIconType,
       fileUploadAlertIcon,
       fileUploadAlertIconSVG,
@@ -41,7 +37,7 @@
       model,
       property,
     } = options;
-    const { LinearProgress } = window.MaterialUI.Core;
+    const { LinearProgress, Icon } = window.MaterialUI.Core;
     const isDev = env === 'dev';
     const allowedTypesValue = useText(allowedTypesRaw);
     const [isDragOver, setIsDragOver] = useState(false);
@@ -98,6 +94,8 @@
           throw new Error('Please select a valid file property');
         }
 
+        console.log({ property: propertyInfo, model: modelInfo });
+
         const apiURL = `${origin}${apiEndpoint}/${appUUID}`;
 
         const response = await fetch(apiURL, {
@@ -106,8 +104,8 @@
           body: JSON.stringify({
             operationName: 'GenerateFileUploadRequest',
             variables: {
-              modelName: modelInfo.name,
-              propertyName: propertyInfo.name,
+              modelName: 'Document',
+              propertyName: 'file',
               contentType: file.type,
               filename: file.name,
             },
@@ -291,8 +289,11 @@
         const mb = Number(size / (1000 * 1000)).toFixed(2);
         return `${mb} MB`;
       }
-      const b = Number(size / 1000).toFixed(2);
-      return `${b} B`;
+      if (size >= 1e3) {
+        const kb = Number(size / 1000).toFixed(2);
+        return `${kb} KB`;
+      }
+      return `${size} B`;
     };
 
     const getDoneFilesLength = () => {
@@ -327,6 +328,20 @@
         <Icon name={name} style={{ fontSize: px }} />
       );
     };
+
+    const UploadCloud = () => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 1024 1024"
+      >
+        <path
+          fill="#08bed5"
+          d="M544 864V672h128L512 480L352 672h128v192H320v-1.6c-5.4.3-10.5 1.6-16 1.6A240 240 0 0 1 64 624a239 239 0 0 1 212.6-237.2A240 240 0 0 1 512 192a240 240 0 0 1 235.5 194.8A239 239 0 0 1 959.9 624a240 240 0 0 1-240 240c-5.3 0-10.5-1.3-16-1.6v1.6z"
+        />
+      </svg>
+    );
 
     const filterFiles = (status) => {
       return Object.values(uploadMap).filter(
@@ -392,14 +407,7 @@
             style={{ display: 'none', pointerEvents: isDev ? 'none' : 'auto' }}
             onChange={handleInputChange}
           />
-          <span className={classes.dragDropUploadIcon}>
-            <ConfigurableIcon
-              type={dragDropUploadIconType}
-              svg={dragDropUploadIconSvg}
-              name={dragDropUploadIcon}
-              size={dragDropUploadIconSize}
-            />
-          </span>
+          <UploadCloud />
           <span className={classes.dragDropTitle}>
             {isDragOver
               ? useText(dragDropTitleContentExtra)
@@ -490,7 +498,6 @@
                       classes.fileUploadStatus,
                     )}
                   >
-                    {' '}
                     <span>{upload.status}</span>
                     {upload.status !== 'finished' &&
                       upload.status !== 'failed' &&
@@ -565,6 +572,8 @@
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        padding: ({ options: { rootInnerSpacing } }) =>
+          convertSizes(rootInnerSpacing),
         gap: '1rem',
         margin: ({ options: { rootOuterSpacing } }) =>
           convertSizes(rootOuterSpacing),
@@ -814,10 +823,6 @@
         color: ({ options: { fileUploadAlertColor } }) =>
           style.getColor(fileUploadAlertColor),
         fontFamily: 'var(--text-fontFamily-body1)',
-      },
-      dragDropUploadIcon: {
-        color: ({ options: { dragDropUploadIconColor } }) =>
-          style.getColor(dragDropUploadIconColor),
       },
       fileUploadAlertIcon: {
         color: ({ options: { fileUploadAlertIconColor } }) =>

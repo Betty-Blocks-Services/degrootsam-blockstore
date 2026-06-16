@@ -4,6 +4,7 @@
     "arrayCombine 1.1",
     "arrayCount 1.0",
     "arrayFilter 1.1",
+    "arrayFilterBy 1.0",
     "arrayFind 1.2",
     "arrayJoin 1.2",
     "arrayMap 1.0",

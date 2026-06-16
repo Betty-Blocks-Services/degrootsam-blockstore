@@ -20,6 +20,14 @@
       "info": "The array to filter"
     },
     {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the source array contains objects, the dot-separated path to the property to compare. For example, 'user.id'"
+    },
+    {
       "name": "filterArray",
       "label": "Filter Array",
       "meta": {
@@ -31,17 +39,10 @@
       },
       "info": "The array of values to filter by"
     },
-    {
-      "name": "path",
-      "label": "Path",
-      "meta": {
-        "type": "Text"
-      },
-      "info": "If the source array contains objects, the dot-separated path to the property to compare. For example, 'user.id'"
-    },
+
     {
       "name": "filterPath",
-      "label": "Filter Path",
+      "label": "Path",
       "meta": {
         "type": "Text"
       },

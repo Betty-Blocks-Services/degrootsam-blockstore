@@ -14,6 +14,14 @@ const arrayPush = async ({
   logging = false,
 }) => {
   try {
+    if (logging)
+      console.log({
+        array,
+        path,
+        data,
+        filter,
+        logging,
+      });
     let result =
       typeof array === "object" && array && "data" in array
         ? array.data

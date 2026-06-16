@@ -10,5 +10,8 @@
     "angular-expressions": "^1.5.1",
     "docxtemplater": "^3.67.6"
   },
-  "private": "true"
+  "private": "true",
+  "devDependencies": {
+    "vitest": "^4.1.9"
+  }
 }

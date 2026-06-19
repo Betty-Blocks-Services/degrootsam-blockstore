@@ -2,8 +2,8 @@
   "category": "Array",
   "description": "Sort an array of primitives or objects by a property path, with optional date handling and ascending or descending direction.",
   "icon": {
-    "color": "Orange",
-    "name": "ActionsIcon"
+    "color": "Blue",
+    "name": "OrderAscendingIcon"
   },
   "label": "Array Sort",
   "options": [

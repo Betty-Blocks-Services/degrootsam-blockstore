@@ -7,9 +7,10 @@
     "arrayFilterBy 1.0",
     "arrayFind 1.2",
     "arrayJoin 1.2",
-    "arrayMap 1.0",
+    "arrayMap 1.1",
     "arrayPush 1.1",
     "arrayReduce 1.1",
+    "arraySort 1.0",
     "arraySplit 1.2"
   ],
   "includes": []

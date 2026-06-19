@@ -1,0 +1,88 @@
+{
+  "category": "Array",
+  "description": "Sort an array of primitives or objects by a property path, with optional date handling and ascending or descending direction.",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Array Sort",
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to sort"
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the array contains objects, the dot-separated path to the property to sort by. For example, 'user.name'"
+    },
+    {
+      "name": "valueIsDate",
+      "label": "Value is date",
+      "meta": {
+        "type": "Boolean"
+      },
+      "info": "Whether to handle the value at the path as a Date"
+    },
+    {
+      "name": "direction",
+      "label": "Sort direction",
+      "meta": {
+        "type": "Select",
+        "values": [
+          {
+            "value": "asc",
+            "label": "Ascending"
+          },
+          {
+            "value": "desc",
+            "label": "Descending"
+          }
+        ]
+      }
+    },
+    {
+      "name": "schemaModel",
+      "label": "Schema Model",
+      "meta": {
+        "type": "SchemaModel"
+      },
+      "info": "The schema model to use for the output array"
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "SCHEMA",
+          "schemaModel": "schemaModel"
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

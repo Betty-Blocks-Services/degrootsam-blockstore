@@ -1,5 +1,5 @@
 {
-  "description": "Description",
+  "description": "Reduce an array to a single value using sum, min, max, or concat.",
   "label": "Array Reduce",
   "category": "Array",
   "icon": {
@@ -16,7 +16,8 @@
         "validations": {
           "required": true
         }
-      }
+      },
+      "info": "The array to reduce."
     },
     {
       "name": "path",
@@ -24,7 +25,7 @@
       "meta": {
         "type": "Text"
       },
-      "info": "If the array is an array of objects, provide the path to the property to filter on. Separate nested properties with a dot. For example, 'user.name'"
+      "info": "If the array contains objects, the dot-separated path to the property to reduce. For example, 'order.total'"
     },
     {
       "name": "reducer",
@@ -40,7 +41,8 @@
         "validations": {
           "required": true
         }
-      }
+      },
+      "info": "The reduction operation: Sum adds numbers, Min/Max finds the smallest/largest value, Concat flattens into a single array."
     },
     {
       "name": "schemaModel",
@@ -70,7 +72,8 @@
             }
           ]
         }
-      }
+      },
+      "info": "The reduced result: a number for sum/min/max, or an array for concat."
     }
   ],
   "yields": "NONE"

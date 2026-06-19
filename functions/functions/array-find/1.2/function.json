@@ -1,5 +1,5 @@
 {
-  "description": "Filter an array of strings, number or objects based on a condition. Returns 1 item that matches the criteria",
+  "description": "Search an array of primitives or objects and return the first item that matches a condition.",
   "label": "Array Find",
   "category": "Array",
   "icon": {
@@ -17,7 +17,7 @@
           "required": true
         }
       },
-      "info": "The array to filter"
+      "info": "The array to search."
     },
     {
       "name": "path",
@@ -28,7 +28,7 @@
           "required": true
         }
       },
-      "info": "If the array is an array of objects, provide the path to the property to filter on. Separate nested properties with a dot. For example, 'user.name'"
+      "info": "If the array contains objects, the dot-separated path to the property to match on. For example, 'user.name'"
     },
     {
       "name": "value",
@@ -40,7 +40,7 @@
           "required": true
         }
       },
-      "info": "The condition to filter on. For example, 'value > 10'"
+      "info": "The value to compare each item (or the property at Path) against."
     },
     {
       "name": "operator",
@@ -81,7 +81,8 @@
             "value": "nCont"
           }
         ]
-      }
+      },
+      "info": "The comparison operator to apply when evaluating each item against Value."
     },
     {
       "name": "schemaModel",
@@ -89,7 +90,7 @@
       "meta": {
         "type": "SchemaModel"
       },
-      "info": "The schema model to use for the output array"
+      "info": "The schema model to use for the output type."
     },
     {
       "name": "resultModel",
@@ -100,7 +101,8 @@
           "type": "Record",
           "model": "array"
         }
-      }
+      },
+      "info": "The matching item, typed to the source array's model."
     },
     {
       "name": "resultSchema",
@@ -120,7 +122,8 @@
             { "type": "Number" }
           ]
         }
-      }
+      },
+      "info": "The matching item, typed to the selected Schema Model."
     }
   ],
   "yields": "NONE"

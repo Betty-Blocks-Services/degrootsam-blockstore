@@ -1,5 +1,5 @@
 {
-  "description": "Description",
+  "description": "Append a value to an array, optionally extracting items by path first and skipping duplicates.",
   "label": "Array Push",
   "category": "Array",
   "icon": {
@@ -22,7 +22,7 @@
       "meta": {
         "type": "Text"
       },
-      "info": "If the Target Collection is an array of objects, this is the path to the value to search for"
+      "info": "If the array contains objects, the dot-separated path to extract from each item before pushing."
     },
     {
       "name": "data",
@@ -59,12 +59,14 @@
       "meta": {
         "type": "Boolean"
       },
-      "advanced": true
+      "advanced": true,
+      "info": "Enable debug logging to the console."
     },
     {
       "name": "schemaModel",
       "label": "Result Schema model",
-      "meta": { "type": "SchemaModel" }
+      "meta": { "type": "SchemaModel" },
+      "info": "Schema model for the output array type."
     },
     {
       "name": "resultSchema",
@@ -80,7 +82,8 @@
             }
           ]
         }
-      }
+      },
+      "info": "The updated array, typed to the selected Schema Model."
     },
     {
       "name": "resultModel",
@@ -91,7 +94,8 @@
           "type": "Collection",
           "model": "array"
         }
-      }
+      },
+      "info": "The updated array, typed to the source array's model."
     },
     {
       "name": "reultText",
@@ -101,7 +105,8 @@
         "output": {
           "type": "Text"
         }
-      }
+      },
+      "info": "The updated array serialized as text."
     }
   ],
   "yields": "NONE"

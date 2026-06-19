@@ -37,7 +37,7 @@
           "required": true
         }
       },
-      "info": "The condition to filter on. For example, 'value > 10'"
+      "info": "The value to compare each array item (or the property at Path) against."
     },
     {
       "name": "valueIsDate",
@@ -86,7 +86,8 @@
             "value": "nCont"
           }
         ]
-      }
+      },
+      "info": "The comparison operator to apply when evaluating each item against Value."
     },
     {
       "name": "schemaModel",
@@ -106,7 +107,8 @@
           "dataType": "SCHEMA",
           "schemaModel": "schemaModel"
         }
-      }
+      },
+      "info": "The filtered array, typed to the selected Schema Model."
     },
     {
       "name": "resultModel",
@@ -117,7 +119,8 @@
           "type": "Collection",
           "model": "array"
         }
-      }
+      },
+      "info": "The filtered array, typed to the source array's model."
     }
   ],
   "yields": "NONE"

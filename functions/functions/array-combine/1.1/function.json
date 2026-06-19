@@ -1,5 +1,5 @@
 {
-  "description": "Description",
+  "description": "Merge two arrays into one. Optionally extract values by property path from each array before combining.",
   "label": "Array Combine",
   "category": "Array",
   "icon": {
@@ -16,7 +16,8 @@
         "validations": {
           "required": true
         }
-      }
+      },
+      "info": "The first array to combine."
     },
     {
       "name": "pathA",
@@ -24,7 +25,8 @@
       "meta": {
         "type": "Text",
         "placeholder": "id"
-      }
+      },
+      "info": "Dot-separated path to a property on each item in Array A to extract before combining. Omit to use items as-is."
     },
     {
       "name": "arrayB",
@@ -33,23 +35,25 @@
         "type": "Value",
         "allowedKinds": ["ARRAY", "COLLECTION"],
         "validations": { "required": true }
-      }
+      },
+      "info": "The second array to combine."
     },
-
     {
       "name": "pathB",
       "label": "Path B",
       "meta": {
         "type": "Text",
         "placeholder": "id"
-      }
+      },
+      "info": "Dot-separated path to a property on each item in Array B to extract before combining. Omit to use items as-is."
     },
     {
       "name": "schema",
       "label": "Schema Model",
       "meta": {
         "type": "SchemaModel"
-      }
+      },
+      "info": "Schema model for the output array type."
     },
     {
       "name": "model",
@@ -67,7 +71,8 @@
           "dataType": "SCHEMA",
           "type": "Array"
         }
-      }
+      },
+      "info": "The combined array, typed to the selected Schema Model."
     },
     {
       "name": "resultModel",
@@ -75,7 +80,8 @@
       "meta": {
         "type": "Output",
         "output": { "type": "Collection", "model": "model" }
-      }
+      },
+      "info": "The combined array, typed to the selected Model."
     }
   ],
 

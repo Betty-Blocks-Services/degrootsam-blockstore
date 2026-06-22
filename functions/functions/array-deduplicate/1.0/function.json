@@ -1,0 +1,63 @@
+{
+  "category": "Array",
+  "description": "Remove duplicate items from an array. Optionally deduplicate by a nested property path.",
+  "icon": {
+    "color": "Blue",
+    "name": "FilterIcon"
+  },
+  "label": "Array Deduplicate",
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to deduplicate"
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the array contains objects, the dot-separated path to the property to deduplicate by. For example, 'user.id'"
+    },
+    {
+      "name": "schemaModel",
+      "label": "Schema Model",
+      "meta": {
+        "type": "SchemaModel"
+      },
+      "info": "The schema model to use for the output array"
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "SCHEMA",
+          "schemaModel": "schemaModel"
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

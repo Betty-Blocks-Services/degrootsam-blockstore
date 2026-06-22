@@ -3,6 +3,7 @@
   "functions": [
     "arrayCombine 1.1",
     "arrayCount 1.0",
+    "arrayDeduplicate 1.0",
     "arrayFilter 1.1",
     "arrayFilterBy 1.0",
     "arrayFind 1.2",

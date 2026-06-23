@@ -1,0 +1,57 @@
+{
+  "description": "If an error occurs, return a custom error message or log the error",
+  "label": "Try Catch",
+  "category": "Flow",
+  "icon": {
+    "name": "ConditionIcon",
+    "color": "Orange"
+  },
+  "options": [
+    {
+      "name": "errorMessage",
+      "label": "Error Message",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "The error message to display if an error occurs"
+    },
+    {
+      "name": "logging",
+      "label": "Log Error",
+      "meta": {
+        "type": "Boolean"
+      },
+      "advanced": true
+    },
+    {
+      "name": "as",
+      "label": "As",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Text"
+            },
+            {
+              "type": "Number"
+            },
+            {
+              "type": "Boolean"
+            },
+            {
+              "type": "Object"
+            },
+            {
+              "type": "JSON"
+            }
+          ]
+        },
+        "validations": {
+          "required": true
+        }
+      }
+    }
+  ],
+  "yields": "ALL"
+}

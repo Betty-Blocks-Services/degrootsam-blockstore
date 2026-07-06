@@ -1,0 +1,68 @@
+{
+  "description": "Extract values from an array of objects by property path, optionally re-wrapping them under a new key.",
+  "label": "Array Map",
+  "category": "Array",
+  "icon": {
+    "name": "CustomModelIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Collection",
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array of objects to map over."
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text",
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "Dot-separated path to the property to extract from each item. For example, 'user.name'"
+    },
+    {
+      "name": "targetPath",
+      "label": "Target Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "Optional. Dot-separated key to wrap the extracted value in. For example, 'label' returns [{ label: value }], 'user.name' returns [{ user: { name: value } }]"
+    },
+    {
+      "name": "resultModel",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      },
+      "info": "The mapped array, typed to the source array's model."
+    },
+
+    {
+      "name": "resultSchema",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "schemaModel": "schemaModel",
+          "dataType": "SCHEMA"
+        }
+      },
+      "info": "The mapped array as a schema-typed array."
+    }
+  ],
+  "yields": "NONE"
+}

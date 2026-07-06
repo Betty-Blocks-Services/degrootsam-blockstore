@@ -1,0 +1,113 @@
+{
+  "description": "Append a value to an array, optionally extracting items by path first and skipping duplicates.",
+  "label": "Array Push",
+  "category": "Array",
+  "icon": {
+    "name": "SquareArrowInsideIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION", "STRING"]
+      },
+      "info": "The array to push the new value into."
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the array contains objects, the dot-separated path to extract from each item before pushing."
+    },
+    {
+      "name": "data",
+      "label": "Value",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": [
+          "ARRAY",
+          "COLLECTION",
+          "BOOLEAN",
+          "INTEGER",
+          "JSON",
+          "OBJECT",
+          "RECORD",
+          "STRING"
+        ],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value to push into the array."
+    },
+    {
+      "name": "filter",
+      "label": "Filter existing values",
+      "meta": {
+        "type": "Boolean"
+      },
+      "info": "If true, the value will only be pushed if it is not already in the array."
+    },
+    {
+      "name": "logging",
+      "label": "Logging",
+      "meta": {
+        "type": "Boolean"
+      },
+      "advanced": true,
+      "info": "Enable debug logging to the console."
+    },
+    {
+      "name": "schemaModel",
+      "label": "Result Schema model",
+      "meta": { "type": "SchemaModel" },
+      "info": "Schema model for the output array type."
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result as schema",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Array",
+              "schemaModel": "schemaModel",
+              "dataType": "SCHEMA"
+            }
+          ]
+        }
+      },
+      "info": "The updated array, typed to the selected Schema Model."
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      },
+      "info": "The updated array, typed to the source array's model."
+    },
+    {
+      "name": "reultText",
+      "label": "Result as text",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Text"
+        }
+      },
+      "info": "The updated array serialized as text."
+    }
+  ],
+  "yields": "NONE"
+}

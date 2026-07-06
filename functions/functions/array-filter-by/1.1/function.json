@@ -1,0 +1,105 @@
+{
+  "description": "Filter an array by keeping or removing items that match values in a second array. Supports filtering by object property path.",
+  "label": "Array Filter By",
+  "category": "Array",
+  "icon": {
+    "name": "FilterIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to filter"
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the source array contains objects, the dot-separated path to the property to compare. For example, 'user.id'"
+    },
+    {
+      "name": "filterArray",
+      "label": "Filter Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array of values to filter by"
+    },
+
+    {
+      "name": "filterPath",
+      "label": "Path",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "If the filter array contains objects, the dot-separated path to the property to compare. For example, 'userId'"
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "meta": {
+        "type": "Select",
+        "values": [
+          {
+            "label": "Include matches",
+            "value": "include"
+          },
+          {
+            "label": "Exclude matches",
+            "value": "exclude"
+          }
+        ],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "Include keeps only items that match. Exclude removes items that match."
+    },
+    {
+      "name": "schemaModel",
+      "label": "Schema Model",
+      "meta": {
+        "type": "SchemaModel"
+      },
+      "info": "The schema model to use for the output array"
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "SCHEMA",
+          "schemaModel": "schemaModel"
+        }
+      }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

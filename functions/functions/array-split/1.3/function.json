@@ -1,0 +1,77 @@
+{
+  "description": "Split a text string into an array using a delimiter.",
+  "label": "Array Split",
+  "category": "Array",
+  "icon": {
+    "name": "SquareArrowOutsideIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "value",
+      "label": "Text Value to Split",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "The text value to split into an array."
+    },
+    {
+      "name": "trim",
+      "label": "Trim",
+      "meta": {
+        "type": "Boolean"
+      },
+      "info": "If true, trims the whitespace from the beginning and end of each element in the array."
+    },
+    {
+      "name": "removeEmpty",
+      "label": "Remove Empty",
+      "meta": {
+        "type": "Boolean"
+      },
+      "info": "If true, removes empty elements from the array."
+    },
+    {
+      "name": "delimiter",
+      "label": "Delimiter",
+      "meta": {
+        "type": "Text"
+      },
+      "info": "The delimiter to split the text value by. Default is a comma."
+    },
+    {
+      "name": "logging",
+      "label": "Logging",
+      "meta": {
+        "type": "Boolean"
+      },
+      "advanced": true,
+      "info": "If true, logs the result to the console."
+    },
+    {
+      "name": "resultInt",
+      "label": "Result [INT ARRAY]",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "INTEGER"
+        }
+      },
+      "info": "The split values as an integer array."
+    },
+    {
+      "name": "resultStr",
+      "label": "Result [STRING ARRAY]",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "STRING"
+        }
+      },
+      "info": "The split values as a string array."
+    }
+  ],
+  "yields": "NONE"
+}

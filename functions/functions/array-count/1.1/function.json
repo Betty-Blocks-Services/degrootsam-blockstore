@@ -1,0 +1,34 @@
+{
+  "description": "Returns the number of items in an array.",
+  "label": "Array Count",
+  "category": "Array",
+  "icon": {
+    "name": "CounterIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to count."
+    },
+    {
+      "name": "result",
+      "label": "Output",
+      "meta": {
+        "type": "Output",
+        "output": { "type": "Number" },
+        "validations": { "required": true }
+      },
+      "info": "The number of items in the array."
+    }
+  ],
+  "yields": "NONE"
+}

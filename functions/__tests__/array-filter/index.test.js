@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arrayFilter from "../../functions/array-filter/1.1/index.js";
+import arrayFilter from "../../functions/array-filter/1.2/index.js";
 
 describe("arrayFilter", () => {
   const originalConsoleLog = console.log;
@@ -52,7 +52,10 @@ describe("arrayFilter", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ resultSchema: [{ name: "Bob", age: 30 }], resultModel: [{ name: "Bob", age: 30 }] });
+    expect(out).toEqual({
+      resultSchema: [{ name: "Bob", age: 30 }],
+      resultModel: [{ name: "Bob", age: 30 }],
+    });
   });
 
   it("filters array with nested path", async () => {
@@ -69,7 +72,10 @@ describe("arrayFilter", () => {
       operator: "eq",
     });
 
-    expect(out).toEqual({ resultSchema: [{ user: { name: "Bob", age: 30 } }], resultModel: [{ user: { name: "Bob", age: 30 } }] });
+    expect(out).toEqual({
+      resultSchema: [{ user: { name: "Bob", age: 30 } }],
+      resultModel: [{ user: { name: "Bob", age: 30 } }],
+    });
   });
 
   it("filters array with not equal operator", async () => {
@@ -79,7 +85,10 @@ describe("arrayFilter", () => {
       operator: "ne",
     });
 
-    expect(out).toEqual({ resultSchema: [1, 2, 4, 5], resultModel: [1, 2, 4, 5] });
+    expect(out).toEqual({
+      resultSchema: [1, 2, 4, 5],
+      resultModel: [1, 2, 4, 5],
+    });
   });
 
   it("filters array with less than or equal operator", async () => {
@@ -99,7 +108,10 @@ describe("arrayFilter", () => {
       operator: "ncont",
     });
 
-    expect(out).toEqual({ resultSchema: ["apple", "cherry", "date"], resultModel: ["apple", "cherry", "date"] });
+    expect(out).toEqual({
+      resultSchema: ["apple", "cherry", "date"],
+      resultModel: ["apple", "cherry", "date"],
+    });
   });
 
   it("handles date comparison with valueIsDate flag", async () => {
@@ -115,12 +127,6 @@ describe("arrayFilter", () => {
 
     expect(out.resultSchema).toHaveLength(1);
     expect(logSpy).toHaveBeenCalledWith(new Date("2023-12-01"));
-  });
-
-  it("throws error when array is missing", async () => {
-    await expect(arrayFilter({ value: 3, operator: "eq" })).rejects.toThrow(
-      "Array Filter: Missing required parameters to filter array",
-    );
   });
 
   it("throws error when operator is missing", async () => {
@@ -148,5 +154,47 @@ describe("arrayFilter", () => {
       array: [1, 2, 3],
       operator: undefined,
     });
+  });
+
+  it("throws error when array is missing", async () => {
+    await expect(
+      arrayFilter({ value: 3, operator: "eq" }),
+    ).rejects.toThrow("Array Filter: 'array' is required!");
+  });
+
+  it("throws error when array is invalid (not an array or {data} shape)", async () => {
+    await expect(
+      arrayFilter({ array: "not-an-array", value: 3, operator: "eq" }),
+    ).rejects.toThrow("Array Filter: 'array' is required!");
+
+    await expect(
+      arrayFilter({ array: null, value: 3, operator: "eq" }),
+    ).rejects.toThrow("Array Filter: 'array' is required!");
+  });
+
+  it("throws error when value is missing", async () => {
+    await expect(
+      arrayFilter({ array: [1, 2, 3], operator: "eq" }),
+    ).rejects.toThrow("Array Filter: 'value' is required!");
+  });
+
+  it("normalizes a plain array input", async () => {
+    const out = await arrayFilter({
+      array: [1, 2, 3],
+      value: 2,
+      operator: "eq",
+    });
+
+    expect(out).toEqual({ resultSchema: [2], resultModel: [2] });
+  });
+
+  it("normalizes a { data: [...] } shaped input", async () => {
+    const out = await arrayFilter({
+      array: { data: [1, 2, 3, 4] },
+      value: 2,
+      operator: "gt",
+    });
+
+    expect(out).toEqual({ resultSchema: [3, 4], resultModel: [3, 4] });
   });
 });

@@ -15,6 +15,9 @@ const arrayPush = async ({
   filter = false,
   logging = false,
 }) => {
+  if (data === undefined) {
+    throw new Error("Array Push: 'data' is required!");
+  }
   try {
     if (logging)
       console.log({
@@ -24,8 +27,9 @@ const arrayPush = async ({
         filter,
         logging,
       });
-    let result = normalizeArray(array);
-    if (!Array.isArray(result)) throw new Error("data is not an array");
+    // 'array' is not a required option, so default to an empty array when
+    // it is missing or cannot be normalized into an array.
+    let result = normalizeArray(array) ?? [];
     if (path) {
       if (logging) console.log("path", path);
       result = result.map((item) => {

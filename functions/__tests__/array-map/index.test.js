@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import mapArray from "../../functions/array-map/1.1/index.js";
+import mapArray from "../../functions/array-map/1.2/index.js";
 
 describe("mapArray", () => {
   it("maps array with simple path", async () => {
@@ -241,6 +241,102 @@ describe("mapArray", () => {
     expect(out).toEqual({
       resultSchema: [{ display: { title: "Alice" } }, { display: { title: "Bob" } }],
       resultModel: [{ display: { title: "Alice" } }, { display: { title: "Bob" } }],
+    });
+  });
+
+  describe("required option validation", () => {
+    it("throws when 'array' is missing", async () => {
+      await expect(mapArray({ path: "name" })).rejects.toThrow(
+        "Array Map: 'array' is required!",
+      );
+    });
+
+    it("throws when 'array' is undefined", async () => {
+      await expect(
+        mapArray({ array: undefined, path: "name" }),
+      ).rejects.toThrow("Array Map: 'array' is required!");
+    });
+
+    it("throws when 'path' is missing", async () => {
+      const array = { data: [{ name: "Alice" }] };
+      await expect(mapArray({ array })).rejects.toThrow(
+        "Array Map: 'path' is required!",
+      );
+    });
+
+    it("throws when 'path' is undefined", async () => {
+      const array = { data: [{ name: "Alice" }] };
+      await expect(
+        mapArray({ array, path: undefined }),
+      ).rejects.toThrow("Array Map: 'path' is required!");
+    });
+  });
+
+  describe("normalizeArray edge cases", () => {
+    it("accepts a plain array (not wrapped in a data property)", async () => {
+      const array = [
+        { name: "Alice", age: 25 },
+        { name: "Bob", age: 30 },
+      ];
+
+      const out = await mapArray({ array, path: "name" });
+
+      expect(out).toEqual({
+        resultSchema: ["Alice", "Bob"],
+        resultModel: ["Alice", "Bob"],
+      });
+    });
+
+    it("accepts a { data: [...] } wrapped array", async () => {
+      const array = { data: [{ name: "Alice" }, { name: "Bob" }] };
+
+      const out = await mapArray({ array, path: "name" });
+
+      expect(out).toEqual({
+        resultSchema: ["Alice", "Bob"],
+        resultModel: ["Alice", "Bob"],
+      });
+    });
+
+    it("throws the 'array' required error when array is null", async () => {
+      await expect(mapArray({ array: null, path: "name" })).rejects.toThrow(
+        "Array Map: 'array' is required!",
+      );
+    });
+
+    it("throws the 'array' required error when array is an invalid shape (no data array)", async () => {
+      await expect(
+        mapArray({ array: { foo: "bar" }, path: "name" }),
+      ).rejects.toThrow("Array Map: 'array' is required!");
+    });
+
+    it("throws the 'array' required error when array's data property is not an array", async () => {
+      await expect(
+        mapArray({ array: { data: "not-an-array" }, path: "name" }),
+      ).rejects.toThrow("Array Map: 'array' is required!");
+    });
+  });
+
+  describe("other edge cases", () => {
+    it("maps over an array of primitives using a non-dot path key", async () => {
+      const array = { data: ["Alice", "Bob", "Charlie"] };
+
+      const out = await mapArray({ array, path: "length" });
+
+      expect(out).toEqual({
+        resultSchema: [5, 3, 7],
+        resultModel: [5, 3, 7],
+      });
+    });
+
+    it("throws when a nested path is used but an item is a primitive, not an object", async () => {
+      const array = { data: ["Alice", "Bob"] };
+
+      await expect(
+        mapArray({ array, path: "user.name" }),
+      ).rejects.toThrow(
+        "Array item is not an object. Cannot travel path",
+      );
     });
   });
 });

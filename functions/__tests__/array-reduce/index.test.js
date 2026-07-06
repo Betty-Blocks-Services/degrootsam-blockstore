@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayReduce from "../../functions/array-reduce/1.1/index.js";
+import arrayReduce from "../../functions/array-reduce/1.2/index.js";
 
 describe("arrayReduce", () => {
   it("reduces array with sum reducer", async () => {
@@ -41,7 +41,6 @@ describe("arrayReduce", () => {
 
     expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
-});
 
   it("reduces array with path and sum reducer", async () => {
     const array = [
@@ -138,6 +137,15 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: [1, 2], resultModel: [1, 2] });
   });
 
+  it("reduces empty array with sum and no initial value defaults to 0", async () => {
+    const out = await arrayReduce({
+      array: [],
+      reducer: "sum",
+    });
+
+    expect(out).toEqual({ resultSchema: 0, resultModel: 0 });
+  });
+
   it("reduces array with string values using concat", async () => {
     const out = await arrayReduce({
       array: ["hello", "world", "test"],
@@ -208,4 +216,66 @@ describe("arrayReduce", () => {
     });
 
     expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
+  });
+
+  it("normalizes a { data: [...] } shaped input before reducing", async () => {
+    const out = await arrayReduce({
+      array: { data: [1, 2, 3] },
+      reducer: "sum",
+    });
+
+    expect(out).toEqual({ resultSchema: 6, resultModel: 6 });
+  });
+
+  it("throws when 'array' is missing (undefined)", async () => {
+    await expect(
+      arrayReduce({
+        reducer: "sum",
+      })
+    ).rejects.toThrow("Array Reduce: 'array' is required!");
+  });
+
+  it("throws when 'array' is null", async () => {
+    await expect(
+      arrayReduce({
+        array: null,
+        reducer: "sum",
+      })
+    ).rejects.toThrow("Array Reduce: 'array' is required!");
+  });
+
+  it("throws when 'array' is not an array and has no .data array", async () => {
+    await expect(
+      arrayReduce({
+        array: { foo: "bar" },
+        reducer: "sum",
+      })
+    ).rejects.toThrow("Array Reduce: 'array' is required!");
+  });
+
+  it("throws when 'reducer' is missing (undefined)", async () => {
+    await expect(
+      arrayReduce({
+        array: [1, 2, 3],
+      })
+    ).rejects.toThrow("Array Reduce: 'reducer' is required!");
+  });
+
+  it("throws when 'reducer' is an empty string", async () => {
+    await expect(
+      arrayReduce({
+        array: [1, 2, 3],
+        reducer: "",
+      })
+    ).rejects.toThrow("Array Reduce: 'reducer' is required!");
+  });
+
+  it("throws when 'reducer' is not a recognized reducer name", async () => {
+    await expect(
+      arrayReduce({
+        array: [1, 2, 3],
+        reducer: "average",
+      })
+    ).rejects.toThrow('Array Reduce: Invalid reducer "average"');
+  });
 });

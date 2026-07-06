@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayCombine from "../../functions/array-combine/1.1/index.js";
+import arrayCombine from "../../functions/array-combine/1.2/index.js";
 
 describe("arrayCombine", () => {
   it("combines two simple arrays", async () => {
@@ -8,7 +8,10 @@ describe("arrayCombine", () => {
       arrayB: [4, 5, 6],
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({
+      result: [1, 2, 3, 4, 5, 6],
+      resultModel: [1, 2, 3, 4, 5, 6],
+    });
   });
 
   it("combines arrays with object paths", async () => {
@@ -28,7 +31,10 @@ describe("arrayCombine", () => {
       pathB: "name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"], resultModel: ["Alice", "Bob", "Charlie", "Diana"] });
+    expect(out).toEqual({
+      result: ["Alice", "Bob", "Charlie", "Diana"],
+      resultModel: ["Alice", "Bob", "Charlie", "Diana"],
+    });
   });
 
   it("handles arrays with data property", async () => {
@@ -40,7 +46,10 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({
+      result: [1, 2, 3, 4, 5, 6],
+      resultModel: [1, 2, 3, 4, 5, 6],
+    });
   });
 
   it("handles mixed array formats", async () => {
@@ -52,7 +61,10 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
+    expect(out).toEqual({
+      result: [1, 2, 3, 4, 5, 6],
+      resultModel: [1, 2, 3, 4, 5, 6],
+    });
   });
 
   it("handles empty arrays", async () => {
@@ -75,7 +87,10 @@ describe("arrayCombine", () => {
       pathB: "user.name",
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
+    expect(out).toEqual({
+      result: ["Alice", "Bob", "Charlie"],
+      resultModel: ["Alice", "Bob", "Charlie"],
+    });
   });
 
   it("uses path for only one array", async () => {
@@ -91,15 +106,63 @@ describe("arrayCombine", () => {
       arrayB,
     });
 
-    expect(out).toEqual({ result: ["Alice", "Bob", "Charlie", "Diana"], resultModel: ["Alice", "Bob", "Charlie", "Diana"] });
+    expect(out).toEqual({
+      result: ["Alice", "Bob", "Charlie", "Diana"],
+      resultModel: ["Alice", "Bob", "Charlie", "Diana"],
+    });
   });
 
-  it("handles undefined arrays gracefully", async () => {
+  it("throws when arrayA is missing", async () => {
+    await expect(
+      arrayCombine({
+        arrayA: undefined,
+        arrayB: [1, 2, 3],
+      }),
+    ).rejects.toThrow("Array Combine: 'arrayA' is required!");
+  });
+
+  it("throws when arrayB is missing", async () => {
+    await expect(
+      arrayCombine({
+        arrayA: [1, 2, 3],
+        arrayB: undefined,
+      }),
+    ).rejects.toThrow("Array Combine: 'arrayB' is required!");
+  });
+
+  it("throws when arrayA is not a valid array or collection", async () => {
+    await expect(
+      arrayCombine({
+        arrayA: null,
+        arrayB: [1, 2, 3],
+      }),
+    ).rejects.toThrow("Array Combine: 'arrayA' is required!");
+  });
+
+  it("throws when arrayB is not a valid array or collection", async () => {
+    await expect(
+      arrayCombine({
+        arrayA: [1, 2, 3],
+        arrayB: { foo: "bar" },
+      }),
+    ).rejects.toThrow("Array Combine: 'arrayB' is required!");
+  });
+
+  it("normalizes plain arrays", async () => {
     const out = await arrayCombine({
-      arrayA: undefined,
-      arrayB: [1, 2, 3],
+      arrayA: [1, 2],
+      arrayB: [3, 4],
     });
 
-    expect(out).toEqual({ result: [1, 2, 3], resultModel: [1, 2, 3] });
+    expect(out).toEqual({ result: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
+  });
+
+  it("normalizes collection shape ({ data: [...] })", async () => {
+    const out = await arrayCombine({
+      arrayA: { data: [1, 2] },
+      arrayB: { data: [3, 4] },
+    });
+
+    expect(out).toEqual({ result: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
   });
 });

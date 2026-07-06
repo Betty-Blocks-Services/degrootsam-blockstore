@@ -13,9 +13,17 @@ const setPath = (path, value) =>
   path.split(".").reduceRight((acc, key) => ({ [key]: acc }), value);
 
 const mapArray = async ({ array, path, targetPath }) => {
-  let result = normalizeArray(array);
+  const normalizedArray = normalizeArray(array);
+  if (!Array.isArray(normalizedArray)) {
+    throw new Error("Array Map: 'array' is required!");
+  }
+  if (!path) {
+    throw new Error("Array Map: 'path' is required!");
+  }
+
+  let result;
   if (path.includes(".")) {
-    result = result.map((item) => {
+    result = normalizedArray.map((item) => {
       if (typeof item === "object") {
         const value = travelPath(item, path);
         return targetPath ? setPath(targetPath, value) : value;
@@ -24,7 +32,7 @@ const mapArray = async ({ array, path, targetPath }) => {
       }
     });
   } else {
-    result = array.map((item) => {
+    result = normalizedArray.map((item) => {
       const value = item[path];
       return targetPath ? setPath(targetPath, value) : value;
     });

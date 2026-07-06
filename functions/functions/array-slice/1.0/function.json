@@ -1,0 +1,72 @@
+{
+  "category": "Misc",
+  "description": "Returns a portion of an array from start to end where start and end represent the index of items in that array.",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Array Slice",
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to reduce."
+    },
+    {
+      "name": "start",
+      "label": "Start index",
+      "meta": {
+        "type": "Number",
+        "default": 0
+      },
+      "info": "Zero-based index at which to start extraction. 0 = the first item of the array. (Default: 0)"
+    },
+    {
+      "name": "start",
+      "label": "Start index",
+      "meta": {
+        "type": "Number",
+        "default": 0
+      },
+      "info": "Zero-based index at which to end extraction. -1 = the last item of the array"
+    },
+    {
+      "name": "schemaModel",
+      "label": "Schema Model",
+      "meta": {
+        "type": "SchemaModel"
+      },
+      "info": "The schema model to use for the output array"
+    },
+    {
+      "name": "resultSchema",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Number"
+            },
+            {
+              "type": "Text"
+            },
+            {
+              "type": "Array",
+              "schemaModel": "schemaModel",
+              "dataType": "SCHEMA"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

@@ -15,7 +15,7 @@ const arraySort = async ({ array, path, valueIsDate, direction = "asc" }) => {
   const normalizedArray = normalizeArray(array);
 
   if (!Array.isArray(normalizedArray)) {
-    throw new Error("Array Sort: 'array' is required");
+    throw new Error("Array Sort: 'array' is required!");
   }
 
   const sorted = [...normalizedArray].sort((a, b) => {

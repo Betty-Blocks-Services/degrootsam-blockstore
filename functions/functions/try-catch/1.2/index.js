@@ -1,9 +1,13 @@
-const tryCatch = async ({ errorMessage, logging }, steps) => {
+const tryCatch = async ({ as, errorMessage, logging }, steps) => {
+  if (!as) {
+    throw new Error("Try Catch: 'as' is required!");
+  }
+
   try {
     const result = await steps();
 
     return {
-      result,
+      as: result,
     };
   } catch (error) {
     if (logging) {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arraySort from "../../functions/array-sort/1.0/index.js";
+import arraySort from "../../functions/array-sort/1.1/index.js";
 
 describe("arraySort", () => {
   // primitives — numbers
@@ -130,6 +130,37 @@ describe("arraySort", () => {
 
   // error cases
   it("throws when array is missing", async () => {
-    await expect(arraySort({})).rejects.toThrow("Array Sort: Missing required parameters");
+    await expect(arraySort({})).rejects.toThrow("Array Sort: 'array' is required!");
+  });
+
+  it("throws when array is undefined", async () => {
+    await expect(arraySort({ array: undefined })).rejects.toThrow("Array Sort: 'array' is required!");
+  });
+
+  it("throws when array is null", async () => {
+    await expect(arraySort({ array: null })).rejects.toThrow("Array Sort: 'array' is required!");
+  });
+
+  it("throws when array is not an array or collection-like object", async () => {
+    await expect(arraySort({ array: "not-an-array" })).rejects.toThrow("Array Sort: 'array' is required!");
+  });
+
+  it("throws when array is a plain object without a data property", async () => {
+    await expect(arraySort({ array: { foo: "bar" } })).rejects.toThrow("Array Sort: 'array' is required!");
+  });
+
+  // normalizeArray edge cases
+  it("sorts a plain array input as-is", async () => {
+    const out = await arraySort({ array: [3, 1, 2], direction: "asc" });
+    expect(out).toEqual({ resultModel: [1, 2, 3], resultSchema: [1, 2, 3] });
+  });
+
+  it("sorts a collection-style input with a data property", async () => {
+    const out = await arraySort({ array: { data: [3, 1, 2] }, direction: "asc" });
+    expect(out).toEqual({ resultModel: [1, 2, 3], resultSchema: [1, 2, 3] });
+  });
+
+  it("throws when the data property is not an array", async () => {
+    await expect(arraySort({ array: { data: "nope" } })).rejects.toThrow("Array Sort: 'array' is required!");
   });
 });

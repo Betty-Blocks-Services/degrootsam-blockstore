@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayFilterBy from "../../functions/array-filter-by/1.0/index.js";
+import arrayFilterBy from "../../functions/array-filter-by/1.1/index.js";
 
 describe("arrayFilterBy", () => {
   // include mode — primitives
@@ -54,8 +54,14 @@ describe("arrayFilterBy", () => {
       mode: "include",
     });
     expect(out).toEqual({
-      resultSchema: [{ id: 1, name: "Alice" }, { id: 3, name: "Charlie" }],
-      resultModel: [{ id: 1, name: "Alice" }, { id: 3, name: "Charlie" }],
+      resultSchema: [
+        { id: 1, name: "Alice" },
+        { id: 3, name: "Charlie" },
+      ],
+      resultModel: [
+        { id: 1, name: "Alice" },
+        { id: 3, name: "Charlie" },
+      ],
     });
   });
 
@@ -75,8 +81,14 @@ describe("arrayFilterBy", () => {
       mode: "include",
     });
     expect(out).toEqual({
-      resultSchema: [{ id: 1, name: "Alice" }, { id: 3, name: "Charlie" }],
-      resultModel: [{ id: 1, name: "Alice" }, { id: 3, name: "Charlie" }],
+      resultSchema: [
+        { id: 1, name: "Alice" },
+        { id: 3, name: "Charlie" },
+      ],
+      resultModel: [
+        { id: 1, name: "Alice" },
+        { id: 3, name: "Charlie" },
+      ],
     });
   });
 
@@ -99,29 +111,121 @@ describe("arrayFilterBy", () => {
     });
   });
 
-  // error cases
   it("throws when array is missing", async () => {
     await expect(
-      arrayFilterBy({ filterArray: [1], mode: "include" })
-    ).rejects.toThrow("Array Filter By: Missing required parameters");
+      arrayFilterBy({ filterArray: [1], mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'array' is required!");
   });
 
   it("throws when filterArray is missing", async () => {
     await expect(
-      arrayFilterBy({ array: [1], mode: "include" })
-    ).rejects.toThrow("Array Filter By: Missing required parameters");
+      arrayFilterBy({ array: [1], mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'filterArray' is required!");
   });
 
   it("throws when mode is missing", async () => {
     await expect(
-      arrayFilterBy({ array: [1], filterArray: [1] })
-    ).rejects.toThrow("Array Filter By: Missing required parameters");
+      arrayFilterBy({ array: [1], filterArray: [1] }),
+    ).rejects.toThrow("Array Filter By: 'mode' is required!");
   });
 
   it("throws on invalid mode", async () => {
     await expect(
-      arrayFilterBy({ array: [1], filterArray: [1], mode: "wrong" })
+      arrayFilterBy({ array: [1], filterArray: [1], mode: "wrong" }),
     ).rejects.toThrow("Invalid mode");
+  });
+
+  // normalizeArray edge cases — array
+  it("throws 'array' is required when array is null", async () => {
+    await expect(
+      arrayFilterBy({ array: null, filterArray: [1], mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'array' is required!");
+  });
+
+  it("throws 'array' is required when array is undefined", async () => {
+    await expect(
+      arrayFilterBy({ array: undefined, filterArray: [1], mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'array' is required!");
+  });
+
+  it("throws 'array' is required when array is a non-array, non-collection value", async () => {
+    await expect(
+      arrayFilterBy({ array: "not-an-array", filterArray: [1], mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'array' is required!");
+  });
+
+  it("include: accepts array as a plain array", async () => {
+    const out = await arrayFilterBy({
+      array: [1, 2, 3],
+      filterArray: [2],
+      mode: "include",
+    });
+    expect(out).toEqual({ resultSchema: [2], resultModel: [2] });
+  });
+
+  it("include: accepts array as a { data: [...] } collection shape", async () => {
+    const out = await arrayFilterBy({
+      array: { data: [1, 2, 3] },
+      filterArray: [2],
+      mode: "include",
+    });
+    expect(out).toEqual({ resultSchema: [2], resultModel: [2] });
+  });
+
+  // normalizeArray edge cases — filterArray
+  it("throws 'filterArray' is required when filterArray is null", async () => {
+    await expect(
+      arrayFilterBy({ array: [1], filterArray: null, mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'filterArray' is required!");
+  });
+
+  it("throws 'filterArray' is required when filterArray is undefined", async () => {
+    await expect(
+      arrayFilterBy({ array: [1], filterArray: undefined, mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'filterArray' is required!");
+  });
+
+  it("throws 'filterArray' is required when filterArray is a non-array, non-collection value", async () => {
+    await expect(
+      arrayFilterBy({ array: [1], filterArray: "nope", mode: "include" }),
+    ).rejects.toThrow("Array Filter By: 'filterArray' is required!");
+  });
+
+  it("include: accepts filterArray as a plain array", async () => {
+    const out = await arrayFilterBy({
+      array: [1, 2, 3],
+      filterArray: [1, 3],
+      mode: "include",
+    });
+    expect(out).toEqual({ resultSchema: [1, 3], resultModel: [1, 3] });
+  });
+
+  it("include: accepts filterArray as a { data: [...] } collection shape", async () => {
+    const out = await arrayFilterBy({
+      array: [1, 2, 3],
+      filterArray: { data: [1, 3] },
+      mode: "include",
+    });
+    expect(out).toEqual({ resultSchema: [1, 3], resultModel: [1, 3] });
+  });
+
+  // mode values
+  it("exclude: filters objects using path with exclude mode", async () => {
+    const array = [
+      { id: 1, name: "Alice" },
+      { id: 2, name: "Bob" },
+      { id: 3, name: "Charlie" },
+    ];
+    const out = await arrayFilterBy({
+      array,
+      filterArray: [1, 3],
+      path: "id",
+      mode: "exclude",
+    });
+    expect(out).toEqual({
+      resultSchema: [{ id: 2, name: "Bob" }],
+      resultModel: [{ id: 2, name: "Bob" }],
+    });
   });
 
   it("include: handles null items in array gracefully", async () => {

@@ -1,0 +1,59 @@
+{
+  "description": "Sanitizes all string values in a string, array, object, or record. Normalizes Unicode (NFKC), removes supplementary-plane characters (emojis and others), strips backticks, and removes any character outside of letters, numbers, punctuation, whitespace, and line breaks. Optionally maps the sanitized result to a schema model.",
+  "label": "Sanitize Value",
+  "category": "Misc",
+  "icon": {
+    "name": "TTIcon",
+    "color": "Green"
+  },
+  "options": [
+    {
+      "label": "Value",
+      "name": "value",
+      "info": "The value to sanitize. Accepts a plain string, array, object, or record. All string values within the structure are Unicode-normalized (NFKC) and stripped of emojis, backticks, and any characters outside of letters, numbers, punctuation, whitespace, and line breaks.",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "OBJECT", "RECORD", "STRING"],
+        "validations": {
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "schema",
+      "label": "Schema",
+      "info": "Optional schema model to map the sanitized output to. When provided, the result is cast to the selected model's shape.",
+      "meta": {
+        "type": "SchemaModel"
+      }
+    },
+    {
+      "name": "result",
+      "label": "Result as",
+      "info": "Variable name to store the sanitized output in. The output type matches the input: a sanitized string, array, or an object shaped by the selected schema model.",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Text"
+            },
+            {
+              "type": "Boolean"
+            },
+            {
+              "type": "Number"
+            },
+            {
+              "type": "Object",
+              "schemaModel": "schemaModel"
+            }
+          ]
+        },
+        "validations": { "required": true }
+      },
+      "configuration": { "placeholder": "result" }
+    }
+  ],
+  "yields": "NONE"
+}

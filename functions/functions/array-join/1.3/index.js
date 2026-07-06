@@ -12,7 +12,14 @@ const travelPath = (object, path) => {
 const arrayJoin = async ({ array, separator, path }) => {
   const normalizedArray = normalizeArray(array);
 
-  if (!Array.isArray(normalizedArray)) throw new Error("Missing array input");
+  if (!Array.isArray(normalizedArray)) {
+    throw new Error("Array Join: 'array' is required!");
+  }
+
+  if (separator === undefined || separator === null) {
+    throw new Error("Array Join: 'separator' is required!");
+  }
+
   let arrayToJoin = [];
   if (path) {
     for (const item of normalizedArray) {

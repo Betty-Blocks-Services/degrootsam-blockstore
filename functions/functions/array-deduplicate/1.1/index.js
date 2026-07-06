@@ -13,8 +13,8 @@ const travelPath = (object, path) => {
 const arrayDeduplicate = async ({ array, path }) => {
   const normalizedArray = normalizeArray(array);
 
-  if (!normalizedArray) {
-    throw new Error("Array Deduplicate: Missing required parameters");
+  if (!Array.isArray(normalizedArray)) {
+    throw new Error("Array Deduplicate: 'array' is required!");
   }
 
   const seen = new Set();

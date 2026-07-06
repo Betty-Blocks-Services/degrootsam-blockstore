@@ -18,14 +18,18 @@ const arrayFilterBy = async ({
   mode,
 }) => {
   const normalizedArray = normalizeArray(array);
+  const normalizedFilterArray = normalizeArray(filterArray);
 
-  if (
-    !normalizedArray ||
-    !Array.isArray(normalizedArray) ||
-    !filterArray ||
-    !mode
-  ) {
-    throw new Error("Array Filter By: Missing required parameters");
+  if (!Array.isArray(normalizedArray)) {
+    throw new Error("Array Filter By: 'array' is required!");
+  }
+
+  if (!Array.isArray(normalizedFilterArray)) {
+    throw new Error("Array Filter By: 'filterArray' is required!");
+  }
+
+  if (!mode) {
+    throw new Error("Array Filter By: 'mode' is required!");
   }
 
   const validModes = ["include", "exclude"];
@@ -34,10 +38,10 @@ const arrayFilterBy = async ({
   }
 
   const filterValues = new Set(
-    filterArray.map((item) => travelPath(item, filterPath)),
+    normalizedFilterArray.map((item) => travelPath(item, filterPath)),
   );
 
-  const result = array.filter((item) => {
+  const result = normalizedArray.filter((item) => {
     const itemValue = travelPath(item, path);
     const inSet = filterValues.has(itemValue);
     return mode === "include" ? inSet : !inSet;

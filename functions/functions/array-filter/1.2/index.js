@@ -11,8 +11,14 @@ const travelPath = (object, path) => {
 };
 const arrayFilter = async ({ array, path, value, operator, valueIsDate }) => {
   const normalizedArray = normalizeArray(array);
-  if (!normalizedArray || !Array.isArray(normalizedArray) || !operator) {
-    console.log({ arr: normalizedArray, operator });
+  if (!normalizedArray || !Array.isArray(normalizedArray)) {
+    throw new Error("Array Filter: 'array' is required!");
+  }
+  if (value === undefined || value === null) {
+    throw new Error("Array Filter: 'value' is required!");
+  }
+  if (!operator) {
+    console.log({ array: normalizedArray, operator });
     throw new Error(
       "Array Filter: Missing required parameters to filter array",
     );

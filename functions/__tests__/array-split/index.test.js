@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arraySplit from "../../functions/array-split/1.2/index.js";
+import arraySplit from "../../functions/array-split/1.3/index.js";
 
 describe("arraySplit", () => {
   const originalConsoleLog = console.log;
@@ -186,6 +186,23 @@ describe("arraySplit", () => {
     ).rejects.toThrow("Value is not a string");
   });
 
+  it("throws error when value is already an array", async () => {
+    await expect(
+      arraySplit({
+        value: ["apple", "banana"],
+        delimiter: ",",
+      }),
+    ).rejects.toThrow("Value is not a string");
+  });
+
+  it("throws error when value is a number", async () => {
+    await expect(
+      arraySplit({
+        value: 42,
+      }),
+    ).rejects.toThrow("Value is not a string");
+  });
+
   it("splits string with special character delimiter", async () => {
     const out = await arraySplit({
       value: "apple*banana*cherry",
@@ -231,5 +248,36 @@ describe("arraySplit", () => {
     });
 
     expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+  });
+
+  it("splits an uneven number of values across the delimiter", async () => {
+    const out = await arraySplit({
+      value: "a,b,c,d,e",
+      delimiter: ",",
+    });
+
+    expect(out).toEqual({
+      resultStr: ["a", "b", "c", "d", "e"],
+      resultInt: ["a", "b", "c", "d", "e"],
+    });
+  });
+
+  it("returns an empty array for an empty string regardless of trim/removeEmpty", async () => {
+    const out = await arraySplit({
+      value: "",
+      trim: true,
+      removeEmpty: true,
+    });
+
+    expect(out).toEqual({ resultStr: [], resultInt: [] });
+  });
+
+  it("does not mutate delimiter default when explicitly undefined", async () => {
+    const out = await arraySplit({
+      value: "apple,banana",
+      delimiter: undefined,
+    });
+
+    expect(out).toEqual({ resultStr: ["apple", "banana"], resultInt: ["apple", "banana"] });
   });
 });

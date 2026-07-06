@@ -45,9 +45,10 @@ const coerceForComparison = (candidateValue, rawValue) => {
 const arrayFind = ({ array, path, value, operator }) => {
   const normalizedArray = normalizeArray(array);
   if (normalizedArray == null)
-    throw new Error("Array Find: 'array' is required");
+    throw new Error("Array Find: 'array' is required!");
+  if (path == null) throw new Error("Array Find: 'path' is required!");
+  if (value == null) throw new Error("Array Find: 'value' is required!");
   if (operator == null) throw new Error("Array Find: 'operator' is required");
-  if (value == null) throw new Error("Array Find: 'value' is required");
 
   const filterFn = operators[operator];
   if (!filterFn) throw new Error(`Array Find: Invalid operator '${operator}'`);

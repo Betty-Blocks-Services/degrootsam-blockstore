@@ -17,9 +17,9 @@ const arrayReduce = async ({
 }) => {
   const normalizedArray = normalizeArray(array);
   if (!Array.isArray(normalizedArray))
-    throw new Error("Array Reduce: 'array' is required");
+    throw new Error("Array Reduce: 'array' is required!");
   if (!reducer) {
-    throw new Error("Array Reduce: Reducer is required");
+    throw new Error("Array Reduce: 'reducer' is required!");
   }
 
   const reducers = {
@@ -56,7 +56,7 @@ const arrayReduce = async ({
   const start =
     initialValue !== undefined ? initialValue : defaultInits[reducer];
 
-  const result = array.reduce((acc, item) => {
+  const result = normalizedArray.reduce((acc, item) => {
     // pull out the value at path, or use the item itself
     const val = path ? travelPath(item, path) : item;
 

@@ -2,20 +2,20 @@ import { describe, it, expect } from "vitest";
 import sanitizeValue from "../../functions/sanitize-value/1.0/index.js";
 
 describe("sanitizeValue", () => {
-  it("sanitizes a plain string: NFKC normalization, emoji/backtick removal, and disallowed characters", () => {
-    const out = sanitizeValue({ value: "Hello 😀 World`!" });
+  it("sanitizes a plain string: NFKC normalization, emoji/backtick removal, and disallowed characters", async () => {
+    const out = await sanitizeValue({ value: "Hello 😀 World`!" });
 
     expect(out).toEqual({ result: "Hello  World!" });
   });
 
-  it("normalizes Unicode using NFKC (e.g. ligatures decompose)", () => {
-    const out = sanitizeValue({ value: "café ﬁ" });
+  it("normalizes Unicode using NFKC (e.g. ligatures decompose)", async () => {
+    const out = await sanitizeValue({ value: "café ﬁ" });
 
     expect(out).toEqual({ result: "café fi" });
   });
 
-  it("removes disallowed symbol characters while keeping letters, numbers, punctuation, and spaces", () => {
-    const out = sanitizeValue({
+  it("removes disallowed symbol characters while keeping letters, numbers, punctuation, and spaces", async () => {
+    const out = await sanitizeValue({
       value: "Price: $100 < 5 ~ test | pipe ^ caret",
     });
 
@@ -24,28 +24,28 @@ describe("sanitizeValue", () => {
     });
   });
 
-  it("removes control characters like tabs but keeps carriage returns and line breaks", () => {
-    const out = sanitizeValue({ value: "tab:\ttab\r\nnewline" });
+  it("removes control characters like tabs but keeps carriage returns and line breaks", async () => {
+    const out = await sanitizeValue({ value: "tab:\ttab\r\nnewline" });
 
     expect(out).toEqual({ result: "tab:tab\r\nnewline" });
   });
 
-  it("sanitizes every string in an array of strings", () => {
-    const out = sanitizeValue({ value: ["hello 😀", "world`"] });
+  it("sanitizes every string in an array of strings", async () => {
+    const out = await sanitizeValue({ value: ["hello 😀", "world`"] });
 
     expect(out).toEqual({ result: ["hello ", "world"] });
   });
 
-  it("recursively sanitizes string properties of an object/record", () => {
-    const out = sanitizeValue({
+  it("recursively sanitizes string properties of an object/record", async () => {
+    const out = await sanitizeValue({
       value: { a: "hi 😀", b: { c: "nested`val" } },
     });
 
     expect(out).toEqual({ result: { a: "hi ", b: { c: "nestedval" } } });
   });
 
-  it("recursively sanitizes nested arrays within objects and objects within arrays", () => {
-    const out = sanitizeValue({
+  it("recursively sanitizes nested arrays within objects and objects within arrays", async () => {
+    const out = await sanitizeValue({
       value: {
         list: ["one`", "two 😀"],
         nested: { deep: [{ label: "a`b" }] },
@@ -60,26 +60,26 @@ describe("sanitizeValue", () => {
     });
   });
 
-  it("leaves already-clean input unchanged (no-op)", () => {
-    const out = sanitizeValue({ value: "plain clean text 123." });
+  it("leaves already-clean input unchanged (no-op)", async () => {
+    const out = await sanitizeValue({ value: "plain clean text 123." });
 
     expect(out).toEqual({ result: "plain clean text 123." });
   });
 
-  it("handles an empty string", () => {
-    const out = sanitizeValue({ value: "" });
+  it("handles an empty string", async () => {
+    const out = await sanitizeValue({ value: "" });
 
     expect(out).toEqual({ result: "" });
   });
 
-  it("throws 'value is required' error when value is undefined", () => {
-    expect(() => sanitizeValue({})).toThrow(
+  it("throws 'value is required' error when value is undefined", async () => {
+    await expect(sanitizeValue({})).rejects.toThrow(
       "Sanitize Value: 'value' is required!",
     );
   });
 
-  it("throws 'value is required' error when value is null", () => {
-    expect(() => sanitizeValue({ value: null })).toThrow(
+  it("throws 'value is required' error when value is null", async () => {
+    await expect(sanitizeValue({ value: null })).rejects.toThrow(
       "Sanitize Value: 'value' is required!",
     );
   });

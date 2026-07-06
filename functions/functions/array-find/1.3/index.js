@@ -42,7 +42,7 @@ const coerceForComparison = (candidateValue, rawValue) => {
   return { candidate: candidateValue, target: rawValue, valid: true };
 };
 
-const arrayFind = ({ array, path, value, operator }) => {
+const arrayFind = async ({ array, path, value, operator }) => {
   const normalizedArray = normalizeArray(array);
   if (normalizedArray == null)
     throw new Error("Array Find: 'array' is required!");

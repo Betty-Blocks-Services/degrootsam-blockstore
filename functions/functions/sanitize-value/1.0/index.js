@@ -16,7 +16,7 @@ const sanitize = (value) => {
   return value;
 };
 
-const sanitizeValue = ({ value }) => {
+const sanitizeValue = async ({ value }) => {
   if (value === undefined || value === null) {
     throw new Error("Sanitize Value: 'value' is required!");
   }

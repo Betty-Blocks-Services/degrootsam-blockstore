@@ -29,11 +29,11 @@
       "info": "Zero-based index at which to start extraction. 0 = the first item of the array. (Default: 0)"
     },
     {
-      "name": "start",
-      "label": "Start index",
+      "name": "end",
+      "label": "End index",
       "meta": {
         "type": "Number",
-        "default": 0
+        "default": 1
       },
       "info": "Zero-based index at which to end extraction. -1 = the last item of the array"
     },

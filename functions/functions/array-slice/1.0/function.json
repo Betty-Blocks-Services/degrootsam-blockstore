@@ -1,9 +1,9 @@
 {
-  "category": "Misc",
+  "category": "Array",
   "description": "Returns a portion of an array from start to end where start and end represent the index of items in that array.",
   "icon": {
-    "color": "Orange",
-    "name": "ActionsIcon"
+    "color": "Blue",
+    "name": "AppGenericIcon"
   },
   "label": "Array Slice",
   "options": [

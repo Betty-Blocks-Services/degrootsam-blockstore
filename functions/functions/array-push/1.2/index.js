@@ -45,7 +45,11 @@ const arrayPush = async ({
       // "If true, the value will only be pushed if it is not already in the array.
       if (result.includes(data)) {
         if (logging) console.log("Value already in array");
-        return { result };
+        return {
+          resultSchema: result,
+          resultModel: result,
+          resultText: result,
+        };
       }
     }
     if (logging) console.log("Pushing value to array");

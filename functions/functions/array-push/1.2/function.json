@@ -98,7 +98,7 @@
       "info": "The updated array, typed to the source array's model."
     },
     {
-      "name": "reultText",
+      "name": "resultText",
       "label": "Result as text",
       "meta": {
         "type": "Output",

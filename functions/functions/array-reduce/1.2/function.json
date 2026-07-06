@@ -74,6 +74,18 @@
         }
       },
       "info": "The reduced result: a number for sum/min/max, or an array for concat."
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      },
+      "info": "The reduced result typed to the source array's model. Only populated when Reducer is Concat, since Sum/Min/Max produce a single number."
     }
   ],
   "yields": "NONE"

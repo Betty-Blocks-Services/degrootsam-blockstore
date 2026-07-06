@@ -65,7 +65,7 @@ const arrayReduce = async ({
 
   return {
     resultSchema: result,
-    resultModel: result,
+    resultModel: reducer === "concat" ? result : undefined,
   };
 };
 

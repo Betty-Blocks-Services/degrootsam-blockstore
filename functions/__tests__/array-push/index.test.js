@@ -99,7 +99,11 @@ describe("arrayPush", () => {
         filter: true,
       });
 
-      expect(out).toEqual({ result: [1, 2, 3] });
+      expect(out).toEqual({
+        resultSchema: [1, 2, 3],
+        resultModel: [1, 2, 3],
+        resultText: [1, 2, 3],
+      });
     },
   );
 
@@ -129,7 +133,11 @@ describe("arrayPush", () => {
         filter: true,
       });
 
-      expect(out).toEqual({ result: ["apple", "banana"] });
+      expect(out).toEqual({
+        resultSchema: ["apple", "banana"],
+        resultModel: ["apple", "banana"],
+        resultText: ["apple", "banana"],
+      });
     },
   );
 

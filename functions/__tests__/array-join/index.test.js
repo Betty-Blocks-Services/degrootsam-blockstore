@@ -1,139 +1,145 @@
 import { describe, it, expect } from "vitest";
 import arrayJoin from "../../functions/array-join/1.3/index.js";
 
+const shapes = [
+  ["array", (arr) => arr],
+  ["collection", (arr) => ({ data: arr })],
+];
+
 describe("arrayJoin", () => {
-  it("joins simple array with comma separator", async () => {
-    const out = await arrayJoin({
-      array: ["apple", "banana", "cherry"],
-      separator: ",",
-    });
+  it.each(shapes)(
+    "joins simple array with comma separator (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap(["apple", "banana", "cherry"]),
+        separator: ",",
+      });
 
-    expect(out).toEqual({ result: "apple,banana,cherry" });
-  });
+      expect(out).toEqual({ result: "apple,banana,cherry" });
+    },
+  );
 
-  it("joins simple array with custom separator", async () => {
-    const out = await arrayJoin({
-      array: ["apple", "banana", "cherry"],
-      separator: " | ",
-    });
+  it.each(shapes)(
+    "joins simple array with custom separator (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap(["apple", "banana", "cherry"]),
+        separator: " | ",
+      });
 
-    expect(out).toEqual({ result: "apple | banana | cherry" });
-  });
+      expect(out).toEqual({ result: "apple | banana | cherry" });
+    },
+  );
 
-  it("joins array with path to extract object property", async () => {
-    const array = [
-      { name: "Alice", age: 25 },
-      { name: "Bob", age: 30 },
-      { name: "Charlie", age: 35 },
-    ];
-
-    const out = await arrayJoin({
-      array,
-      separator: ", ",
-      path: "name",
-    });
-
-    expect(out).toEqual({ result: "Alice, Bob, Charlie" });
-  });
-
-  it("joins array with nested path", async () => {
-    const array = [
-      { user: { name: "Alice", age: 25 } },
-      { user: { name: "Bob", age: 30 } },
-      { user: { name: "Charlie", age: 35 } },
-    ];
-
-    const out = await arrayJoin({
-      array,
-      separator: ", ",
-      path: "user.name",
-    });
-
-    expect(out).toEqual({ result: "Alice, Bob, Charlie" });
-  });
-
-  it("handles array with data property (normalizeArray object shape)", async () => {
-    const array = { data: ["apple", "banana", "cherry"] };
-
-    const out = await arrayJoin({
-      array,
-      separator: ", ",
-    });
-
-    expect(out).toEqual({ result: "apple, banana, cherry" });
-  });
-
-  it("handles array with data property and path", async () => {
-    const array = {
-      data: [
+  it.each(shapes)(
+    "joins array with path to extract object property (%s input)",
+    async (_label, wrap) => {
+      const array = [
         { name: "Alice", age: 25 },
         { name: "Bob", age: 30 },
         { name: "Charlie", age: 35 },
-      ],
-    };
+      ];
 
-    const out = await arrayJoin({
-      array,
-      separator: ", ",
-      path: "name",
-    });
+      const out = await arrayJoin({
+        array: wrap(array),
+        separator: ", ",
+        path: "name",
+      });
 
-    expect(out).toEqual({ result: "Alice, Bob, Charlie" });
-  });
+      expect(out).toEqual({ result: "Alice, Bob, Charlie" });
+    },
+  );
 
-  it("joins empty array", async () => {
-    const out = await arrayJoin({
-      array: [],
-      separator: ", ",
-    });
+  it.each(shapes)(
+    "joins array with nested path (%s input)",
+    async (_label, wrap) => {
+      const array = [
+        { user: { name: "Alice", age: 25 } },
+        { user: { name: "Bob", age: 30 } },
+        { user: { name: "Charlie", age: 35 } },
+      ];
 
-    expect(out).toEqual({ result: "" });
-  });
+      const out = await arrayJoin({
+        array: wrap(array),
+        separator: ", ",
+        path: "user.name",
+      });
 
-  it("joins single element array", async () => {
-    const out = await arrayJoin({
-      array: ["apple"],
-      separator: ", ",
-    });
+      expect(out).toEqual({ result: "Alice, Bob, Charlie" });
+    },
+  );
 
-    expect(out).toEqual({ result: "apple" });
-  });
+  it.each(shapes)(
+    "joins empty array (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap([]),
+        separator: ", ",
+      });
 
-  it("joins array with mixed types", async () => {
-    const out = await arrayJoin({
-      array: [1, "string", true],
-      separator: ", ",
-    });
+      expect(out).toEqual({ result: "" });
+    },
+  );
 
-    expect(out).toEqual({ result: "1, string, true" });
-  });
+  it.each(shapes)(
+    "joins single element array (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap(["apple"]),
+        separator: ", ",
+      });
 
-  it("joins numbers with custom separator", async () => {
-    const out = await arrayJoin({
-      array: [1, 2, 3, 4, 5],
-      separator: " - ",
-    });
+      expect(out).toEqual({ result: "apple" });
+    },
+  );
 
-    expect(out).toEqual({ result: "1 - 2 - 3 - 4 - 5" });
-  });
+  it.each(shapes)(
+    "joins array with mixed types (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap([1, "string", true]),
+        separator: ", ",
+      });
 
-  it("joins array with empty string separator (valid, concatenates directly)", async () => {
-    const out = await arrayJoin({
-      array: ["a", "b", "c"],
-      separator: "",
-    });
+      expect(out).toEqual({ result: "1, string, true" });
+    },
+  );
 
-    expect(out).toEqual({ result: "abc" });
-  });
+  it.each(shapes)(
+    "joins numbers with custom separator (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap([1, 2, 3, 4, 5]),
+        separator: " - ",
+      });
 
-  it("handles array with null/undefined values", async () => {
-    const out = await arrayJoin({
-      array: ["apple", null, undefined, "banana"],
-      separator: ", ",
-    });
+      expect(out).toEqual({ result: "1 - 2 - 3 - 4 - 5" });
+    },
+  );
 
-    expect(out).toEqual({ result: "apple, , , banana" });
-  });
+  it.each(shapes)(
+    "joins array with empty string separator (valid, concatenates directly) (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap(["a", "b", "c"]),
+        separator: "",
+      });
+
+      expect(out).toEqual({ result: "abc" });
+    },
+  );
+
+  it.each(shapes)(
+    "handles array with null/undefined values (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayJoin({
+        array: wrap(["apple", null, undefined, "banana"]),
+        separator: ", ",
+      });
+
+      expect(out).toEqual({ result: "apple, , , banana" });
+    },
+  );
 
   it("throws error when array item is not an object and path is provided", async () => {
     await expect(

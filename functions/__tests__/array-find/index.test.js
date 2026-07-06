@@ -8,9 +8,14 @@ describe("arrayFind", () => {
     console.log = originalConsoleLog;
   });
 
-  it("finds element with equality operator", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3, 4, 5],
+  const shapes = [
+    ["array", (arr) => arr],
+    ["collection", (arr) => ({ data: arr })],
+  ];
+
+  it.each(shapes)("finds element with equality operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([1, 2, 3, 4, 5]),
       path: "",
       value: 3,
       operator: "eq",
@@ -19,9 +24,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 3, resultModel: 3 });
   });
 
-  it("finds element with greater than operator", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3, 4, 5],
+  it.each(shapes)("finds element with greater than operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([1, 2, 3, 4, 5]),
       path: "",
       value: 3,
       operator: "gt",
@@ -30,9 +35,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 4, resultModel: 4 });
   });
 
-  it("finds element with contains operator on strings", async () => {
-    const out = await arrayFind({
-      array: ["apple", "banana", "cherry", "date"],
+  it.each(shapes)("finds element with contains operator on strings (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap(["apple", "banana", "cherry", "date"]),
       path: "",
       value: "an",
       operator: "cont",
@@ -41,15 +46,15 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: "banana", resultModel: "banana" });
   });
 
-  it("finds element with path and operator", async () => {
+  it.each(shapes)("finds element with path and operator (%s input)", (_label, wrap) => {
     const array = [
       { name: "Alice", age: 25 },
       { name: "Bob", age: 30 },
       { name: "Charlie", age: 35 },
     ];
 
-    const out = await arrayFind({
-      array,
+    const out = arrayFind({
+      array: wrap(array),
       path: "age",
       value: 30,
       operator: "eq",
@@ -61,15 +66,15 @@ describe("arrayFind", () => {
     });
   });
 
-  it("finds element with nested path", async () => {
+  it.each(shapes)("finds element with nested path (%s input)", (_label, wrap) => {
     const array = [
       { user: { name: "Alice", age: 25 } },
       { user: { name: "Bob", age: 30 } },
       { user: { name: "Charlie", age: 35 } },
     ];
 
-    const out = await arrayFind({
-      array,
+    const out = arrayFind({
+      array: wrap(array),
       path: "user.age",
       value: 30,
       operator: "eq",
@@ -81,9 +86,9 @@ describe("arrayFind", () => {
     });
   });
 
-  it("finds element with not equal operator", async () => {
-    const out = await arrayFind({
-      array: [3, 3, 3, 4, 5],
+  it.each(shapes)("finds element with not equal operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([3, 3, 3, 4, 5]),
       path: "",
       value: 3,
       operator: "ne",
@@ -92,9 +97,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 4, resultModel: 4 });
   });
 
-  it("finds element with less than operator", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3, 4, 5],
+  it.each(shapes)("finds element with less than operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([1, 2, 3, 4, 5]),
       path: "",
       value: 3,
       operator: "lt",
@@ -103,9 +108,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
-  it("finds element with greater than or equal operator", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3, 4, 5],
+  it.each(shapes)("finds element with greater than or equal operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([1, 2, 3, 4, 5]),
       path: "",
       value: 3,
       operator: "gte",
@@ -114,9 +119,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 3, resultModel: 3 });
   });
 
-  it("finds element with not contains operator", async () => {
-    const out = await arrayFind({
-      array: ["apple", "banana", "cherry", "date"],
+  it.each(shapes)("finds element with not contains operator (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap(["apple", "banana", "cherry", "date"]),
       path: "",
       value: "an",
       operator: "ncont",
@@ -125,9 +130,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: "apple", resultModel: "apple" });
   });
 
-  it("returns undefined when no element matches", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3, 4, 5],
+  it.each(shapes)("returns undefined when no element matches (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([1, 2, 3, 4, 5]),
       path: "",
       value: 10,
       operator: "eq",
@@ -136,9 +141,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: undefined, resultModel: undefined });
   });
 
-  it("handles string values correctly", async () => {
-    const out = await arrayFind({
-      array: ["hello", "world", "test"],
+  it.each(shapes)("handles string values correctly (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap(["hello", "world", "test"]),
       path: "",
       value: "world",
       operator: "eq",
@@ -147,9 +152,9 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: "world", resultModel: "world" });
   });
 
-  it("handles number values correctly", async () => {
-    const out = await arrayFind({
-      array: [10, 20, 30],
+  it.each(shapes)("handles number values correctly (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([10, 20, 30]),
       path: "",
       value: "20",
       operator: "eq",
@@ -158,14 +163,14 @@ describe("arrayFind", () => {
     expect(out).toEqual({ resultSchema: 20, resultModel: 20 });
   });
 
-  it("returns undefined when path traverses into a non-existent property", async () => {
+  it.each(shapes)("returns undefined when path traverses into a non-existent property (%s input)", (_label, wrap) => {
     const array = [
       { name: "Alice", age: 25 },
       { name: "Bob", age: 30 },
     ];
 
-    const out = await arrayFind({
-      array,
+    const out = arrayFind({
+      array: wrap(array),
       path: "profile.age",
       value: 30,
       operator: "eq",
@@ -194,28 +199,6 @@ describe("arrayFind", () => {
     ).toThrow("Array Find: 'array' is required!");
   });
 
-  it("normalizes a plain array input", async () => {
-    const out = await arrayFind({
-      array: [1, 2, 3],
-      path: "",
-      value: 2,
-      operator: "eq",
-    });
-
-    expect(out).toEqual({ resultSchema: 2, resultModel: 2 });
-  });
-
-  it("normalizes a { data: [...] } shaped collection input", async () => {
-    const out = await arrayFind({
-      array: { data: [1, 2, 3, 4] },
-      path: "",
-      value: 2,
-      operator: "gt",
-    });
-
-    expect(out).toEqual({ resultSchema: 3, resultModel: 3 });
-  });
-
   it("throws error when path is missing", () => {
     expect(() =>
       arrayFind({ array: [1, 2, 3], value: 3, operator: "eq" }),
@@ -232,9 +215,9 @@ describe("arrayFind", () => {
     ).toThrow("Array Find: 'value' is required!");
   });
 
-  it("does not treat a falsy value of 0 as missing", async () => {
-    const out = await arrayFind({
-      array: [0, 1, 2],
+  it.each(shapes)("does not treat a falsy value of 0 as missing (%s input)", (_label, wrap) => {
+    const out = arrayFind({
+      array: wrap([0, 1, 2]),
       path: "",
       value: 0,
       operator: "eq",
@@ -260,11 +243,11 @@ describe("arrayFind", () => {
     ).toThrow("Array Find: Invalid operator 'invalid'");
   });
 
-  it("returns undefined for invalid value type", async () => {
+  it.each(shapes)("returns undefined for invalid value type (%s input)", (_label, wrap) => {
     const array = [null, undefined, Symbol("test")];
 
-    const out = await arrayFind({
-      array,
+    const out = arrayFind({
+      array: wrap(array),
       path: "test",
       value: 3,
       operator: "eq",

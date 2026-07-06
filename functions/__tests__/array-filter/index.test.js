@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import arrayFilter from "../../functions/array-filter/1.2/index.js";
 
+const shapes = [
+  ["array", (arr) => arr],
+  ["collection", (arr) => ({ data: arr })],
+];
+
 describe("arrayFilter", () => {
   const originalConsoleLog = console.log;
 
@@ -8,9 +13,9 @@ describe("arrayFilter", () => {
     console.log = originalConsoleLog;
   });
 
-  it("filters array with equality operator", async () => {
+  it.each(shapes)("filters array with equality operator (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       value: 3,
       operator: "eq",
     });
@@ -18,9 +23,9 @@ describe("arrayFilter", () => {
     expect(out).toEqual({ resultSchema: [3], resultModel: [3] });
   });
 
-  it("filters array with greater than operator", async () => {
+  it.each(shapes)("filters array with greater than operator (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       value: 3,
       operator: "gt",
     });
@@ -28,9 +33,9 @@ describe("arrayFilter", () => {
     expect(out).toEqual({ resultSchema: [4, 5], resultModel: [4, 5] });
   });
 
-  it("filters array with contains operator on strings", async () => {
+  it.each(shapes)("filters array with contains operator on strings (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: ["apple", "banana", "cherry", "date"],
+      array: wrap(["apple", "banana", "cherry", "date"]),
       value: "an",
       operator: "cont",
     });
@@ -38,7 +43,7 @@ describe("arrayFilter", () => {
     expect(out).toEqual({ resultSchema: ["banana"], resultModel: ["banana"] });
   });
 
-  it("filters array with path and operator", async () => {
+  it.each(shapes)("filters array with path and operator (%s input)", async (_label, wrap) => {
     const array = [
       { name: "Alice", age: 25 },
       { name: "Bob", age: 30 },
@@ -46,7 +51,7 @@ describe("arrayFilter", () => {
     ];
 
     const out = await arrayFilter({
-      array,
+      array: wrap(array),
       path: "age",
       value: 30,
       operator: "eq",
@@ -58,7 +63,7 @@ describe("arrayFilter", () => {
     });
   });
 
-  it("filters array with nested path", async () => {
+  it.each(shapes)("filters array with nested path (%s input)", async (_label, wrap) => {
     const array = [
       { user: { name: "Alice", age: 25 } },
       { user: { name: "Bob", age: 30 } },
@@ -66,7 +71,7 @@ describe("arrayFilter", () => {
     ];
 
     const out = await arrayFilter({
-      array,
+      array: wrap(array),
       path: "user.age",
       value: 30,
       operator: "eq",
@@ -78,9 +83,9 @@ describe("arrayFilter", () => {
     });
   });
 
-  it("filters array with not equal operator", async () => {
+  it.each(shapes)("filters array with not equal operator (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       value: 3,
       operator: "ne",
     });
@@ -91,9 +96,9 @@ describe("arrayFilter", () => {
     });
   });
 
-  it("filters array with less than or equal operator", async () => {
+  it.each(shapes)("filters array with less than or equal operator (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       value: 3,
       operator: "lte",
     });
@@ -101,9 +106,9 @@ describe("arrayFilter", () => {
     expect(out).toEqual({ resultSchema: [1, 2, 3], resultModel: [1, 2, 3] });
   });
 
-  it("filters array with not contains operator", async () => {
+  it.each(shapes)("filters array with not contains operator (%s input)", async (_label, wrap) => {
     const out = await arrayFilter({
-      array: ["apple", "banana", "cherry", "date"],
+      array: wrap(["apple", "banana", "cherry", "date"]),
       value: "an",
       operator: "ncont",
     });
@@ -114,12 +119,12 @@ describe("arrayFilter", () => {
     });
   });
 
-  it("handles date comparison with valueIsDate flag", async () => {
+  it.each(shapes)("handles date comparison with valueIsDate flag (%s input)", async (_label, wrap) => {
     const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const array = ["2023-01-01", "2023-06-01", "2023-12-01"];
 
     const out = await arrayFilter({
-      array,
+      array: wrap(array),
       value: "2023-06-01",
       operator: "gt",
       valueIsDate: true,
@@ -176,25 +181,5 @@ describe("arrayFilter", () => {
     await expect(
       arrayFilter({ array: [1, 2, 3], operator: "eq" }),
     ).rejects.toThrow("Array Filter: 'value' is required!");
-  });
-
-  it("normalizes a plain array input", async () => {
-    const out = await arrayFilter({
-      array: [1, 2, 3],
-      value: 2,
-      operator: "eq",
-    });
-
-    expect(out).toEqual({ resultSchema: [2], resultModel: [2] });
-  });
-
-  it("normalizes a { data: [...] } shaped input", async () => {
-    const out = await arrayFilter({
-      array: { data: [1, 2, 3, 4] },
-      value: 2,
-      operator: "gt",
-    });
-
-    expect(out).toEqual({ resultSchema: [3, 4], resultModel: [3, 4] });
   });
 });

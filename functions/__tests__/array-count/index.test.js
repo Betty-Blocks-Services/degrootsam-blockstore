@@ -1,32 +1,40 @@
 import { describe, it, expect } from "vitest";
 import arrayCount from "../../functions/array-count/1.1/index.js";
 
+const shapes = [
+  ["array", (arr) => arr],
+  ["collection", (arr) => ({ data: arr })],
+];
+
 describe("arrayCount", () => {
-  it("counts elements in a valid array", async () => {
-    const out = await arrayCount({ array: [1, 2, 3, 4, 5] });
+  it.each(shapes)(
+    "counts elements in a valid array (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayCount({ array: wrap([1, 2, 3, 4, 5]) });
 
-    expect(out).toEqual({ result: 5 });
-  });
+      expect(out).toEqual({ result: 5 });
+    },
+  );
 
-  it("counts elements in an empty array", async () => {
-    const out = await arrayCount({ array: [] });
+  it.each(shapes)(
+    "counts elements in an empty array (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayCount({ array: wrap([]) });
 
-    expect(out).toEqual({ result: 0 });
-  });
+      expect(out).toEqual({ result: 0 });
+    },
+  );
 
-  it("counts elements in an array with mixed types", async () => {
-    const out = await arrayCount({
-      array: [1, "string", true, null, undefined],
-    });
+  it.each(shapes)(
+    "counts elements in an array with mixed types (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayCount({
+        array: wrap([1, "string", true, null, undefined]),
+      });
 
-    expect(out).toEqual({ result: 5 });
-  });
-
-  it("correctly counts a collection input ({ data: [...] } shape)", async () => {
-    const out = await arrayCount({ array: { data: [1, 2, 3] } });
-
-    expect(out).toEqual({ result: 3 });
-  });
+      expect(out).toEqual({ result: 5 });
+    },
+  );
 
   it("throws when 'array' is missing", async () => {
     await expect(arrayCount({})).rejects.toThrow(

@@ -1,15 +1,18 @@
 import { describe, it, expect } from "vitest";
 import mapArray from "../../functions/array-map/1.2/index.js";
 
+const shapes = [
+  ["array", (arr) => arr],
+  ["collection", (arr) => ({ data: arr })],
+];
+
 describe("mapArray", () => {
-  it("maps array with simple path", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: 30 },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("maps array with simple path (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: 30 },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -19,14 +22,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
-  it("maps array with nested path", async () => {
-    const array = {
-      data: [
-        { user: { name: "Alice", age: 25 } },
-        { user: { name: "Bob", age: 30 } },
-        { user: { name: "Charlie", age: 35 } },
-      ],
-    };
+  it.each(shapes)("maps array with nested path (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { user: { name: "Alice", age: 25 } },
+      { user: { name: "Bob", age: 30 } },
+      { user: { name: "Charlie", age: 35 } },
+    ]);
 
     const out = await mapArray({
       array,
@@ -36,14 +37,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: ["Alice", "Bob", "Charlie"], resultModel: ["Alice", "Bob", "Charlie"] });
   });
 
-  it("maps array with numeric values", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: 30 },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("maps array with numeric values (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: 30 },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -53,14 +52,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [25, 30, 35], resultModel: [25, 30, 35] });
   });
 
-  it("maps array with boolean values", async () => {
-    const array = {
-      data: [
-        { name: "Alice", active: true },
-        { name: "Bob", active: false },
-        { name: "Charlie", active: true },
-      ],
-    };
+  it.each(shapes)("maps array with boolean values (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", active: true },
+      { name: "Bob", active: false },
+      { name: "Charlie", active: true },
+    ]);
 
     const out = await mapArray({
       array,
@@ -70,14 +67,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [true, false, true], resultModel: [true, false, true] });
   });
 
-  it("maps array with mixed value types", async () => {
-    const array = {
-      data: [
-        { name: "Alice", score: 95, passed: true },
-        { name: "Bob", score: 87, passed: true },
-        { name: "Charlie", score: 72, passed: false },
-      ],
-    };
+  it.each(shapes)("maps array with mixed value types (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", score: 95, passed: true },
+      { name: "Bob", score: 87, passed: true },
+      { name: "Charlie", score: 72, passed: false },
+    ]);
 
     const out = await mapArray({
       array,
@@ -87,14 +82,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [95, 87, 72], resultModel: [95, 87, 72] });
   });
 
-  it("maps array with deeply nested path", async () => {
-    const array = {
-      data: [
-        { user: { profile: { settings: { theme: "dark" } } } },
-        { user: { profile: { settings: { theme: "light" } } } },
-        { user: { profile: { settings: { theme: "dark" } } } },
-      ],
-    };
+  it.each(shapes)("maps array with deeply nested path (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { user: { profile: { settings: { theme: "dark" } } } },
+      { user: { profile: { settings: { theme: "light" } } } },
+      { user: { profile: { settings: { theme: "dark" } } } },
+    ]);
 
     const out = await mapArray({
       array,
@@ -104,14 +97,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: ["dark", "light", "dark"], resultModel: ["dark", "light", "dark"] });
   });
 
-  it("maps array with null values", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: null },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("maps array with null values (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: null },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -121,14 +112,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [25, null, 35], resultModel: [25, null, 35] });
   });
 
-  it("maps array with undefined values", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: undefined },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("maps array with undefined values (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: undefined },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -138,8 +127,8 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [25, undefined, 35], resultModel: [25, undefined, 35] });
   });
 
-  it("maps empty array", async () => {
-    const array = { data: [] };
+  it.each(shapes)("maps empty array (%s input)", async (_label, wrap) => {
+    const array = wrap([]);
 
     const out = await mapArray({
       array,
@@ -149,10 +138,8 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [], resultModel: [] });
   });
 
-  it("maps single element array", async () => {
-    const array = {
-      data: [{ name: "Alice", age: 25 }],
-    };
+  it.each(shapes)("maps single element array (%s input)", async (_label, wrap) => {
+    const array = wrap([{ name: "Alice", age: 25 }]);
 
     const out = await mapArray({
       array,
@@ -162,14 +149,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: ["Alice"], resultModel: ["Alice"] });
   });
 
-  it("handles path that doesn't exist on some objects", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob" },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("handles path that doesn't exist on some objects (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob" },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -179,14 +164,12 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [25, undefined, 35], resultModel: [25, undefined, 35] });
   });
 
-  it("handles path that returns undefined", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: 30 },
-        { name: "Charlie", age: 35 },
-      ],
-    };
+  it.each(shapes)("handles path that returns undefined (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: 30 },
+      { name: "Charlie", age: 35 },
+    ]);
 
     const out = await mapArray({
       array,
@@ -196,13 +179,11 @@ describe("mapArray", () => {
     expect(out).toEqual({ resultSchema: [undefined, undefined, undefined], resultModel: [undefined, undefined, undefined] });
   });
 
-  it("wraps extracted value in targetPath key", async () => {
-    const array = {
-      data: [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: 30 },
-      ],
-    };
+  it.each(shapes)("wraps extracted value in targetPath key (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice", age: 25 },
+      { name: "Bob", age: 30 },
+    ]);
 
     const out = await mapArray({ array, path: "name", targetPath: "label" });
 
@@ -212,13 +193,11 @@ describe("mapArray", () => {
     });
   });
 
-  it("wraps extracted value in nested targetPath", async () => {
-    const array = {
-      data: [
-        { name: "Alice" },
-        { name: "Bob" },
-      ],
-    };
+  it.each(shapes)("wraps extracted value in nested targetPath (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { name: "Alice" },
+      { name: "Bob" },
+    ]);
 
     const out = await mapArray({ array, path: "name", targetPath: "user.label" });
 
@@ -228,13 +207,11 @@ describe("mapArray", () => {
     });
   });
 
-  it("wraps nested path extraction in targetPath", async () => {
-    const array = {
-      data: [
-        { user: { name: "Alice" } },
-        { user: { name: "Bob" } },
-      ],
-    };
+  it.each(shapes)("wraps nested path extraction in targetPath (%s input)", async (_label, wrap) => {
+    const array = wrap([
+      { user: { name: "Alice" } },
+      { user: { name: "Bob" } },
+    ]);
 
     const out = await mapArray({ array, path: "user.name", targetPath: "display.title" });
 
@@ -273,31 +250,6 @@ describe("mapArray", () => {
   });
 
   describe("normalizeArray edge cases", () => {
-    it("accepts a plain array (not wrapped in a data property)", async () => {
-      const array = [
-        { name: "Alice", age: 25 },
-        { name: "Bob", age: 30 },
-      ];
-
-      const out = await mapArray({ array, path: "name" });
-
-      expect(out).toEqual({
-        resultSchema: ["Alice", "Bob"],
-        resultModel: ["Alice", "Bob"],
-      });
-    });
-
-    it("accepts a { data: [...] } wrapped array", async () => {
-      const array = { data: [{ name: "Alice" }, { name: "Bob" }] };
-
-      const out = await mapArray({ array, path: "name" });
-
-      expect(out).toEqual({
-        resultSchema: ["Alice", "Bob"],
-        resultModel: ["Alice", "Bob"],
-      });
-    });
-
     it("throws the 'array' required error when array is null", async () => {
       await expect(mapArray({ array: null, path: "name" })).rejects.toThrow(
         "Array Map: 'array' is required!",
@@ -318,8 +270,8 @@ describe("mapArray", () => {
   });
 
   describe("other edge cases", () => {
-    it("maps over an array of primitives using a non-dot path key", async () => {
-      const array = { data: ["Alice", "Bob", "Charlie"] };
+    it.each(shapes)("maps over an array of primitives using a non-dot path key (%s input)", async (_label, wrap) => {
+      const array = wrap(["Alice", "Bob", "Charlie"]);
 
       const out = await mapArray({ array, path: "length" });
 

@@ -1,48 +1,53 @@
 import { describe, it, expect } from "vitest";
 import arrayReduce from "../../functions/array-reduce/1.2/index.js";
 
+const shapes = [
+  ["array", (arr) => arr],
+  ["collection", (arr) => ({ data: arr })],
+];
+
 describe("arrayReduce", () => {
-  it("reduces array with sum reducer", async () => {
+  it.each(shapes)("reduces array with sum reducer (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       reducer: "sum",
     });
 
     expect(out).toEqual({ resultSchema: 15, resultModel: 15 });
   });
 
-  it("reduces array with min reducer", async () => {
+  it.each(shapes)("reduces array with min reducer (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [5, 2, 8, 1, 9],
+      array: wrap([5, 2, 8, 1, 9]),
       reducer: "min",
     });
 
     expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
-  it("reduces array with max reducer", async () => {
+  it.each(shapes)("reduces array with max reducer (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [5, 2, 8, 1, 9],
+      array: wrap([5, 2, 8, 1, 9]),
       reducer: "max",
     });
 
     expect(out).toEqual({ resultSchema: 9, resultModel: 9 });
   });
 
-  it("reduces array with concat reducer", async () => {
+  it.each(shapes)("reduces array with concat reducer (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [
+      array: wrap([
         [1, 2],
         [3, 4],
         [5, 6],
-      ],
+      ]),
       reducer: "concat",
     });
 
     expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
 
-  it("reduces array with path and sum reducer", async () => {
+  it.each(shapes)("reduces array with path and sum reducer (%s input)", async (_label, wrap) => {
     const array = [
       { name: "Alice", score: 85 },
       { name: "Bob", score: 92 },
@@ -50,7 +55,7 @@ describe("arrayReduce", () => {
     ];
 
     const out = await arrayReduce({
-      array,
+      array: wrap(array),
       path: "score",
       reducer: "sum",
     });
@@ -58,7 +63,7 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 255, resultModel: 255 });
   });
 
-  it("reduces array with nested path and min reducer", async () => {
+  it.each(shapes)("reduces array with nested path and min reducer (%s input)", async (_label, wrap) => {
     const array = [
       { user: { profile: { score: 85 } } },
       { user: { profile: { score: 92 } } },
@@ -66,7 +71,7 @@ describe("arrayReduce", () => {
     ];
 
     const out = await arrayReduce({
-      array,
+      array: wrap(array),
       path: "user.profile.score",
       reducer: "min",
     });
@@ -74,9 +79,9 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 78, resultModel: 78 });
   });
 
-  it("reduces array with custom initial value", async () => {
+  it.each(shapes)("reduces array with custom initial value (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, 2, 3, 4, 5],
+      array: wrap([1, 2, 3, 4, 5]),
       reducer: "sum",
       initialValue: 100,
     });
@@ -84,12 +89,12 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 115, resultModel: 115 });
   });
 
-  it("reduces array with custom initial value for concat", async () => {
+  it.each(shapes)("reduces array with custom initial value for concat (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [
+      array: wrap([
         [1, 2],
         [3, 4],
-      ],
+      ]),
       reducer: "concat",
       initialValue: [0],
     });
@@ -97,9 +102,9 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: [0, 1, 2, 3, 4], resultModel: [0, 1, 2, 3, 4] });
   });
 
-  it("reduces empty array with sum and custom initial value", async () => {
+  it.each(shapes)("reduces empty array with sum and custom initial value (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [],
+      array: wrap([]),
       reducer: "sum",
       initialValue: 10,
     });
@@ -107,9 +112,9 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 10, resultModel: 10 });
   });
 
-  it("reduces empty array with min and custom initial value", async () => {
+  it.each(shapes)("reduces empty array with min and custom initial value (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [],
+      array: wrap([]),
       reducer: "min",
       initialValue: 5,
     });
@@ -117,9 +122,9 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
-  it("reduces empty array with max and custom initial value", async () => {
+  it.each(shapes)("reduces empty array with max and custom initial value (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [],
+      array: wrap([]),
       reducer: "max",
       initialValue: 5,
     });
@@ -127,9 +132,9 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
-  it("reduces empty array with concat and custom initial value", async () => {
+  it.each(shapes)("reduces empty array with concat and custom initial value (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [],
+      array: wrap([]),
       reducer: "concat",
       initialValue: [1, 2],
     });
@@ -137,87 +142,91 @@ describe("arrayReduce", () => {
     expect(out).toEqual({ resultSchema: [1, 2], resultModel: [1, 2] });
   });
 
-  it("reduces empty array with sum and no initial value defaults to 0", async () => {
+  it.each(shapes)("reduces empty array with sum and no initial value defaults to 0 (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [],
+      array: wrap([]),
       reducer: "sum",
     });
 
     expect(out).toEqual({ resultSchema: 0, resultModel: 0 });
   });
 
-  it("reduces array with string values using concat", async () => {
+  it.each(shapes)("reduces array with string values using concat (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: ["hello", "world", "test"],
+      array: wrap(["hello", "world", "test"]),
       reducer: "concat",
     });
 
     expect(out).toEqual({ resultSchema: ["hello", "world", "test"], resultModel: ["hello", "world", "test"] });
   });
 
-  it("reduces array with mixed numeric types using sum", async () => {
+  it.each(shapes)("reduces array with mixed numeric types using sum (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, "2", 3.5, "4.5"],
+      array: wrap([1, "2", 3.5, "4.5"]),
       reducer: "sum",
     });
 
     expect(out).toEqual({ resultSchema: 11, resultModel: 11 });
   });
 
-  it("reduces array with mixed numeric types using min", async () => {
+  it.each(shapes)("reduces array with mixed numeric types using min (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, "2", 3.5, "4.5"],
+      array: wrap([1, "2", 3.5, "4.5"]),
       reducer: "min",
     });
 
     expect(out).toEqual({ resultSchema: 1, resultModel: 1 });
   });
 
-  it("reduces array with mixed numeric types using max", async () => {
+  it.each(shapes)("reduces array with mixed numeric types using max (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, "2", 3.5, "4.5"],
+      array: wrap([1, "2", 3.5, "4.5"]),
       reducer: "max",
     });
 
     expect(out).toEqual({ resultSchema: 4.5, resultModel: 4.5 });
   });
 
-  it("handles array with null values using sum", async () => {
+  it.each(shapes)("handles array with null values using sum (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, null, 3, undefined, 5],
+      array: wrap([1, null, 3, undefined, 5]),
       reducer: "sum",
     });
 
     expect(out).toEqual({ resultSchema: 9, resultModel: 9 });
   });
 
-  it("handles array with null values using min", async () => {
+  it.each(shapes)("handles array with null values using min (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, null, 3, undefined, 5],
+      array: wrap([1, null, 3, undefined, 5]),
       reducer: "min",
     });
 
     expect(out).toEqual({ resultSchema: 0, resultModel: 0 });
   });
 
-  it("handles array with null values using max", async () => {
+  it.each(shapes)("handles array with null values using max (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [1, null, 3, undefined, 5],
+      array: wrap([1, null, 3, undefined, 5]),
       reducer: "max",
     });
 
     expect(out).toEqual({ resultSchema: 5, resultModel: 5 });
   });
 
-  it("handles array with null values using concat", async () => {
+  it.each(shapes)("handles array with null values using concat (%s input)", async (_label, wrap) => {
     const out = await arrayReduce({
-      array: [[1, 2], null, [3, 4], undefined, [5, 6]],
+      array: wrap([[1, 2], null, [3, 4], undefined, [5, 6]]),
       reducer: "concat",
     });
 
     expect(out).toEqual({ resultSchema: [1, 2, 3, 4, 5, 6], resultModel: [1, 2, 3, 4, 5, 6] });
   });
 
+  // Regression test: previously `.reduce()` ran on the raw, un-normalized `array`
+  // value, so a `{ data: [...] }` shaped collection (as Betty Blocks passes) would
+  // throw instead of being normalized first. Kept as an explicit, standalone test
+  // documenting that bug fix, in addition to the { data: [...] } coverage above.
   it("normalizes a { data: [...] } shaped input before reducing", async () => {
     const out = await arrayReduce({
       array: { data: [1, 2, 3] },

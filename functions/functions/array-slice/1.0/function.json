@@ -46,18 +46,6 @@
       "info": "The schema model to use for the output array"
     },
     {
-      "name": "resultModel",
-      "label": "Result as model",
-      "meta": {
-        "type": "Output",
-        "output": {
-          "type": "Collection",
-          "model": "array"
-        }
-      },
-      "info": "The filtered array, typed to the source array's model."
-    },
-    {
       "name": "resultSchema",
       "label": "Result",
       "meta": {
@@ -78,6 +66,18 @@
           ]
         }
       }
+    },
+    {
+      "name": "resultModel",
+      "label": "Result as model",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Collection",
+          "model": "array"
+        }
+      },
+      "info": "The filtered array, typed to the source array's model."
     }
   ],
   "yields": "NONE"

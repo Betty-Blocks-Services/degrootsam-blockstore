@@ -1,0 +1,32 @@
+{
+  "category": "Misc",
+  "description": "Description",
+  "icon": {
+    "color": "Blue",
+    "name": "CheckboxLineIcon"
+  },
+  "label": "Array Is Array",
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": { "required": true }
+      }
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Boolean"
+        },
+        "validations": { "required": true }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

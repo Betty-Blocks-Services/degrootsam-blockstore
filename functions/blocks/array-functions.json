@@ -7,6 +7,7 @@
     "arrayFilter 1.2",
     "arrayFilterBy 1.1",
     "arrayFind 1.3",
+    "arrayIsArray 1.0",
     "arrayJoin 1.3",
     "arrayMap 1.2",
     "arrayPush 1.2",
@@ -15,5 +16,5 @@
     "arraySort 1.1",
     "arraySplit 1.3"
   ],
-  "includes": []
+  "includes": ["functions/utils"]
 }

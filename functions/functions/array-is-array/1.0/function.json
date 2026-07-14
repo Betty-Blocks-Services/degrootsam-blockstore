@@ -1,11 +1,11 @@
 {
-  "category": "Misc",
-  "description": "Description",
+  "category": "Array",
+  "description": "Checks a value whether it is a valid array. Returns a boolean result.",
   "icon": {
     "color": "Blue",
     "name": "CheckboxLineIcon"
   },
-  "label": "Array Is Array",
+  "label": "Is Array",
   "options": [
     {
       "name": "array",

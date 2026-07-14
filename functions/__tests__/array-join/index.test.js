@@ -69,17 +69,14 @@ describe("arrayJoin", () => {
     },
   );
 
-  it.each(shapes)(
-    "joins empty array (%s input)",
-    async (_label, wrap) => {
-      const out = await arrayJoin({
-        array: wrap([]),
-        separator: ", ",
-      });
+  it.each(shapes)("joins empty array (%s input)", async (_label, wrap) => {
+    const out = await arrayJoin({
+      array: wrap([]),
+      separator: ", ",
+    });
 
-      expect(out).toEqual({ result: "" });
-    },
-  );
+    expect(out).toEqual({ result: "" });
+  });
 
   it.each(shapes)(
     "joins single element array (%s input)",
@@ -166,9 +163,9 @@ describe("arrayJoin", () => {
   });
 
   it("throws error when array is null", async () => {
-    await expect(
-      arrayJoin({ array: null, separator: ", " }),
-    ).rejects.toThrow("Array Join: 'array' is required!");
+    await expect(arrayJoin({ array: null, separator: ", " })).rejects.toThrow(
+      "Array Join: 'array' is required!",
+    );
   });
 
   it("throws error when array's data property is not an array (invalid normalizeArray shape)", async () => {

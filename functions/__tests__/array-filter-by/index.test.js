@@ -176,7 +176,11 @@ describe("arrayFilterBy", () => {
 
   it("throws 'array' is required when array is a non-array, non-collection value", async () => {
     await expect(
-      arrayFilterBy({ array: "not-an-array", filterArray: [1], mode: "include" }),
+      arrayFilterBy({
+        array: "not-an-array",
+        filterArray: [1],
+        mode: "include",
+      }),
     ).rejects.toThrow("Array Filter By: 'array' is required!");
   });
 

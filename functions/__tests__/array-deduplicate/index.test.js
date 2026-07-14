@@ -8,23 +8,29 @@ const shapes = [
 
 describe("arrayDeduplicate", () => {
   // happy path — primitives
-  it.each(shapes)("removes duplicate numbers (%s input)", async (_label, wrap) => {
-    const out = await arrayDeduplicate({ array: wrap([1, 2, 2, 3, 1, 4]) });
-    expect(out).toEqual({
-      resultSchema: [1, 2, 3, 4],
-      resultModel: [1, 2, 3, 4],
-    });
-  });
+  it.each(shapes)(
+    "removes duplicate numbers (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayDeduplicate({ array: wrap([1, 2, 2, 3, 1, 4]) });
+      expect(out).toEqual({
+        resultSchema: [1, 2, 3, 4],
+        resultModel: [1, 2, 3, 4],
+      });
+    },
+  );
 
-  it.each(shapes)("removes duplicate strings (%s input)", async (_label, wrap) => {
-    const out = await arrayDeduplicate({
-      array: wrap(["a", "b", "a", "c", "b"]),
-    });
-    expect(out).toEqual({
-      resultSchema: ["a", "b", "c"],
-      resultModel: ["a", "b", "c"],
-    });
-  });
+  it.each(shapes)(
+    "removes duplicate strings (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayDeduplicate({
+        array: wrap(["a", "b", "a", "c", "b"]),
+      });
+      expect(out).toEqual({
+        resultSchema: ["a", "b", "c"],
+        resultModel: ["a", "b", "c"],
+      });
+    },
+  );
 
   // deduplication by path
   it.each(shapes)(
@@ -57,7 +63,10 @@ describe("arrayDeduplicate", () => {
         { user: { id: 2 } },
         { user: { id: 1 } },
       ];
-      const out = await arrayDeduplicate({ array: wrap(array), path: "user.id" });
+      const out = await arrayDeduplicate({
+        array: wrap(array),
+        path: "user.id",
+      });
       expect(out).toEqual({
         resultSchema: [{ user: { id: 1 } }, { user: { id: 2 } }],
         resultModel: [{ user: { id: 1 } }, { user: { id: 2 } }],
@@ -85,15 +94,15 @@ describe("arrayDeduplicate", () => {
   });
 
   it("throws when 'array' is not an array or valid collection", async () => {
-    await expect(
-      arrayDeduplicate({ array: "not-an-array" }),
-    ).rejects.toThrow("Array Deduplicate: 'array' is required!");
+    await expect(arrayDeduplicate({ array: "not-an-array" })).rejects.toThrow(
+      "Array Deduplicate: 'array' is required!",
+    );
   });
 
   it("throws when 'array' is an object without a data array", async () => {
-    await expect(
-      arrayDeduplicate({ array: { foo: "bar" } }),
-    ).rejects.toThrow("Array Deduplicate: 'array' is required!");
+    await expect(arrayDeduplicate({ array: { foo: "bar" } })).rejects.toThrow(
+      "Array Deduplicate: 'array' is required!",
+    );
   });
 
   // other edge cases

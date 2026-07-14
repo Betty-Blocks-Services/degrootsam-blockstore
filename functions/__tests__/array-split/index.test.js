@@ -13,7 +13,10 @@ describe("arraySplit", () => {
       value: "apple,banana,cherry",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with custom delimiter", async () => {
@@ -22,7 +25,10 @@ describe("arraySplit", () => {
       delimiter: "|",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with space delimiter", async () => {
@@ -31,7 +37,10 @@ describe("arraySplit", () => {
       delimiter: " ",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with trim enabled", async () => {
@@ -41,7 +50,10 @@ describe("arraySplit", () => {
       trim: true,
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with removeEmpty enabled", async () => {
@@ -51,7 +63,10 @@ describe("arraySplit", () => {
       removeEmpty: true,
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with both trim and removeEmpty enabled", async () => {
@@ -62,7 +77,10 @@ describe("arraySplit", () => {
       removeEmpty: true,
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits empty string", async () => {
@@ -79,7 +97,10 @@ describe("arraySplit", () => {
       delimiter: ",",
     });
 
-    expect(out).toEqual({ resultStr: ["apple banana cherry"], resultInt: ["apple banana cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple banana cherry"],
+      resultInt: ["apple banana cherry"],
+    });
   });
 
   it("splits string with single character", async () => {
@@ -96,7 +117,10 @@ describe("arraySplit", () => {
       delimiter: ",",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "", "", "banana"], resultInt: ["apple", "", "", "banana"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "", "", "banana"],
+      resultInt: ["apple", "", "", "banana"],
+    });
   });
 
   it("splits string with leading and trailing delimiters", async () => {
@@ -105,7 +129,10 @@ describe("arraySplit", () => {
       delimiter: ",",
     });
 
-    expect(out).toEqual({ resultStr: ["", "apple", "banana", ""], resultInt: ["", "apple", "banana", ""] });
+    expect(out).toEqual({
+      resultStr: ["", "apple", "banana", ""],
+      resultInt: ["", "apple", "banana", ""],
+    });
   });
 
   it("logs when logging is enabled", async () => {
@@ -209,7 +236,10 @@ describe("arraySplit", () => {
       delimiter: "*",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits string with multi-character delimiter", async () => {
@@ -218,7 +248,10 @@ describe("arraySplit", () => {
       delimiter: "--",
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("handles string with only delimiters", async () => {
@@ -227,7 +260,10 @@ describe("arraySplit", () => {
       delimiter: ",",
     });
 
-    expect(out).toEqual({ resultStr: ["", "", "", ""], resultInt: ["", "", "", ""] });
+    expect(out).toEqual({
+      resultStr: ["", "", "", ""],
+      resultInt: ["", "", "", ""],
+    });
   });
 
   it("handles string with only delimiters and removeEmpty", async () => {
@@ -247,7 +283,10 @@ describe("arraySplit", () => {
       trim: true,
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana", "cherry"], resultInt: ["apple", "banana", "cherry"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana", "cherry"],
+      resultInt: ["apple", "banana", "cherry"],
+    });
   });
 
   it("splits an uneven number of values across the delimiter", async () => {
@@ -278,6 +317,9 @@ describe("arraySplit", () => {
       delimiter: undefined,
     });
 
-    expect(out).toEqual({ resultStr: ["apple", "banana"], resultInt: ["apple", "banana"] });
+    expect(out).toEqual({
+      resultStr: ["apple", "banana"],
+      resultInt: ["apple", "banana"],
+    });
   });
 });

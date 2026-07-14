@@ -8,4 +8,6 @@ const attributes = {
   keywords: [''],
 };
 
-export default prefab('MultiFileUpload', attributes, undefined, [MultiFileUpload({})]);
+export default prefab('MultiFileUpload', attributes, undefined, [
+  MultiFileUpload({}),
+]);

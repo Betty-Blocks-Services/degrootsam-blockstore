@@ -6,7 +6,7 @@ import {
   ThemeColor,
   model,
   text,
-  showIf
+  showIf,
 } from '@betty-blocks/component-sdk';
 import { advanced } from '../advanced';
 
@@ -14,36 +14,22 @@ export const categories = [
   {
     label: 'Data',
     expanded: true,
-    members: [
-      'modelId',
-      'actionVariableId'
-    ],
+    members: ['modelId', 'actionVariableId'],
   },
   {
     label: 'Filter',
     expanded: true,
-    members: [
-      'addFilterRowText',
-      'ANDText',
-      'ORText',
-    ],
+    members: ['addFilterRowText', 'ANDText', 'ORText'],
   },
   {
     label: 'Whitelist / Blacklist',
     expanded: false,
-    members: [
-      'propertyWhiteList',
-      'propertyBlacklist',
-    ],
+    members: ['propertyWhiteList', 'propertyBlacklist'],
   },
   {
     label: 'Layout',
     expanded: false,
-    members: [
-      'height',
-      'width',
-      'outerSpacing',
-    ],
+    members: ['height', 'width', 'outerSpacing'],
   },
   {
     label: 'Style',
@@ -60,11 +46,9 @@ export const categories = [
   {
     label: 'Advanced',
     expanded: false,
-    members: [
-      'dataComponentAttribute',
-    ],
+    members: ['dataComponentAttribute'],
   },
-]
+];
 
 export const filterComponentOptions = {
   actionVariableId: option('ACTION_JS_VARIABLE', {
@@ -120,14 +104,14 @@ export const filterComponentOptions = {
   }),
   propertyWhiteList: text('Property Whitelist', {
     configuration: {
-      as: 'MULTILINE'
-    }
+      as: 'MULTILINE',
+    },
   }),
   propertyBlacklist: text('Property Blacklist', {
     value: 'id',
     configuration: {
-      as: 'MULTILINE'
-    }
+      as: 'MULTILINE',
+    },
   }),
   ...advanced,
 };

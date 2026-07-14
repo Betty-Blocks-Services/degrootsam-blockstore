@@ -9,7 +9,13 @@ const travelPath = (object, path) => {
   return result;
 };
 
-const arrayFilterBy = async ({ array, filterArray, path, filterPath, mode }) => {
+const arrayFilterBy = async ({
+  array,
+  filterArray,
+  path,
+  filterPath,
+  mode,
+}) => {
   if (!array || !filterArray || !mode) {
     throw new Error("Array Filter By: Missing required parameters");
   }
@@ -20,7 +26,7 @@ const arrayFilterBy = async ({ array, filterArray, path, filterPath, mode }) => 
   }
 
   const filterValues = new Set(
-    filterArray.map((item) => travelPath(item, filterPath))
+    filterArray.map((item) => travelPath(item, filterPath)),
   );
 
   const result = array.filter((item) => {

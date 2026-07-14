@@ -206,18 +206,21 @@ describe("arrayPush", () => {
     });
   });
 
-  it.each(shapes)("pushes null value to array (%s input)", async (_label, wrap) => {
-    const out = await arrayPush({
-      array: wrap([1, 2, 3]),
-      data: null,
-    });
+  it.each(shapes)(
+    "pushes null value to array (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayPush({
+        array: wrap([1, 2, 3]),
+        data: null,
+      });
 
-    expect(out).toEqual({
-      resultSchema: [1, 2, 3, null],
-      resultModel: [1, 2, 3, null],
-      resultText: [1, 2, 3, null],
-    });
-  });
+      expect(out).toEqual({
+        resultSchema: [1, 2, 3, null],
+        resultModel: [1, 2, 3, null],
+        resultText: [1, 2, 3, null],
+      });
+    },
+  );
 
   it.each(shapes)(
     "pushes multiple items in sequence into the same array (%s input)",

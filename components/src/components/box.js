@@ -75,9 +75,9 @@
         style={
           interactionBackground
             ? {
-              backgroundImage: interactionBackground,
-              opacity,
-            }
+                backgroundImage: interactionBackground,
+                opacity,
+              }
             : { opacity }
         }
       >
@@ -94,8 +94,6 @@
     B.defineFunction('ToOpaque', () => setOpacity(1));
     B.defineFunction('ToSemiTransparent', () => setOpacity(0.5));
     B.defineFunction('ToTransparent', () => setOpacity(0));
-
-
 
     if (!isDev && !logic) {
       return <></>;
@@ -225,9 +223,9 @@
           backgroundColor === 'Transparent'
             ? style.getColor(backgroundColor)
             : getColorAlpha(
-              style.getColor(backgroundColor),
-              backgroundColorAlpha / 100,
-            ),
+                style.getColor(backgroundColor),
+                backgroundColorAlpha / 100,
+              ),
         backgroundImage: ({ options: { backgroundUrl } }) => {
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const image = useText(backgroundUrl);
@@ -242,8 +240,9 @@
           backgroundAttachment,
       },
       border: {
-        borderWidth: ({ options: { borderWidth, borderStyle, borderColor } }) =>
-          borderWidth && borderStyle && borderColor ? borderWidth : 0,
+        borderWidth: ({
+          options: { borderWidth, borderStyle, borderColor },
+        }) => (borderWidth && borderStyle && borderColor ? borderWidth : 0),
         borderStyle: ({ options: { borderStyle } }) => borderStyle,
         borderColor: ({ options: { borderColor } }) =>
           style.getColor(borderColor),

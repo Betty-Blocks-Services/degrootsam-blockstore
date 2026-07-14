@@ -50,7 +50,7 @@ export const buttonOptions = {
         { name: 'Center', value: 'center' },
         { name: 'Right', value: 'right' },
       ],
-    },  
+    },
   }),
   size: option('CUSTOM', {
     value: 'small',

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   prefab,
   Icon,
@@ -9,7 +9,7 @@ import {
   sizes,
   PrefabReference,
   PrefabComponent,
-} from "@betty-blocks/component-sdk";
+} from '@betty-blocks/component-sdk';
 
 import {
   Box,
@@ -17,42 +17,42 @@ import {
   Button,
   buttonOptions,
   FilterComponent,
-} from "./structures";
+} from './structures';
 
 const interactions: PrefabInteraction[] = [
   {
-    name: "Add filter group",
-    sourceEvent: "Click",
+    name: 'Add filter group',
+    sourceEvent: 'Click',
     ref: {
-      targetComponentId: "#filterComp",
-      sourceComponentId: "#addFilterButton",
+      targetComponentId: '#filterComp',
+      sourceComponentId: '#addFilterButton',
     },
     type: InteractionType.Custom,
   },
   {
-    name: "Apply filter",
-    sourceEvent: "Click",
+    name: 'Apply filter',
+    sourceEvent: 'Click',
     ref: {
-      targetComponentId: "#filterComp",
-      sourceComponentId: "#applyButton",
+      targetComponentId: '#filterComp',
+      sourceComponentId: '#applyButton',
     },
     type: InteractionType.Custom,
   },
   {
-    name: "Reset advanced filter",
-    sourceEvent: "Click",
+    name: 'Reset advanced filter',
+    sourceEvent: 'Click',
     ref: {
-      targetComponentId: "#filterComp",
-      sourceComponentId: "#clearButton",
+      targetComponentId: '#filterComp',
+      sourceComponentId: '#clearButton',
     },
     type: InteractionType.Custom,
   },
 ];
 
 const attributes = {
-  category: "DATA",
+  category: 'DATA',
   icon: Icon.FilterIcon,
-  keywords: ["DATA", "filter", "cat", "kitty", "smokey"],
+  keywords: ['DATA', 'filter', 'cat', 'kitty', 'smokey'],
   interactions,
 };
 
@@ -79,17 +79,17 @@ const beforeCreate = ({
 
   function treeSearch(
     dirName: string,
-    array: PrefabReference[]
+    array: PrefabReference[],
   ): PrefabComponent | undefined {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < array.length; i++) {
       const q = array[i];
-      if (q.type === "COMPONENT") {
+      if (q.type === 'COMPONENT') {
         if (q.ref && q.ref.id === dirName) {
           return q;
         }
       }
-      if (q.type !== "PARTIAL" && q.descendants && q.descendants.length) {
+      if (q.type !== 'PARTIAL' && q.descendants && q.descendants.length) {
         const result = treeSearch(dirName, q.descendants);
         if (result) return result;
       }
@@ -102,19 +102,19 @@ const beforeCreate = ({
       <Header onClose={close} title="Configure Filter" />
 
       <Content>
-        <BoxComp pad={{ bottom: "15px" }}>
+        <BoxComp pad={{ bottom: '15px' }}>
           <Field label="Select the component you want to filter">
             <ComponentSelector
               onChange={(component) => {
                 const foundModelId = Object.values<any>(
-                  component.options
+                  component.options,
                 ).reduce(
                   (acc, option) =>
-                    option.type === "MODEL" ||
-                    option.type === "MODEL_AND_RELATION"
+                    option.type === 'MODEL' ||
+                    option.type === 'MODEL_AND_RELATION'
                       ? option.value
                       : acc,
-                  null
+                  null,
                 );
                 setThisPageState((prevState) => ({
                   ...prevState,
@@ -123,9 +123,9 @@ const beforeCreate = ({
                 }));
                 setModelId(foundModelId);
               }}
-              value={thisPageState.component ? thisPageState.component.id : ""}
+              value={thisPageState.component ? thisPageState.component.id : ''}
               placeholder="No components available."
-              allowedComponents={["DataTable", "DataList"]}
+              allowedComponents={['DataTable', 'DataList']}
             />
           </Field>
         </BoxComp>
@@ -134,28 +134,28 @@ const beforeCreate = ({
         onClick={close}
         onSave={() => {
           const newPrefab = { ...originalPrefab };
-          const filterComp = treeSearch("#filterComp", newPrefab.structure);
-          setOption(filterComp, "modelId", (option: any) => ({
+          const filterComp = treeSearch('#filterComp', newPrefab.structure);
+          setOption(filterComp, 'modelId', (option: any) => ({
             ...option,
             value: modelId,
           }));
           newPrefab.interactions.push({
-            name: "Advanced filter",
-            sourceEvent: "onSubmit",
+            name: 'Advanced filter',
+            sourceEvent: 'onSubmit',
             targetComponentId: thisPageState.component.id,
             ref: {
-              sourceComponentId: "#filterComp",
+              sourceComponentId: '#filterComp',
             },
-            type: "Custom",
+            type: 'Custom',
           } as PrefabInteraction);
           newPrefab.interactions.push({
-            name: "Clear advanced filter",
-            sourceEvent: "Click",
+            name: 'Clear advanced filter',
+            sourceEvent: 'Click',
             targetComponentId: thisPageState.component.id,
             ref: {
-              sourceComponentId: "#clearButton",
+              sourceComponentId: '#clearButton',
             },
-            type: "Custom",
+            type: 'Custom',
           } as PrefabInteraction);
           save(newPrefab);
         }}
@@ -168,99 +168,99 @@ const beforeCreate = ({
   );
 };
 
-export default prefab("Filter", attributes, beforeCreate, [
+export default prefab('Filter', attributes, beforeCreate, [
   Box(
     {
       options: {
         ...boxOptions,
-        innerSpacing: sizes("Inner space", {
-          value: ["0rem", "0rem", "M", "0rem"],
+        innerSpacing: sizes('Inner space', {
+          value: ['0rem', '0rem', 'M', '0rem'],
         }),
       },
     },
     [
-      FilterComponent({ ref: { id: "#filterComp" } }, []),
+      FilterComponent({ ref: { id: '#filterComp' } }, []),
       Box(
         {
           options: {
             ...boxOptions,
             alignment: buttongroup(
-              "Alignment",
+              'Alignment',
               [
-                ["None", "none"],
-                ["Left", "flex-start"],
-                ["Center", "center"],
-                ["Right", "flex-end"],
-                ["Justified", "space-between"],
+                ['None', 'none'],
+                ['Left', 'flex-start'],
+                ['Center', 'center'],
+                ['Right', 'flex-end'],
+                ['Justified', 'space-between'],
               ],
               {
-                value: "space-between",
+                value: 'space-between',
                 configuration: {
-                  dataType: "string",
+                  dataType: 'string',
                 },
-              }
+              },
             ),
-            innerSpacing: sizes("Inner space", {
-              value: ["0rem", "0rem", "0rem", "0rem"],
+            innerSpacing: sizes('Inner space', {
+              value: ['0rem', '0rem', '0rem', '0rem'],
             }),
           },
         },
         [
           Button(
             {
-              ref: { id: "#addFilterButton" },
-              style: { name: "Outline" },
+              ref: { id: '#addFilterButton' },
+              style: { name: 'Outline' },
               options: {
                 ...buttonOptions,
-                buttonText: variable("Button text", {
-                  value: ["Add filter group"],
+                buttonText: variable('Button text', {
+                  value: ['Add filter group'],
                 }),
               },
             },
-            []
+            [],
           ),
           Box(
             {
               options: {
                 ...boxOptions,
-                innerSpacing: sizes("Inner space", {
-                  value: ["0rem", "0rem", "0rem", "0rem"],
+                innerSpacing: sizes('Inner space', {
+                  value: ['0rem', '0rem', '0rem', '0rem'],
                 }),
               },
             },
             [
               Button(
                 {
-                  ref: { id: "#clearButton" },
-                  style: { name: "Outline" },
+                  ref: { id: '#clearButton' },
+                  style: { name: 'Outline' },
                   options: {
                     ...buttonOptions,
-                    buttonText: variable("Button text", {
-                      value: ["Clear filter"],
+                    buttonText: variable('Button text', {
+                      value: ['Clear filter'],
                     }),
-                    outerSpacing: sizes("Outer space", {
-                      value: ["0rem", "M", "0rem", "0rem"],
+                    outerSpacing: sizes('Outer space', {
+                      value: ['0rem', 'M', '0rem', '0rem'],
                     }),
                   },
                 },
-                []
+                [],
               ),
               Button(
                 {
-                  ref: { id: "#applyButton" },
+                  ref: { id: '#applyButton' },
                   options: {
                     ...buttonOptions,
-                    buttonText: variable("Button text", {
-                      value: ["Apply filter"],
+                    buttonText: variable('Button text', {
+                      value: ['Apply filter'],
                     }),
                   },
                 },
-                []
+                [],
               ),
-            ]
+            ],
           ),
-        ]
+        ],
       ),
-    ]
+    ],
   ),
 ]);

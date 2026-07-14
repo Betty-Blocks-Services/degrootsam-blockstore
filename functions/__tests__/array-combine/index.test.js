@@ -7,40 +7,46 @@ const shapes = [
 ];
 
 describe("arrayCombine", () => {
-  it.each(shapes)("combines two simple arrays (%s input)", async (_label, wrap) => {
-    const out = await arrayCombine({
-      arrayA: wrap([1, 2, 3]),
-      arrayB: wrap([4, 5, 6]),
-    });
+  it.each(shapes)(
+    "combines two simple arrays (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayCombine({
+        arrayA: wrap([1, 2, 3]),
+        arrayB: wrap([4, 5, 6]),
+      });
 
-    expect(out).toEqual({
-      result: [1, 2, 3, 4, 5, 6],
-      resultModel: [1, 2, 3, 4, 5, 6],
-    });
-  });
+      expect(out).toEqual({
+        result: [1, 2, 3, 4, 5, 6],
+        resultModel: [1, 2, 3, 4, 5, 6],
+      });
+    },
+  );
 
-  it.each(shapes)("combines arrays with object paths (%s input)", async (_label, wrap) => {
-    const arrayA = wrap([
-      { id: 1, name: "Alice" },
-      { id: 2, name: "Bob" },
-    ]);
-    const arrayB = wrap([
-      { id: 3, name: "Charlie" },
-      { id: 4, name: "Diana" },
-    ]);
+  it.each(shapes)(
+    "combines arrays with object paths (%s input)",
+    async (_label, wrap) => {
+      const arrayA = wrap([
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" },
+      ]);
+      const arrayB = wrap([
+        { id: 3, name: "Charlie" },
+        { id: 4, name: "Diana" },
+      ]);
 
-    const out = await arrayCombine({
-      arrayA,
-      pathA: "name",
-      arrayB,
-      pathB: "name",
-    });
+      const out = await arrayCombine({
+        arrayA,
+        pathA: "name",
+        arrayB,
+        pathB: "name",
+      });
 
-    expect(out).toEqual({
-      result: ["Alice", "Bob", "Charlie", "Diana"],
-      resultModel: ["Alice", "Bob", "Charlie", "Diana"],
-    });
-  });
+      expect(out).toEqual({
+        result: ["Alice", "Bob", "Charlie", "Diana"],
+        resultModel: ["Alice", "Bob", "Charlie", "Diana"],
+      });
+    },
+  );
 
   it("handles mixed array formats", async () => {
     const arrayA = [1, 2, 3];
@@ -66,41 +72,50 @@ describe("arrayCombine", () => {
     expect(out).toEqual({ result: [], resultModel: [] });
   });
 
-  it.each(shapes)("handles nested object paths (%s input)", async (_label, wrap) => {
-    const arrayA = wrap([{ user: { name: "Alice" } }, { user: { name: "Bob" } }]);
-    const arrayB = wrap([{ user: { name: "Charlie" } }]);
+  it.each(shapes)(
+    "handles nested object paths (%s input)",
+    async (_label, wrap) => {
+      const arrayA = wrap([
+        { user: { name: "Alice" } },
+        { user: { name: "Bob" } },
+      ]);
+      const arrayB = wrap([{ user: { name: "Charlie" } }]);
 
-    const out = await arrayCombine({
-      arrayA,
-      pathA: "user.name",
-      arrayB,
-      pathB: "user.name",
-    });
+      const out = await arrayCombine({
+        arrayA,
+        pathA: "user.name",
+        arrayB,
+        pathB: "user.name",
+      });
 
-    expect(out).toEqual({
-      result: ["Alice", "Bob", "Charlie"],
-      resultModel: ["Alice", "Bob", "Charlie"],
-    });
-  });
+      expect(out).toEqual({
+        result: ["Alice", "Bob", "Charlie"],
+        resultModel: ["Alice", "Bob", "Charlie"],
+      });
+    },
+  );
 
-  it.each(shapes)("uses path for only one array (%s input)", async (_label, wrap) => {
-    const arrayA = wrap([
-      { id: 1, name: "Alice" },
-      { id: 2, name: "Bob" },
-    ]);
-    const arrayB = wrap(["Charlie", "Diana"]);
+  it.each(shapes)(
+    "uses path for only one array (%s input)",
+    async (_label, wrap) => {
+      const arrayA = wrap([
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" },
+      ]);
+      const arrayB = wrap(["Charlie", "Diana"]);
 
-    const out = await arrayCombine({
-      arrayA,
-      pathA: "name",
-      arrayB,
-    });
+      const out = await arrayCombine({
+        arrayA,
+        pathA: "name",
+        arrayB,
+      });
 
-    expect(out).toEqual({
-      result: ["Alice", "Bob", "Charlie", "Diana"],
-      resultModel: ["Alice", "Bob", "Charlie", "Diana"],
-    });
-  });
+      expect(out).toEqual({
+        result: ["Alice", "Bob", "Charlie", "Diana"],
+        resultModel: ["Alice", "Bob", "Charlie", "Diana"],
+      });
+    },
+  );
 
   it("throws when arrayA is missing", async () => {
     await expect(
@@ -138,12 +153,15 @@ describe("arrayCombine", () => {
     ).rejects.toThrow("Array Combine: 'arrayB' is required!");
   });
 
-  it.each(shapes)("normalizes plain arrays (%s input)", async (_label, wrap) => {
-    const out = await arrayCombine({
-      arrayA: wrap([1, 2]),
-      arrayB: wrap([3, 4]),
-    });
+  it.each(shapes)(
+    "normalizes plain arrays (%s input)",
+    async (_label, wrap) => {
+      const out = await arrayCombine({
+        arrayA: wrap([1, 2]),
+        arrayB: wrap([3, 4]),
+      });
 
-    expect(out).toEqual({ result: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
-  });
+      expect(out).toEqual({ result: [1, 2, 3, 4], resultModel: [1, 2, 3, 4] });
+    },
+  );
 });

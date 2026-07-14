@@ -1,60 +1,60 @@
 {
-	"description": "Description",
-	"label": "Try Catch",
-	"category": "Misc",
-	"icon": {
-		"name": "ActionsIcon",
-		"color": "Orange"
-	},
-	"options": [
-		{
-			"name": "errorMessage",
-			"label": "Custom Error Message",
-			"meta": {
-				"type": "MultilineText",
-				"validations": {
-					"required": true
-				}
-			},
-			"info": "The error message to display if an error occurs"
-		},
-		{
-			"name": "logging",
-			"label": "Log Error",
-			"meta": {
-				"type": "Boolean"
-			},
-			"advanced": true
-		},
-		{
-			"name": "result",
-			"label": "Result",
-			"meta": {
-				"type": "Output",
-				"output": {
-					"anyOf": [
-						{
-							"type": "Text"
-						},
-						{
-							"type": "Number"
-						},
-						{
-							"type": "Boolean"
-						},
-						{
-							"type": "Object"
-						},
-						{
-							"type": "JSON"
-						}
-					]
-				},
-				"validations": {
-					"required": true
-				}
-			}
-		}
-	],
-	"yields": "ALL"
+  "description": "Description",
+  "label": "Try Catch",
+  "category": "Misc",
+  "icon": {
+    "name": "ActionsIcon",
+    "color": "Orange"
+  },
+  "options": [
+    {
+      "name": "errorMessage",
+      "label": "Custom Error Message",
+      "meta": {
+        "type": "MultilineText",
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The error message to display if an error occurs"
+    },
+    {
+      "name": "logging",
+      "label": "Log Error",
+      "meta": {
+        "type": "Boolean"
+      },
+      "advanced": true
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "anyOf": [
+            {
+              "type": "Text"
+            },
+            {
+              "type": "Number"
+            },
+            {
+              "type": "Boolean"
+            },
+            {
+              "type": "Object"
+            },
+            {
+              "type": "JSON"
+            }
+          ]
+        },
+        "validations": {
+          "required": true
+        }
+      }
+    }
+  ],
+  "yields": "ALL"
 }

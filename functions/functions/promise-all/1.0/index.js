@@ -5,7 +5,8 @@ const promiseAll = async ({ concurrency, array }, steps) => {
   if (!Array.isArray(normalizedArray)) {
     throw new Error("Promise All: 'array' is required!");
   }
-  const batchSize = concurrency > 0 ? concurrency : normalizedArray.length;
+  const batchSize =
+    concurrency > 0 ? Math.min(concurrency, 10) : normalizedArray.length;
 
   for (let i = 0; i < normalizedArray.length; i += batchSize) {
     const batch = normalizedArray.slice(i, i + batchSize);

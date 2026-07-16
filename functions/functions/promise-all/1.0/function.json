@@ -56,7 +56,7 @@
         "type": "Number",
         "default": 5
       },
-      "info": "How many requests to run at a time"
+      "info": "How many requests to run at a time. MAX: 10"
     }
   ],
   "yields": "ALL"

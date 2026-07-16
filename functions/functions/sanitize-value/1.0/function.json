@@ -1,5 +1,5 @@
 {
-  "description": "Sanitizes all string values in a string, array, object, or record. Normalizes Unicode (NFKC), removes supplementary-plane characters (emojis and others), strips backticks, and removes any character outside of letters, numbers, punctuation, whitespace, and line breaks. Optionally maps the sanitized result to a schema model.",
+  "description": "Sanitizes all string values in a string, array, object, or record",
   "label": "Sanitize Value",
   "category": "Misc",
   "icon": {

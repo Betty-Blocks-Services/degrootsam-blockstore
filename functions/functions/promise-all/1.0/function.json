@@ -1,0 +1,21 @@
+{
+  "category": "Misc",
+  "description": "Description",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Promise All",
+  "options": [
+    {
+      "name": "concurrency",
+      "label": "Concurrency",
+      "meta": {
+        "type": "Number",
+        "default": 5
+      },
+      "info": "How many requests to run at a time"
+    }
+  ],
+  "yields": "ALL"
+}

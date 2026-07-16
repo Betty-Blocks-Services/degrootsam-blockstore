@@ -1,12 +1,54 @@
 {
-  "category": "Misc",
+  "category": "Flow",
   "description": "Description",
   "icon": {
-    "color": "Orange",
-    "name": "ActionsIcon"
+    "color": "Green",
+    "name": "LoopIcon"
   },
   "label": "Promise All",
   "options": [
+    {
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        },
+        "allowLazyCollection": true
+      },
+      "name": "array",
+      "label": "Array",
+      "info": "The array you want to loop through."
+    },
+    {
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Inherit",
+          "source": "array",
+          "toSingleItem": true,
+          "scoped": true
+        },
+        "validations": {
+          "required": true
+        }
+      },
+      "name": "iterator",
+      "label": "Iterator name",
+      "info": "The name for the iterator under which the value of each iteration will be available."
+    },
+    {
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Number",
+          "scoped": true
+        }
+      },
+      "name": "index",
+      "label": "Index",
+      "info": "The name for the variable under which the current iteration will be available. Starts at 0. For example, in the 1st iteration this variable holds the value 0 and in 10th iteration, this variable holds the value 9."
+    },
     {
       "name": "concurrency",
       "label": "Concurrency",

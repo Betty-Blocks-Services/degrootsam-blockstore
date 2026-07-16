@@ -1,0 +1,5 @@
+{
+  "dependencies": [],
+  "functions": ["promiseAll 1.0"],
+  "includes": ["functions/utils"]
+}

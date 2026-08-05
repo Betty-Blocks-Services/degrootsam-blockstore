@@ -39,9 +39,9 @@ Located in [`functions/`](./functions).
 
 ```bash
 cd functions
-npm install
-npm test      # run tests with vitest
-npm run publish  # publish blocks to Betty Blocks
+bun install
+bun test      # run tests with vitest
+bun run publish  # publish blocks to Betty Blocks
 ```
 
 ## Commit conventions

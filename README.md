@@ -20,11 +20,11 @@ Located in [`components/`](./components).
 
 ```bash
 cd components
-yarn          # install dependencies
-yarn dev      # build + watch
-yarn start    # serve components locally (port 5002)
-yarn build    # production build
-yarn lint     # lint src
+bun          # install dependencies
+bun dev      # build + watch
+bun start    # serve components locally (port 5002)
+bun build    # production build
+bun lint     # lint src
 ```
 
 See [`components/README.md`](./components/README.md) for more details.

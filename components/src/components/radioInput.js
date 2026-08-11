@@ -314,7 +314,16 @@
       }
 
       if (optionType === 'manual') {
-        return parsedManualValues.map((item) => renderRadio(item, item));
+        return parsedManualValues.map((item = '') => {
+          let val = item;
+          let lbl = item;
+          if (item.includes('||')) {
+            const [l, v] = item.split('||');
+            lbl = l;
+            val = v;
+          }
+          return renderRadio(val, lbl);
+        });
       }
 
       if (isDev && !isListProperty && !isObjectProperty)

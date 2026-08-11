@@ -74,12 +74,8 @@ const beforeCreate = ({
   let propertyModelId;
   const componentId = createUuid();
 
-  function isProperty(path: string) {
-    return (
-      typeof path !== 'string' &&
-      typeof path === 'object' &&
-      !Array.isArray(path)
-    );
+  function isProperty(path: unknown): path is { id: string | string[] } {
+    return typeof path === 'object' && path !== null && !Array.isArray(path);
   }
 
   let propertyId: string;
@@ -204,7 +200,7 @@ const beforeCreate = ({
           structure.id = componentId;
 
           let kind = propertyKind || 'STRING';
-          const isListProperty = kind === ('LIST' || 'list');
+          const isListProperty = kind === 'LIST' || kind === 'list';
 
           const integerKind = 'BELONGS_TO';
 

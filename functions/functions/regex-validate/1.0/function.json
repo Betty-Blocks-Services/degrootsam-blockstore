@@ -3,7 +3,7 @@
   "description": "Validates the provided value against a regex and returns a boolean plus a friendly message",
   "icon": {
     "color": "Orange",
-    "name": "ActionsIcon"
+    "name": "CheckCircleIcon"
   },
   "label": "Regex Validate",
   "options": [

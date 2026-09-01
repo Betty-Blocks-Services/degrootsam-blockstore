@@ -3,7 +3,7 @@
   "description": "Replaces regex matches in the provided value with a replacement string",
   "icon": {
     "color": "Orange",
-    "name": "ActionsIcon"
+    "name": "ArrowClockwiseIcon"
   },
   "label": "Regex Replace",
   "options": [

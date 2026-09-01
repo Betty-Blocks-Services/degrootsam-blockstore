@@ -3,7 +3,7 @@
   "description": "Splits the provided value into an array using a regex as the delimiter",
   "icon": {
     "color": "Orange",
-    "name": "ActionsIcon"
+    "name": "ListDashedIcon"
   },
   "label": "Regex Split",
   "options": [

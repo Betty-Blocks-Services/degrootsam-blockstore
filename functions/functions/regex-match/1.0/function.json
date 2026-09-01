@@ -3,7 +3,7 @@
   "description": "Matches the provided value against a regex and returns all matches",
   "icon": {
     "color": "Orange",
-    "name": "ActionsIcon"
+    "name": "MagnifyingGlassIcon"
   },
   "label": "Regex Match",
   "options": [

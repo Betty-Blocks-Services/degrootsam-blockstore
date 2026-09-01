@@ -1,0 +1,13 @@
+{
+  "dependencies": [],
+  "functions": [
+    "regexCount 1.0",
+    "regexExtractGroups 1.0",
+    "regexMatch 1.0",
+    "regexReplace 1.0",
+    "regexSplit 1.0",
+    "regexTest 1.0",
+    "regexValidate 1.0"
+  ],
+  "includes": []
+}

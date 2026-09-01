@@ -3,7 +3,7 @@
   "description": "Tests the provided value against a regex",
   "icon": {
     "color": "Orange",
-    "name": "ActionsIcon"
+    "name": "RegExIcon"
   },
   "label": "Regex Test",
   "options": [

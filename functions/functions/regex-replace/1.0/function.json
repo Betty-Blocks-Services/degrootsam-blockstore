@@ -1,0 +1,112 @@
+{
+  "category": "Regex",
+  "description": "Replaces regex matches in the provided value with a replacement string",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Regex Replace",
+  "options": [
+    {
+      "name": "regex",
+      "label": "Regex",
+      "meta": {
+        "type": "MultilineText",
+        "default": "([A-Z])\\w+",
+        "placeholder": "([A-Z])\\w+",
+        "validations": { "required": true }
+      },
+      "info": "The regular expression pattern to search for."
+    },
+    {
+      "name": "replacement",
+      "label": "Replacement",
+      "meta": {
+        "type": "Text",
+        "default": ""
+      },
+      "info": "The replacement text. Use '$1', '$2', etc. to reference capture groups from the regex."
+    },
+    {
+      "name": "replaceAll",
+      "label": "Replace all",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'g' flag. If on, replaces every match; if off, only the first match is replaced."
+    },
+    {
+      "name": "flagCaseInsensitive",
+      "label": "Case insensitive",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'i' flag. Ignores letter case when matching."
+    },
+    {
+      "name": "flagMultiline",
+      "label": "Multiline",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'm' flag. Makes '^' and '$' match the start/end of each line instead of the whole string."
+    },
+    {
+      "name": "flagSingleLine",
+      "label": "Single line (dotall)",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 's' flag. Makes '.' match newline characters as well."
+    },
+    {
+      "name": "flagUnicode",
+      "label": "Unicode",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'u' flag. Treats the pattern as a sequence of Unicode code points."
+    },
+    {
+      "name": "flagSticky",
+      "label": "Sticky",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'y' flag. Matches only from the position given by the regex's lastIndex, so subsequent matches must be contiguous."
+    },
+    {
+      "name": "value",
+      "label": "Value",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["STRING", "INTEGER"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value to search within and replace matches in."
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Text"
+        },
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value with matches replaced."
+    }
+  ],
+  "yields": "NONE"
+}

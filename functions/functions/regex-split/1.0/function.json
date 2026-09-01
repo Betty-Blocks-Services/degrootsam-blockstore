@@ -1,0 +1,86 @@
+{
+  "category": "Regex",
+  "description": "Splits the provided value into an array using a regex as the delimiter",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Regex Split",
+  "options": [
+    {
+      "name": "regex",
+      "label": "Regex",
+      "meta": {
+        "type": "MultilineText",
+        "default": "\\s*,\\s*",
+        "placeholder": "\\s*,\\s*",
+        "validations": { "required": true }
+      },
+      "info": "The regular expression pattern to split the value on."
+    },
+    {
+      "name": "flagCaseInsensitive",
+      "label": "Case insensitive",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'i' flag. Ignores letter case when matching."
+    },
+    {
+      "name": "flagMultiline",
+      "label": "Multiline",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'm' flag. Makes '^' and '$' match the start/end of each line instead of the whole string."
+    },
+    {
+      "name": "flagSingleLine",
+      "label": "Single line (dotall)",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 's' flag. Makes '.' match newline characters as well."
+    },
+    {
+      "name": "flagUnicode",
+      "label": "Unicode",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'u' flag. Treats the pattern as a sequence of Unicode code points."
+    },
+    {
+      "name": "value",
+      "label": "Value to split",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["STRING", "INTEGER"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value to split using the regex."
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "STRING"
+        },
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array of substrings produced by splitting the value on the regex."
+    }
+  ],
+  "yields": "NONE"
+}

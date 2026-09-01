@@ -1,0 +1,57 @@
+{
+  "description": "Group an array of primitives or objects by the value at a property path. Returns an array of { key, items } groups.",
+  "label": "Array Group",
+  "category": "Array",
+  "icon": {
+    "name": "ListIncredementIcon",
+    "color": "Blue"
+  },
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The array to group."
+    },
+    {
+      "name": "path",
+      "label": "Path",
+      "meta": {
+        "type": "Text",
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "If the array contains objects, the dot-separated path to the property to group on. For example, 'user.name'"
+    },
+    {
+      "name": "schemaModel",
+      "label": "Schema Model",
+      "meta": {
+        "type": "SchemaModel"
+      },
+      "info": "The schema model to use for the output type."
+    },
+    {
+      "name": "result",
+      "label": "Output",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Array",
+          "dataType": "SCHEMA",
+          "schemaModel": "schema"
+        },
+        "validations": { "required": true }
+      },
+      "info": "An array of groups. Each group is an object: 'key' is the shared value at Path, 'items' is the array of matching items."
+    }
+  ],
+  "yields": "NONE"
+}

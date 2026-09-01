@@ -104,8 +104,8 @@
           body: JSON.stringify({
             operationName: 'GenerateFileUploadRequest',
             variables: {
-              modelName: 'Document',
-              propertyName: 'file',
+              modelName: modelInfo.name,
+              propertyName: propertyInfo.name,
               contentType: file.type,
               filename: file.name,
             },
@@ -564,7 +564,7 @@
     const { mediaMinWidth, Styling } = B;
     const style = new Styling(t);
 
-    const convertSizes = (sizes, device = 'Mobile') =>
+    const convertSizes = (sizes = [], device = 'Mobile') =>
       sizes.map((size) => style.getSpacing(size, device)).join(' ');
 
     return {

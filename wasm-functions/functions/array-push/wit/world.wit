@@ -1,0 +1,19 @@
+package betty-blocks:array-push;
+
+
+interface array-push {
+
+  record push-error {
+      message: string
+  }
+
+  type json-string = string; 
+
+  push: func(array: list<json-string>, value: json-string) -> result<list<json-string>, push-error>;
+}
+
+world main {
+  export array-push;
+}
+
+

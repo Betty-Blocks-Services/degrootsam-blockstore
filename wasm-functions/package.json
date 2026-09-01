@@ -1,0 +1,13 @@
+{
+  "name": "bb-generic-actions-wasm",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bbs-cli": "file:~/dev/services-cli/"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

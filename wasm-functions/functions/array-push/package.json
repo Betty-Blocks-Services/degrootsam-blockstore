@@ -1,0 +1,29 @@
+{
+  "name": "concat_text",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun typecheck && bun generate-types && bun build:js && bun build:wasm",
+    "typecheck": "tsc",
+    "build:js": "rslib build",
+    "generate-types": "jco types wit/ -o gen/types",
+    "build:wasm": "jco componentize -w wit -o array-push.wasm dist/index.js"
+  },
+  "devDependencies": {
+    "@bytecodealliance/componentize-js": "^0.18.4",
+    "@bytecodealliance/jco": "^1.13.1",
+    "@rslib/core": "^0.11.2",
+    "@types/node": "^22.17.0",
+    "typescript": "^5.9.2"
+  }
+}

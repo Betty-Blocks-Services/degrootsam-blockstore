@@ -1,0 +1,94 @@
+{
+  "category": "Regex",
+  "description": "Tests the provided value against a regex",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Regex Test",
+  "options": [
+    {
+      "name": "regex",
+      "label": "Regex",
+      "meta": {
+        "type": "MultilineText",
+        "default": "([A-Z])\\w+",
+        "placeholder": "([A-Z])\\w+",
+        "validations": { "required": true }
+      },
+      "info": "The regular expression pattern to test the value against."
+    },
+    {
+      "name": "flagCaseInsensitive",
+      "label": "Case insensitive",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'i' flag. Ignores letter case when matching."
+    },
+    {
+      "name": "flagMultiline",
+      "label": "Multiline",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'm' flag. Makes '^' and '$' match the start/end of each line instead of the whole string."
+    },
+    {
+      "name": "flagSingleLine",
+      "label": "Single line (dotall)",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 's' flag. Makes '.' match newline characters as well."
+    },
+    {
+      "name": "flagUnicode",
+      "label": "Unicode",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'u' flag. Treats the pattern as a sequence of Unicode code points."
+    },
+    {
+      "name": "flagSticky",
+      "label": "Sticky",
+      "meta": {
+        "type": "Boolean",
+        "default": true
+      },
+      "info": "Adds the 'y' flag. Matches only from the position given by the regex's lastIndex."
+    },
+    {
+      "name": "value",
+      "label": "Value to test",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["STRING", "INTEGER"],
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The value to test using the regex"
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Boolean"
+        },
+        "validations": {
+          "required": true
+        }
+      },
+      "info": "The variable containing the result"
+    }
+  ],
+  "yields": "NONE"
+}

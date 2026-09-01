@@ -1,0 +1,28 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "bb-generic-actions-wasm",
+      "devDependencies": {
+        "@types/bun": "latest",
+        "bbs-cli": "file:~/dev/services-cli/",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
+  },
+  "packages": {
+    "@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
+
+    "@types/node": ["@types/node@26.1.1", "", { "dependencies": { "undici-types": "~8.3.0" } }, ""],
+
+    "bbs-cli": ["bbs-cli@file:../../../dev/services-cli", { "devDependencies": { "@types/bun": "^1.3.14", "@types/node": "^22.13.4", "typescript": "^5.7.3" }, "bin": { "bbs": "dist/index.js" } }],
+
+    "bun-types": ["bun-types@1.3.14", "", { "dependencies": { "@types/node": "*" } }, ""],
+
+    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, ""],
+
+    "undici-types": ["undici-types@8.3.0", "", {}, ""],
+  }
+}

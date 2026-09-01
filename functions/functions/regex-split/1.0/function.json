@@ -23,7 +23,7 @@
       "label": "Case insensitive",
       "meta": {
         "type": "Boolean",
-        "default": true
+        "default": false
       },
       "info": "Adds the 'i' flag. Ignores letter case when matching."
     },
@@ -32,7 +32,7 @@
       "label": "Multiline",
       "meta": {
         "type": "Boolean",
-        "default": true
+        "default": false
       },
       "info": "Adds the 'm' flag. Makes '^' and '$' match the start/end of each line instead of the whole string."
     },
@@ -41,7 +41,7 @@
       "label": "Single line (dotall)",
       "meta": {
         "type": "Boolean",
-        "default": true
+        "default": false
       },
       "info": "Adds the 's' flag. Makes '.' match newline characters as well."
     },
@@ -50,7 +50,7 @@
       "label": "Unicode",
       "meta": {
         "type": "Boolean",
-        "default": true
+        "default": false
       },
       "info": "Adds the 'u' flag. Treats the pattern as a sequence of Unicode code points."
     },

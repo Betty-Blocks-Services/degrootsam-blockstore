@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayIsArray from "../../functions/array-is-array/1.0/index.js";
+import arrayIsArray from "../../functions/array-is-array/1.1/index.js";
 
 describe("arrayIsArray", () => {
   it("returns true for a plain array", async () => {

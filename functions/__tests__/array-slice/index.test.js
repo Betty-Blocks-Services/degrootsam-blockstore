@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arraySlice from "../../functions/array-slice/1.0/index.js";
+import arraySlice from "../../functions/array-slice/1.1/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayCount from "../../functions/array-count/1.1/index.js";
+import arrayCount from "../../functions/array-count/1.2/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

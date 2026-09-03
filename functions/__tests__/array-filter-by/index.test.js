@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayFilterBy from "../../functions/array-filter-by/1.1/index.js";
+import arrayFilterBy from "../../functions/array-filter-by/1.2/index.js";
 
 describe("arrayFilterBy", () => {
   const shapes = [

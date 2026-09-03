@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arraySplit from "../../functions/array-split/1.3/index.js";
+import arraySplit from "../../functions/array-split/1.4/index.js";
 
 describe("arraySplit", () => {
   const originalConsoleLog = console.log;
@@ -135,46 +135,57 @@ describe("arraySplit", () => {
     });
   });
 
-  it("logs when logging is enabled", async () => {
+  it("logs when debugLogging is enabled", async () => {
     const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     await arraySplit({
       value: "apple,banana,cherry",
       delimiter: ",",
-      logging: true,
+      debugLogging: true,
     });
 
-    expect(logSpy).toHaveBeenCalledWith("arraySplit", {
+    expect(logSpy).toHaveBeenCalledWith("Array Split: input", {
       value: "apple,banana,cherry",
       delimiter: ",",
-      logging: true,
+      trim: false,
+      removeEmpty: false,
     });
-    expect(logSpy).toHaveBeenCalledWith("values split into array:", [
-      "apple",
-      "banana",
-      "cherry",
-    ]);
-    expect(logSpy).toHaveBeenCalledWith("result", [
+    expect(logSpy).toHaveBeenCalledWith(
+      "Array Split: values split into array",
+      ["apple", "banana", "cherry"],
+    );
+    expect(logSpy).toHaveBeenCalledWith("Array Split: result", [
       "apple",
       "banana",
       "cherry",
     ]);
   });
 
-  it("logs error when value is not a string", async () => {
-    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  it("logs when value is not a string and debugLogging is enabled", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     try {
       await arraySplit({
         value: 123,
         delimiter: ",",
-        logging: true,
+        debugLogging: true,
       });
     } catch (err) {
       // Expected to throw
     }
 
-    expect(errorSpy).toHaveBeenCalledWith("Value is not a string");
+    expect(logSpy).toHaveBeenCalledWith("Array Split: 'value' is not a string");
+  });
+
+  it("does not log when debugLogging is disabled", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    await arraySplit({
+      value: "apple,banana,cherry",
+      delimiter: ",",
+    });
+
+    expect(logSpy).not.toHaveBeenCalled();
   });
 
   it("throws error when value is not a string", async () => {

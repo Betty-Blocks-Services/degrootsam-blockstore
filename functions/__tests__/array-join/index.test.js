@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayJoin from "../../functions/array-join/1.3/index.js";
+import arrayJoin from "../../functions/array-join/1.4/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

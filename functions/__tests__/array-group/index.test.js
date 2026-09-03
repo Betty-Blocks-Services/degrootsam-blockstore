@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayGroup from "../../functions/array-group/1.0/index.js";
+import arrayGroup from "../../functions/array-group/1.1/index.js";
 
 describe("arrayGroup", () => {
   const shapes = [

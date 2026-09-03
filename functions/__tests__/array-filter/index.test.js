@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import arrayFilter from "../../functions/array-filter/1.2/index.js";
+import arrayFilter from "../../functions/array-filter/1.3/index.js";
 
 const shapes = [
   ["array", (arr) => arr],
@@ -157,10 +157,14 @@ describe("arrayFilter", () => {
         value: "2023-06-01",
         operator: "gt",
         valueIsDate: true,
+        debugLogging: true,
       });
 
       expect(out.resultSchema).toHaveLength(1);
-      expect(logSpy).toHaveBeenCalledWith(new Date("2023-12-01"));
+      expect(logSpy).toHaveBeenCalledWith(
+        "Array Filter: comparing as dates",
+        expect.objectContaining({ itemValue: "2023-12-01" }),
+      );
     },
   );
 
@@ -176,7 +180,22 @@ describe("arrayFilter", () => {
     ).rejects.toThrow("Invalid operator");
   });
 
-  it("logs parameters when error occurs", async () => {
+  it("logs parameters when error occurs and debugLogging is enabled", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    try {
+      await arrayFilter({ array: [1, 2, 3], value: 3, debugLogging: true });
+    } catch (err) {
+      // Expected to throw
+    }
+
+    expect(logSpy).toHaveBeenCalledWith("Array Filter: 'operator' is missing", {
+      array: [1, 2, 3],
+      operator: undefined,
+    });
+  });
+
+  it("does not log when debugLogging is disabled", async () => {
     const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     try {
@@ -185,10 +204,7 @@ describe("arrayFilter", () => {
       // Expected to throw
     }
 
-    expect(logSpy).toHaveBeenCalledWith({
-      array: [1, 2, 3],
-      operator: undefined,
-    });
+    expect(logSpy).not.toHaveBeenCalled();
   });
 
   it("throws error when array is missing", async () => {

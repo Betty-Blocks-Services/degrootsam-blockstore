@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import arrayFind from "../../functions/array-find/1.3/index.js";
+import arrayFind from "../../functions/array-find/1.4/index.js";
 
 describe("arrayFind", () => {
   const originalConsoleLog = console.log;

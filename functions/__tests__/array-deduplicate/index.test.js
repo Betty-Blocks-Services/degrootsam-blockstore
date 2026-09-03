@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayDeduplicate from "../../functions/array-deduplicate/1.1/index.js";
+import arrayDeduplicate from "../../functions/array-deduplicate/1.2/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayCombine from "../../functions/array-combine/1.2/index.js";
+import arrayCombine from "../../functions/array-combine/1.3/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

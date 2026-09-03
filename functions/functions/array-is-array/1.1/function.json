@@ -1,0 +1,39 @@
+{
+  "category": "Array",
+  "description": "Checks a value whether it is a valid array. Returns a boolean result.",
+  "icon": {
+    "color": "Blue",
+    "name": "CheckboxLineIcon"
+  },
+  "label": "Is Array",
+  "options": [
+    {
+      "name": "array",
+      "label": "Array",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["ARRAY", "COLLECTION"],
+        "validations": { "required": true }
+      }
+    },
+    {
+      "name": "debugLogging",
+      "label": "Debug logging",
+      "meta": { "type": "Boolean" },
+      "info": "Turn on debug logging for this step",
+      "advanced": true
+    },
+    {
+      "name": "result",
+      "label": "Result",
+      "meta": {
+        "type": "Output",
+        "output": {
+          "type": "Boolean"
+        },
+        "validations": { "required": true }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

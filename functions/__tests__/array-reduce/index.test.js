@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arrayReduce from "../../functions/array-reduce/1.2/index.js";
+import arrayReduce from "../../functions/array-reduce/1.3/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

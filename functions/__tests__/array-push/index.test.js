@@ -1,5 +1,5 @@
-import { describe, it, expect, afterEach } from "vitest";
-import arrayPush from "../../functions/array-push/1.2/index.js";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import arrayPush from "../../functions/array-push/1.3/index.js";
 
 const shapes = [
   ["array", (arr) => arr],
@@ -251,5 +251,32 @@ describe("arrayPush", () => {
         array: [1, 2, 3],
       }),
     ).rejects.toThrow("Array Push: 'data' is required!");
+  });
+
+  it("logs steps when debugLogging is enabled", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    await arrayPush({
+      array: [1, 2, 3],
+      data: 4,
+      debugLogging: true,
+    });
+
+    expect(logSpy).toHaveBeenCalledWith(
+      "Array Push: pushing value to array",
+      4,
+    );
+    expect(logSpy).toHaveBeenCalledWith("Array Push: result", [1, 2, 3, 4]);
+  });
+
+  it("does not log when debugLogging is disabled", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    await arrayPush({
+      array: [1, 2, 3],
+      data: 4,
+    });
+
+    expect(logSpy).not.toHaveBeenCalled();
   });
 });

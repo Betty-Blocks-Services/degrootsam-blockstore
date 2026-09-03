@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import arraySort from "../../functions/array-sort/1.1/index.js";
+import arraySort from "../../functions/array-sort/1.2/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

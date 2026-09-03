@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import mapArray from "../../functions/array-map/1.2/index.js";
+import mapArray from "../../functions/array-map/1.3/index.js";
 
 const shapes = [
   ["array", (arr) => arr],

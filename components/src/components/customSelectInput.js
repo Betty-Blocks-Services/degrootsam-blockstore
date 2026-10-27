@@ -172,7 +172,8 @@
       data: queryData,
       loading: queryLoading,
       refetch,
-    } = useAllQuery(
+    } = valueType !== 'manual' &&
+    useAllQuery(
       referenceModelId || modelId,
       {
         filter: completeFilter,

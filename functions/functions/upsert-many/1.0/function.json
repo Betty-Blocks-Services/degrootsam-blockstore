@@ -1,0 +1,26 @@
+{
+  "category": "Misc",
+  "description": "Description",
+  "icon": {
+    "color": "Orange",
+    "name": "ActionsIcon"
+  },
+  "label": "Upsert Many",
+  "options": [
+    {
+      "name": "model",
+      "label": "Model",
+      "meta": { "type": "Model", "validations": { "required": true } }
+    },
+    {
+      "name": "records",
+      "label": "Records",
+      "meta": {
+        "type": "Value",
+        "allowedKinds": ["COLLECTION", "ARRAY"],
+        "validations": { "required": true }
+      }
+    }
+  ],
+  "yields": "NONE"
+}

@@ -200,7 +200,34 @@
         });
     };
 
-    const onFileDrop = async (files) => {
+    // iOS gives every camera capture the same name (e.g. "image.jpg"), and
+    // uploads are keyed by file name, so duplicates would overwrite each other.
+    const ensureUniqueNames = (files) => {
+      const taken = new Set(Object.keys(uploadMap));
+      return files.map((file) => {
+        if (!taken.has(file.name)) {
+          taken.add(file.name);
+          return file;
+        }
+        const dot = file.name.lastIndexOf('.');
+        const base = dot > 0 ? file.name.slice(0, dot) : file.name;
+        const ext = dot > 0 ? file.name.slice(dot) : '';
+        let n = 1;
+        let name = `${base} (${n})${ext}`;
+        while (taken.has(name)) {
+          n += 1;
+          name = `${base} (${n})${ext}`;
+        }
+        taken.add(name);
+        return new File([file], name, {
+          type: file.type,
+          lastModified: file.lastModified,
+        });
+      });
+    };
+
+    const onFileDrop = async (droppedFiles) => {
+      const files = ensureUniqueNames(droppedFiles);
       const maxBytes = (maxFileSize || 25) * 1024 * 1024;
       const newFiles = Object.fromEntries(
         files.map((file) => {

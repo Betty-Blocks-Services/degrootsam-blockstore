@@ -12,6 +12,6 @@
   },
   "private": "true",
   "devDependencies": {
-    "vitest": "^4.1.9"
+    "vitest": "^5.1.0"
   }
 }
